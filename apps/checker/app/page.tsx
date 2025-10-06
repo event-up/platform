@@ -15,7 +15,7 @@ export default function Home() {
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           
           <li className="tracking-[-.01em]">
-            checker
+            checker 101
           </li>
         </ol>
 
