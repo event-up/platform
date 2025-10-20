@@ -118,7 +118,7 @@ useEffect(() => {
 };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[85vh] bg-black relative">
+    <div className="flex flex-col items-center justify-center min-h-[85vh] relative">
       {/* Loading Spinner */}
       {isLoading && (
         <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10">
