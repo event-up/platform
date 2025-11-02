@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@workspace/eslint-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*"
+    "@workspace/typescript-config": "workspace:*",
+    "@workspace/const": "workspace:*",
+    "firebase": "^12.4.0",
+    "supabase": "workspace:*",
+    "models": "workspace:*"
   }
 }
