@@ -157,23 +157,28 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
+  packages/const: {}
+
   packages/database:
     dependencies:
+      '@workspace/const':
+        specifier: workspace:*
+        version: link:../const
       '@workspace/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@workspace/firebase':
+        specifier: workspace:*
+        version: link:../firebase
+      '@workspace/models':
+        specifier: workspace:*
+        version: link:../models
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       firebase:
         specifier: ^12.4.0
         version: 12.4.0
-      models:
-        specifier: workspace:*
-        version: link:../models
-      supabase:
-        specifier: workspace:*
-        version: link:../firebase
 
   packages/eslint-config:
     devDependencies:
@@ -312,6 +317,8 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
+
+  packages/utils: {}
 
 packages:
 

@@ -1,5 +1,5 @@
 {
-  "name": "database",
+  "name": "@workspace/database",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "@workspace/typescript-config": "workspace:*",
     "@workspace/const": "workspace:*",
     "firebase": "^12.4.0",
-    "supabase": "workspace:*",
-    "models": "workspace:*"
+    "@workspace/firebase": "workspace:*",
+    "@workspace/models": "workspace:*"
   }
 }
