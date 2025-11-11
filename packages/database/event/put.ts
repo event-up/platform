@@ -1,12 +1,12 @@
 import { Event } from '@workspace/models/db/event';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
 
 const COLLECTION_NAME = 'events';
 const eventsCollection = collection(db, COLLECTION_NAME);
 
-export async function getEvent(eventId: string): Promise<Event> {
+export async function updateEvent(eventId: string, updates: Partial<Event>): Promise<Event> {
     try {
         const eventRef = doc(eventsCollection, eventId);
         const eventDoc = await getDoc(eventRef);
@@ -15,21 +15,10 @@ export async function getEvent(eventId: string): Promise<Event> {
             throw new NotFoundError('Event', eventId);
         }
 
-        return eventDoc.data() as Event;
-    } catch (error) {
-        if (error instanceof DatabaseError) {
-            throw error;
-        }
-        throw DatabaseError.fromFirebaseError(error as any);
-    }
-}
+        await updateDoc(eventRef, updates);
 
-export async function getEventsByOrganizer(organizerId: string): Promise<Event[]> {
-    try {
-        const q = query(eventsCollection, where('organizerId', '==', organizerId));
-        const querySnapshot = await getDocs(q);
-
-        return querySnapshot.docs.map(doc => doc.data() as Event);
+        const updatedDoc = await getDoc(eventRef);
+        return updatedDoc.data() as Event;
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;
