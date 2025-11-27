@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 
 /**
  * Configuration for NotifyLk client
@@ -21,14 +21,14 @@ export interface SendSMSParams {
   contactEmail?: string;
   contactAddress?: string;
   contactGroup?: string;
-  type?: 'unicode';
+  type?: "unicode";
 }
 
 /**
  * Response from sendSMS API
  */
 export interface SendSMSResponse {
-  status: 'success' | 'error';
+  status: "success" | "error";
   data: string;
   message?: string;
 }
@@ -37,7 +37,7 @@ export interface SendSMSResponse {
  * Response from getAccountStatus API
  */
 export interface AccountStatusResponse {
-  status: 'success' | 'error';
+  status: "success" | "error";
   data: {
     active: boolean;
     acc_balance: number;
@@ -47,23 +47,23 @@ export interface AccountStatusResponse {
 
 /**
  * NotifyLk SMS Client
- * 
+ *
  * This client provides methods to interact with the Notify.lk SMS API.
- * 
+ *
  * @example
  * ```typescript
  * const client = new NotifyLkClient({
  *   userId: 'your_user_id',
  *   apiKey: 'your_api_key'
  * });
- * 
+ *
  * // Send SMS
  * const result = await client.sendSMS({
  *   senderId: 'NotifyDEMO',
  *   to: '94712345678',
  *   message: 'Hello World'
  * });
- * 
+ *
  * // Get account status
  * const status = await client.getAccountStatus();
  * ```
@@ -78,20 +78,20 @@ export class NotifyLkClient {
     this.apiKey = config.apiKey;
 
     this.axiosInstance = axios.create({
-      baseURL: config.baseUrl || 'https://app.notify.lk/api/v1',
+      baseURL: config.baseUrl || "https://app.notify.lk/api/v1",
       timeout: 30000,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   }
 
   /**
    * Send SMS to a recipient
-   * 
+   *
    * @param params - SMS parameters including senderId, recipient, and message
    * @returns Promise with the SMS send result
-   * 
+   *
    * @example
    * ```typescript
    * const result = await client.sendSMS({
@@ -112,13 +112,15 @@ export class NotifyLkClient {
         ...(params.contactFname && { contact_fname: params.contactFname }),
         ...(params.contactLname && { contact_lname: params.contactLname }),
         ...(params.contactEmail && { contact_email: params.contactEmail }),
-        ...(params.contactAddress && { contact_address: params.contactAddress }),
+        ...(params.contactAddress && {
+          contact_address: params.contactAddress,
+        }),
         ...(params.contactGroup && { contact_group: params.contactGroup }),
         ...(params.type && { type: params.type }),
       };
 
       const response = await this.axiosInstance.post<SendSMSResponse>(
-        '/send',
+        "/send",
         null,
         { params: requestParams }
       );
@@ -136,9 +138,9 @@ export class NotifyLkClient {
 
   /**
    * Get account status and balance
-   * 
+   *
    * @returns Promise with account status and balance information
-   * 
+   *
    * @example
    * ```typescript
    * const status = await client.getAccountStatus();
@@ -149,7 +151,7 @@ export class NotifyLkClient {
   async getAccountStatus(): Promise<AccountStatusResponse> {
     try {
       const response = await this.axiosInstance.get<AccountStatusResponse>(
-        '/status',
+        "/status",
         {
           params: {
             user_id: this.userId,
@@ -172,7 +174,7 @@ export class NotifyLkClient {
 
 /**
  * Create a new NotifyLk client instance
- * 
+ *
  * @param config - Configuration with userId and apiKey
  * @returns NotifyLkClient instance
  */
