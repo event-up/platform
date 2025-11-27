@@ -1,0 +1,21 @@
+{
+  "name": "@workspace/channels",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Add dev script here'",
+    "build": "echo 'Add build script here'",
+    "test": "echo 'Add test script here'",
+    "lint": "echo 'Add lint script here'"
+  },
+  "dependencies": {
+    "@workspace/const": "workspace:*",
+    "@workspace/models": "workspace:*",
+    "@workspace/utils": "workspace:*",
+    "axios": "^1.7.7"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*"
+  }
+}

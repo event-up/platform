@@ -1,27 +1,54 @@
-import { Registration } from '@workspace/models/db/registration';
-import { collection, doc, setDoc } from 'firebase/firestore';
-import { db } from '@workspace/firebase';
-import { DatabaseError } from '@workspace/utils/src/errors/database';
+"use client";
+import { Registration } from "@workspace/models/db/registration";
+import { collection, doc, setDoc } from "firebase/firestore";
 
-const COLLECTION_NAME = 'registrations';
-const registrationsCollection = collection(db, COLLECTION_NAME);
+import { db } from "@workspace/firebase";
+import { DatabaseError } from "@workspace/utils/src/errors/database";
+import {
+  EVENT_COLLECTION,
+  ORGANIZER_COLLECTION,
+  REGISTRATION_COLLECTION,
+} from "@workspace/const/database";
 
-export async function createRegistration(registration: Omit<Registration, 'id'>): Promise<Registration> {
-    try {
-        const registrationRef = doc(registrationsCollection);
-        const newRegistration: Registration = {
-            ...registration,
-            id: registrationRef.id,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        };
+export async function createRegistration(
+  registration: Omit<
+    Registration,
+    "registrationId" | "createdAt" | "updatedAt" | "token"
+  >
+): Promise<Registration> {
+  try {
+    const registrationsCollection = collection(
+      db,
+      ORGANIZER_COLLECTION,
+      registration.organizerId,
+      EVENT_COLLECTION,
+      registration.eventId,
+      REGISTRATION_COLLECTION
+    );
+    const registrationRef = doc(registrationsCollection);
 
-        await setDoc(registrationRef, newRegistration);
-        return newRegistration;
-    } catch (error) {
-        if (error instanceof Error) {
-            throw DatabaseError.fromFirebaseError(error as any);
-        }
-        throw error;
+    const tokenObject = {
+      o: registration.organizerId,
+      e: registration.eventId,
+      r: registrationRef.id,
+    };
+    const newRegistration: Registration = {
+      ...registration,
+      registrationId: registrationRef.id,
+      token: {
+        verifyToken: JSON.stringify(tokenObject),
+        type: "QR",
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    await setDoc(registrationRef, newRegistration);
+    return newRegistration;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw DatabaseError.fromFirebaseError(error as any);
     }
+    throw error;
+  }
 }

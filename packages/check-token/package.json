@@ -1,0 +1,22 @@
+{
+  "name": "@workspace/check-token",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Add dev script here'",
+    "build": "echo 'Add build script here'",
+    "test": "echo 'Add test script here'",
+    "lint": "echo 'Add lint script here'"
+  },
+  "dependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@workspace/const": "workspace:*",
+    "@workspace/models": "workspace:*",
+    "@workspace/utils": "workspace:*",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*"
+  }
+}

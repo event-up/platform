@@ -42,3 +42,6 @@ export async function getOrganizerByEmail(email: string): Promise<Organizer | nu
         throw DatabaseError.fromFirebaseError(error as any);
     }
 }
+
+
+

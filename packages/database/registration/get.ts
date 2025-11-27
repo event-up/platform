@@ -1,53 +1,120 @@
-import { Registration } from '@workspace/models/db/registration';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@workspace/firebase';
-import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
+import { Registration } from "@workspace/models/db/registration";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+  startAfter,
+  QueryDocumentSnapshot,
+  DocumentData,
+} from "firebase/firestore";
+import { db } from "@workspace/firebase";
+import {
+  DatabaseError,
+  NotFoundError,
+} from "@workspace/utils/src/errors/database";
+import {
+  EVENT_COLLECTION,
+  ORGANIZER_COLLECTION,
+  REGISTRATION_COLLECTION,
+} from "@workspace/const/database";
 
-const COLLECTION_NAME = 'registrations';
-const registrationsCollection = collection(db, COLLECTION_NAME);
+export async function getRegistration(
+  orgnizerId: string,
+  eventId: string,
+  registrationId: string
+): Promise<Registration> {
+  try {
+    const registrationCollection = collection(
+      db,
+      ORGANIZER_COLLECTION,
+      orgnizerId,
+      EVENT_COLLECTION,
+      eventId,
+      REGISTRATION_COLLECTION
+    );
+    const registrationRef = doc(registrationCollection, registrationId);
+    const registrationDoc = await getDoc(registrationRef);
 
-export async function getRegistration(registrationId: string): Promise<Registration> {
-    try {
-        const registrationRef = doc(registrationsCollection, registrationId);
-        const registrationDoc = await getDoc(registrationRef);
-
-        if (!registrationDoc.exists()) {
-            throw new NotFoundError('Registration', registrationId);
-        }
-
-        return registrationDoc.data() as Registration;
-    } catch (error) {
-        if (error instanceof DatabaseError) {
-            throw error;
-        }
-        throw DatabaseError.fromFirebaseError(error as any);
+    if (!registrationDoc.exists()) {
+      throw new NotFoundError("Registration", registrationId);
     }
+
+    return registrationDoc.data() as Registration;
+  } catch (error) {
+    if (error instanceof DatabaseError) {
+      throw error;
+    }
+    throw DatabaseError.fromFirebaseError(error as any);
+  }
 }
 
-export async function getRegistrationsByEvent(eventId: string): Promise<Registration[]> {
-    try {
-        const q = query(registrationsCollection, where('eventId', '==', eventId));
-        const querySnapshot = await getDocs(q);
 
-        return querySnapshot.docs.map(doc => doc.data() as Registration);
-    } catch (error) {
-        if (error instanceof DatabaseError) {
-            throw error;
-        }
-        throw DatabaseError.fromFirebaseError(error as any);
-    }
+export interface PaginationOptions {
+  pageSize?: number;
+  lastDoc?: QueryDocumentSnapshot<DocumentData> | null;
 }
 
-export async function getRegistrationsByUser(userId: string): Promise<Registration[]> {
-    try {
-        const q = query(registrationsCollection, where('userId', '==', userId));
-        const querySnapshot = await getDocs(q);
+export interface PaginatedResponse<T> {
+  data: T[];
+  lastDoc: QueryDocumentSnapshot<DocumentData> | null;
+  hasMore: boolean;
+}
 
-        return querySnapshot.docs.map(doc => doc.data() as Registration);
-    } catch (error) {
-        if (error instanceof DatabaseError) {
-            throw error;
-        }
-        throw DatabaseError.fromFirebaseError(error as any);
+export async function getEventRegistrations(
+  organizerId: string,
+  eventId: string,
+  options?: PaginationOptions
+): Promise<PaginatedResponse<Registration>> {
+  try {
+    const pageSize = options?.pageSize || 20;
+    const registrationCollection = collection(
+      db,
+      ORGANIZER_COLLECTION,
+      organizerId,
+      EVENT_COLLECTION,
+      eventId,
+      REGISTRATION_COLLECTION
+    );
+
+    let registrationsQuery = query(
+      registrationCollection,
+      orderBy("createdAt", "desc"),
+      limit(pageSize + 1) // Fetch one extra to determine if there are more
+    );
+
+    if (options?.lastDoc) {
+      registrationsQuery = query(
+        registrationCollection,
+        orderBy("createdAt", "desc"),
+        startAfter(options.lastDoc),
+        limit(pageSize + 1)
+      );
     }
+
+    const querySnapshot = await getDocs(registrationsQuery);
+    const docs = querySnapshot.docs;
+    const hasMore = docs.length > pageSize;
+
+    const data = docs
+      .slice(0, pageSize)
+      .map((doc) => doc.data() as Registration);
+
+    const lastDoc = hasMore && docs[pageSize - 1] ? docs[pageSize - 1] : null;
+
+    return {
+      data,
+      lastDoc: lastDoc ?? null,
+      hasMore,
+    };
+  } catch (error) {
+    if (error instanceof DatabaseError) {
+      throw error;
+    }
+    throw DatabaseError.fromFirebaseError(error as any);
+  }
 }
