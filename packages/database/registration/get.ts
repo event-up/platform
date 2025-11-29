@@ -1,4 +1,7 @@
-import { Registration } from "@workspace/models/db/registration";
+import {
+  ParticipantStatus,
+  Registration,
+} from "@workspace/models/db/registration";
 import {
   collection,
   doc,
@@ -52,7 +55,6 @@ export async function getRegistration(
     throw DatabaseError.fromFirebaseError(error as any);
   }
 }
-
 
 export interface PaginationOptions {
   pageSize?: number;
@@ -111,6 +113,33 @@ export async function getEventRegistrations(
       lastDoc: lastDoc ?? null,
       hasMore,
     };
+  } catch (error) {
+    if (error instanceof DatabaseError) {
+      throw error;
+    }
+    throw DatabaseError.fromFirebaseError(error as any);
+  }
+}
+
+export async function getEventRegistrationsByStatus(
+  organizerId: string,
+  eventId: string,
+  status: ParticipantStatus
+) {
+  try {
+    const collectionRef = collection(
+      db,
+      ORGANIZER_COLLECTION,
+      organizerId,
+      EVENT_COLLECTION,
+      eventId,
+      REGISTRATION_COLLECTION
+    );
+    const docRef = await getDocs(
+      query(collectionRef, where("status", "==", status))
+    );
+
+    return docRef.docs.map((doc) => doc.data() as Registration);
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;
