@@ -1,4 +1,4 @@
-import { EventCreateForm } from "@/app/(main)/event/[eventId]/participants/components/event-create-from";
+import { EventCreateForm } from "@/components/shared/event-create-from";
 
 export default function CreateEventPage() {
   return (

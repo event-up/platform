@@ -10,47 +10,40 @@ import {
   CardContent,
   CardFooter,
 } from "@workspace/ui/components/card";
-import { Input } from "@workspace/ui/components/input";
-import { Label } from "@workspace/ui/components/label";
+
 import Link from "next/link";
-import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { signInWithGoogle, onAuthStateChange } from "@workspace/firebase/auth";
+import { signInWithGoogleWithOrganizerProfile } from "@/helper/auth";
 
 export function LoginForm() {
-  const { signInWithGoogle, user, loading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   useEffect(() => {
-    if (user && !loading) {
-      router.push('/');
-    }
-  }, [user, loading, router]);
+    const unsubscribe = onAuthStateChange((user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
 
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
       setIsSigningIn(true);
-      await signInWithGoogle();
+      await signInWithGoogleWithOrganizerProfile();
     } catch (err: any) {
-      console.error('Sign in error:', err);
-      setError(err.message || 'Failed to sign in with Google');
+      console.error("Sign in error:", err);
+      setError(err.message || "Failed to sign in with Google");
     } finally {
       setIsSigningIn(false);
     }
   };
-
-  if (loading) {
-    return (
-      <Card className="w-full max-w-sm">
-        <CardContent className="flex items-center justify-center p-6">
-          <p className="text-muted-foreground">Loading...</p>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
     <Card className="w-full max-w-sm">
@@ -97,7 +90,7 @@ export function LoginForm() {
               fill="#EA4335"
             />
           </svg>
-          {isSigningIn ? 'Signing in...' : 'Sign in with Google'}
+          {isSigningIn ? "Signing in..." : "Sign in with Google"}
         </Button>
       </CardFooter>
     </Card>
