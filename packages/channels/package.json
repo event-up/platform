@@ -9,6 +9,7 @@
     "lint": "echo 'Add lint script here'"
   },
   "dependencies": {
+    "@t3-oss/env-core": "^0.13.8",
     "@workspace/const": "workspace:*",
     "@workspace/models": "workspace:*",
     "@workspace/utils": "workspace:*",

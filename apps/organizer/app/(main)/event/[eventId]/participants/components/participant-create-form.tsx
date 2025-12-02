@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { createRegistration } from "@workspace/database/registration/post";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { RegistrationContactChannels } from "@workspace/models/db/registration";
 
 // Zod validation schema
 const participantSchema = z.object({
@@ -44,16 +45,25 @@ export function ParticipantCreateForm() {
   });
   const { eventId } = useParams<{ eventId: string }>();
   const { user } = useAuth();
+
+
   const onSubmit = async (data: ParticipantFormData) => {
     try {
       console.log("Participant data:", data);
       if (!user?.uid) return;
+
       const res = await createRegistration({
         eventId,
         organizerId: user?.uid || "",
         registrationData: data,
         status: "registered",
+        contactChannels:[
+          { type: RegistrationContactChannels.EMAIL, value: data.email , jobResults:[] },
+          { type: RegistrationContactChannels.PHONE, value: data.phone, jobResults: [] },
+        ]
       });
+
+
       // TODO: Implement API call to create participant
       toast.success("Participant Created", {
         description: "The participant has been successfully added.",

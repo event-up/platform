@@ -198,6 +198,9 @@ importers:
 
   functions:
     dependencies:
+      '@t3-oss/env-core':
+        specifier: ^0.13.8
+        version: 0.13.8(typescript@5.9.2)(zod@3.25.76)
       firebase-admin:
         specifier: ^12.6.0
         version: 12.7.0
@@ -211,6 +214,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.12.0
         version: 5.62.0(eslint@8.57.1)(typescript@5.9.2)
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
       esbuild:
         specifier: ^0.27.0
         version: 0.27.0
@@ -232,6 +238,9 @@ importers:
 
   packages/channels:
     dependencies:
+      '@t3-oss/env-core':
+        specifier: ^0.13.8
+        version: 0.13.8(typescript@5.9.2)(zod@3.25.76)
       '@workspace/const':
         specifier: workspace:*
         version: link:../const
@@ -299,6 +308,9 @@ importers:
       firebase:
         specifier: ^12.4.0
         version: 12.4.0
+      firebase-admin:
+        specifier: ^13.6.0
+        version: 13.6.0
 
   packages/eslint-config:
     devDependencies:
@@ -356,6 +368,9 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      firebase-admin:
+        specifier: ^13.6.0
+        version: 13.6.0
 
   packages/typescript-config: {}
 
@@ -3129,6 +3144,10 @@ packages:
 
   dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+
+  dotenv@17.2.3:
+    resolution: {integrity: sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -7522,6 +7541,11 @@ snapshots:
       typescript: 5.7.3
       zod: 3.25.76
 
+  '@t3-oss/env-core@0.13.8(typescript@5.9.2)(zod@3.25.76)':
+    optionalDependencies:
+      typescript: 5.9.2
+      zod: 3.25.76
+
   '@t3-oss/env-nextjs@0.13.8(typescript@5.7.3)(zod@3.25.76)':
     dependencies:
       '@t3-oss/env-core': 0.13.8(typescript@5.7.3)(zod@3.25.76)
@@ -8670,6 +8694,8 @@ snapshots:
       no-case: 2.3.2
 
   dotenv@16.0.3: {}
+
+  dotenv@17.2.3: {}
 
   dunder-proto@1.0.1:
     dependencies:

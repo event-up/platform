@@ -45,6 +45,12 @@ export interface AccountStatusResponse {
   message?: string;
 }
 
+// Helper function to convert object to URL query parameters
+const toQueryString = (obj: Record<string, any>): string => {
+  return Object.entries(obj)
+    .map(([key, value]) => `${key}=${String(value)}`)
+    .join("&");
+};
 /**
  * NotifyLk SMS Client
  *
@@ -76,14 +82,33 @@ export class NotifyLkClient {
   constructor(config: NotifyLkConfig) {
     this.userId = config.userId;
     this.apiKey = config.apiKey;
-
+    console.debug(
+      `NotifyLkClient initialized with userId: ${this.userId} ${this.apiKey}`
+    );
     this.axiosInstance = axios.create({
-      baseURL: config.baseUrl || "https://app.notify.lk/api/v1",
+      baseURL: "https://app.notify.lk/api/v1",
       timeout: 30000,
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    this.axiosInstance.interceptors.request.use(
+      (config) => {
+        console.debug("#####Axios####Outgoing Request:", {
+          method: config.method?.toUpperCase(),
+          url: config.url,
+          baseURL: config.baseURL,
+          params: config.params,
+          data: config.data,
+        });
+        return config;
+      },
+      (error) => {
+        console.error("Request Error:", error);
+        return Promise.reject(error);
+      }
+    );
   }
 
   /**
@@ -101,39 +126,40 @@ export class NotifyLkClient {
    * });
    * ```
    */
-  async sendSMS(params: SendSMSParams): Promise<SendSMSResponse> {
-    try {
-      const requestParams = {
-        user_id: this.userId,
-        api_key: this.apiKey,
-        sender_id: params.senderId,
-        to: params.to,
-        message: params.message,
-        ...(params.contactFname && { contact_fname: params.contactFname }),
-        ...(params.contactLname && { contact_lname: params.contactLname }),
-        ...(params.contactEmail && { contact_email: params.contactEmail }),
-        ...(params.contactAddress && {
-          contact_address: params.contactAddress,
-        }),
-        ...(params.contactGroup && { contact_group: params.contactGroup }),
-        ...(params.type && { type: params.type }),
-      };
+  async sendSMS(params: SendSMSParams): Promise<SendSMSResponse | null> {
+    const requestParams = {
+      user_id: this.userId,
+      api_key: this.apiKey,
+      sender_id: params.senderId,
+      to: params.to,
+      message: params.message,
+      ...(params.contactFname && { contact_fname: params.contactFname }),
+      ...(params.contactLname && { contact_lname: params.contactLname }),
+      ...(params.contactEmail && { contact_email: params.contactEmail }),
+      ...(params.contactAddress && {
+        contact_address: params.contactAddress,
+      }),
+      ...(params.contactGroup && { contact_group: params.contactGroup }),
+      ...(params.type && { type: params.type }),
+    };
 
-      const response = await this.axiosInstance.post<SendSMSResponse>(
-        "/send",
-        null,
-        { params: requestParams }
-      );
+    console.log({ requestParams });
 
-      return response.data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(
-          `Failed to send SMS: ${error.response?.data?.message || error.message}`
-        );
-      }
-      throw error;
+    const queryString = toQueryString(requestParams);
+
+    const response = await this.axiosInstance.post<SendSMSResponse>(
+      `/send?${queryString}`
+    );
+
+    if (
+      response.data &&
+      typeof response.data === "object" &&
+      Object.keys(response.data).length === 0
+    ) {
+      return null;
     }
+
+    return response.data;
   }
 
   /**
@@ -179,5 +205,7 @@ export class NotifyLkClient {
  * @returns NotifyLkClient instance
  */
 export function createNotifyLkClient(config: NotifyLkConfig): NotifyLkClient {
+  console.log({ notifyFigs: config });
+
   return new NotifyLkClient(config);
 }

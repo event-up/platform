@@ -1,9 +1,11 @@
 import {
   EVENT_COLLECTION,
+  INVITATION_BATCH_COLLECTION,
   INVITATION_JOB_COLLECTION,
   ORGANIZER_COLLECTION,
   REGISTRATION_COLLECTION,
 } from "@workspace/const/database";
+import { InvitationJobBatch } from "@workspace/models/db/invitations";
 import {
   ParticipantStatus,
   Registration,
@@ -43,23 +45,30 @@ export async function createBatch(
   eventId: string,
   jobId: string,
   batches: Registration[][],
-  message?: string
+  message: string
 ) {
   // 3. Write each batch as a separate doc under job -> batches
   const batchWrites = db.batch();
   const batchesCol = db.collection(
-    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${INVITATION_JOB_COLLECTION}/${jobId}/batches`
+    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${INVITATION_JOB_COLLECTION}/${jobId}/${INVITATION_BATCH_COLLECTION}`
   );
-
+  const createdBatches: InvitationJobBatch[] = [];
   batches.forEach((batchList) => {
     const batchDocRef = batchesCol.doc(); // auto-ID
-    batchWrites.set(batchDocRef, {
+    const batch: InvitationJobBatch = {
       recipients: batchList,
-      status: "pending",
+      batchId: batchDocRef.id,
+      status: "created",
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      message: message ?? null,
-    });
+      completedAt: null,
+      successCount: 0,
+      message: message,
+    };
+    createdBatches.push(batch);
+    batchWrites.set(batchDocRef, batch);
   });
 
   await batchWrites.commit();
+
+  return createdBatches;
 }

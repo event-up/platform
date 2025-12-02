@@ -9,11 +9,12 @@
     "lint": "echo 'Add lint script here'"
   },
   "dependencies": {
-    "@workspace/eslint-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
     "@workspace/const": "workspace:*",
-    "firebase": "^12.4.0",
+    "@workspace/eslint-config": "workspace:*",
     "@workspace/firebase": "workspace:*",
-    "@workspace/models": "workspace:*"
+    "@workspace/models": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "firebase": "^12.4.0",
+    "firebase-admin": "^13.6.0"
   }
 }

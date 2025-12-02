@@ -9,6 +9,8 @@
 
 import { setGlobalOptions } from "firebase-functions";
 export * from "./triggers/invitation-job/on-create";
+export * from "./task-queue/send-sms-batch";
+export { env } from "../env";
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
@@ -23,7 +25,6 @@ export * from "./triggers/invitation-job/on-create";
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
 setGlobalOptions({ maxInstances: 10 });
-
 // export const helloWorld = onRequest((request, response) => {
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");

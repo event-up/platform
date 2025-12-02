@@ -3,6 +3,18 @@ export type ParticipantStatus =
   | "self-cancelled"
   | "blocked"
   | "checked-in";
+
+export enum RegistrationContactChannels {
+  PHONE = "PHONE",
+  EMAIL = "EMAIL",
+  SMS = "SMS",
+}
+
+export interface ContactChannelJobResult {
+  jobId: string;
+  response: unknown;
+  success: boolean;
+}
 export interface BaseRegistration {
   organizerId: string;
   eventId: string;
@@ -11,13 +23,16 @@ export interface BaseRegistration {
   status: ParticipantStatus;
   createdAt: string;
   updatedAt: string;
+  contactChannels: {
+    type: RegistrationContactChannels;
+    value: string;
+    jobResults: ContactChannelJobResult[];
+  }[];
 
   token: RegistrationToken;
 }
 export interface Registration extends BaseRegistration {
   registrationData?: {
-    name: string;
-    email: string;
     [key: string]: any;
   };
 }
