@@ -79,6 +79,9 @@ importers:
 
   apps/front-face:
     dependencies:
+      '@workspace/surveyjs':
+        specifier: workspace:*
+        version: link:../../packages/surveyjs
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -134,6 +137,9 @@ importers:
       '@workspace/models':
         specifier: workspace:*
         version: link:../../packages/models
+      '@workspace/surveyjs':
+        specifier: workspace:*
+        version: link:../../packages/surveyjs
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -371,6 +377,49 @@ importers:
       firebase-admin:
         specifier: ^13.6.0
         version: 13.6.0
+
+  packages/surveyjs:
+    dependencies:
+      '@workspace/models':
+        specifier: workspace:*
+        version: link:../models
+      '@workspace/ui':
+        specifier: workspace:*
+        version: link:../ui
+      '@workspace/utils':
+        specifier: workspace:*
+        version: link:../utils
+      lucide-react:
+        specifier: ^0.475.0
+        version: 0.475.0(react@19.1.1)
+      react:
+        specifier: 19.1.1
+        version: 19.1.1
+      react-dom:
+        specifier: 19.1.1
+        version: 19.1.1(react@19.1.1)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      survey-core:
+        specifier: ^2.4.0
+        version: 2.4.0
+      survey-react-ui:
+        specifier: ^2.4.0
+        version: 2.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(survey-core@2.4.0)
+    devDependencies:
+      '@types/react':
+        specifier: 19.1.9
+        version: 19.1.9
+      '@types/react-dom':
+        specifier: 19.1.7
+        version: 19.1.7(@types/react@19.1.9)
+      '@workspace/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@workspace/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
 
   packages/typescript-config: {}
 
@@ -5260,6 +5309,16 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  survey-core@2.4.0:
+    resolution: {integrity: sha512-KmdY203Oq4rUjnZsUnHi+3eSO4/rvVoej6JEDPXe040+aQa4NhG76wE00lNRLQgXU2Orvy0EA9jfEPCsCoH36Q==}
+
+  survey-react-ui@2.4.0:
+    resolution: {integrity: sha512-f2HuV9KJPHvcI0FWnFMlIk0WisuGJPmUHdsmY+DqUqTK0IRb01RecBQ7NrNdro5MGmT0AjBLdeTETn39icVFpg==}
+    peerDependencies:
+      react: ^16.5.0 || ^17.0.1 || ^18.1.0 || ^19.0.0
+      react-dom: ^16.5.0 || ^17.0.1 || ^18.1.0 || ^19.0.0
+      survey-core: 2.4.0
 
   swap-case@1.1.2:
     resolution: {integrity: sha512-BAmWG6/bx8syfc6qXPprof3Mn5vQgf5dwdUNJhsNqU9WdPt5P+ES/wQ5bxfijy8zwZgZZHslC3iAsxsuQMCzJQ==}
@@ -11485,6 +11544,14 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  survey-core@2.4.0: {}
+
+  survey-react-ui@2.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(survey-core@2.4.0):
+    dependencies:
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+      survey-core: 2.4.0
 
   swap-case@1.1.2:
     dependencies:

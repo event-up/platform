@@ -1,6 +1,11 @@
-import { Alert, AlertTitle, AlertDescription } from "@workspace/ui/components/alert"
-import { Button } from "@workspace/ui/components/button"
-import { Terminal } from "lucide-react"
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@workspace/ui/components/alert";
+import { Button } from "@workspace/ui/components/button";
+import { Terminal } from "lucide-react";
+import { SurveyComponent } from "@workspace/surveyjs";
 
 export default function Page() {
   return (
@@ -10,12 +15,14 @@ export default function Page() {
         <Button size="sm">Button</Button>
       </div>
       <Alert variant="default">
-      <Terminal/>
+        <Terminal />
         <AlertTitle>This is Front Face app</AlertTitle>
         <AlertDescription>
           You can add components and dependencies to your app using the cli.
         </AlertDescription>
       </Alert>
+
+      <SurveyComponent />
     </div>
-  )
+  );
 }

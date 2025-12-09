@@ -14,7 +14,7 @@ export const env = () =>
     server: {
       FIREBASE_PROJECT_ID: z.string(),
       FIREBASE_CLIENT_EMAIL: z.string(),
-      FIREBASE_PRIVATE_KEY: z.string(),
+      GOOGLE_APPLICATION_CREDENTIALS: z.string(),
       FIREBASE_STORAGE_BUCKET: z.string(),
     },
     runtimeEnv: {
@@ -30,7 +30,8 @@ export const env = () =>
       NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
       FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
       FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL,
-      FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
+      GOOGLE_APPLICATION_CREDENTIALS:
+        process.env.GOOGLE_APPLICATION_CREDENTIALS,
       FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
     },
   });

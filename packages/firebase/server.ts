@@ -9,7 +9,7 @@ const isRunningInGoogleCloud =
 
 const serverApp = !isRunningInGoogleCloud
   ? initializeApp({
-      credential: cert(JSON.parse(env().FIREBASE_PRIVATE_KEY)),
+      credential: cert(JSON.parse(env().GOOGLE_APPLICATION_CREDENTIALS)),
     })
   : initializeApp();
 
