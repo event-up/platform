@@ -7,6 +7,7 @@ import { Card, CardContent } from "@workspace/ui/components/card";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
 import { useCreateRegistrationFormMutation } from "@/hooks/mutation/registration-form";
+import { debug } from "console";
 
 /**
  * Create Registration Form Page
@@ -16,7 +17,7 @@ const CreateRegistrationFormPage = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const { user } = useAuth();
   const router = useRouter();
-  const { mutate } = useCreateRegistrationFormMutation();
+  const { mutate, mutateAsync } = useCreateRegistrationFormMutation();
   const handleSaveForm = () => {
     // TODO: Implement form save logic using createRegistrationFormServer
     toast.success("Form Saved", {
@@ -55,7 +56,9 @@ const CreateRegistrationFormPage = () => {
         <CardContent className="pt-6">
           <FormEditor
             onSaveClick={async (formState) => {
-              const res = mutate({
+              debugger;
+
+              const res = await mutateAsync({
                 authentication: [],
                 eventId,
                 formSchema: {
@@ -66,6 +69,12 @@ const CreateRegistrationFormPage = () => {
                 organizerId: user.uid,
                 status: "active",
               });
+              toast.success("Form Saved", {
+                description:
+                  "Your registration form has been saved successfully.",
+              });
+              setTimeout(() => {});
+              router.push(`/event/${eventId}/registration`);
             }}
           />
         </CardContent>
