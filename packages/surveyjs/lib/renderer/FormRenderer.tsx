@@ -1,6 +1,8 @@
 "use client";
 import { Model, Survey } from "survey-react-ui";
-import "survey-core/survey-core.css";
+import "./survey-theme.css";
+// import "./components/input"; // Import to register the custom input component
+
 const surveyJson = {
   elements: [
     {
@@ -12,6 +14,11 @@ const surveyJson = {
       name: "LastName",
       title: "Enter your last name:",
       type: "text",
+    },
+    {
+      name: "Comments",
+      title: "Additional comments:",
+      type: "comment",
     },
   ],
 };

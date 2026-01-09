@@ -75,10 +75,12 @@ const columns = [
 function ParticipantsPage() {
   const { eventId } = useParams<{ eventId: string }>();
   const { user } = useAuth();
-  
 
-  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
-  const prevLastDocRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(null);
+  const [lastDoc, setLastDoc] =
+    useState<QueryDocumentSnapshot<DocumentData> | null>(null);
+  const prevLastDocRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(
+    null
+  );
   const pageSize = 10;
 
   const { registrations, isRegistrationLoading, registrationError } =
@@ -86,7 +88,6 @@ function ParticipantsPage() {
       lastDoc: lastDoc,
       pageSize: pageSize,
     });
-
 
   const table = useReactTable({
     data: registrations?.data || [],
@@ -101,7 +102,6 @@ function ParticipantsPage() {
       prevLastDocRef.current = lastDoc;
       setLastDoc(registrations.lastDoc);
     }
-
   };
 
   // const handlePreviousPage = () => {
@@ -110,7 +110,6 @@ function ParticipantsPage() {
   //     setLastDoc(prevLastDocRef.current);
   //   // }
   // };
-
 
   return (
     <div className="space-y-6 p-6">

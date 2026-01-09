@@ -20,6 +20,7 @@ export const useGetOrgnizerEventsQuery = (organizerId: string) => {
     initialData: [],
     queryFn: () => getOrganizerEvents(organizerId),
   });
+  console.log("data", { data });
 
   return {
     events: data,

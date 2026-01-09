@@ -24,6 +24,7 @@ import {
   EVENT_COLLECTION,
   ORGANIZER_COLLECTION,
   REGISTRATION_COLLECTION,
+  REGISTRATION_FORM_COLLECTION,
 } from "@workspace/const/database";
 
 export async function getRegistration(
@@ -38,7 +39,7 @@ export async function getRegistration(
       orgnizerId,
       EVENT_COLLECTION,
       eventId,
-      REGISTRATION_COLLECTION
+      REGISTRATION_FORM_COLLECTION
     );
     const registrationRef = doc(registrationCollection, registrationId);
     const registrationDoc = await getDoc(registrationRef);
@@ -73,6 +74,15 @@ export async function getEventRegistrations(
   options?: PaginationOptions
 ): Promise<PaginatedResponse<Registration>> {
   try {
+    debugger;
+    console.log({
+      ORGANIZER_COLLECTION,
+      organizerId,
+      EVENT_COLLECTION,
+      eventId,
+      REGISTRATION_COLLECTION,
+    });
+
     const pageSize = options?.pageSize || 20;
     const registrationCollection = collection(
       db,

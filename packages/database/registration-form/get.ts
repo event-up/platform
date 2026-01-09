@@ -1,22 +1,23 @@
-"use server";
 import {
   ORGANIZER_COLLECTION,
   EVENT_COLLECTION,
   REGISTRATION_FORM_COLLECTION,
 } from "@workspace/const/database";
-import { serverDb as db } from "@workspace/firebase/server";
+import { db } from "@workspace/firebase";
 import { RegistrationForm } from "@workspace/models/db/registration-form";
-import { firestore } from "firebase-admin";
+import { collection, query, limit, getDocs } from "firebase/firestore";
 
-export async function getRegistrationFormServer(
+export async function getRegistrationForm(
   organizerId: string,
   eventId: string
 ): Promise<RegistrationForm | null> {
-  const registrationFormCol = db.collection(
+  const registrationFormCol = collection(
+    db,
     `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${REGISTRATION_FORM_COLLECTION}`
   );
 
-  const snapshot = await registrationFormCol.limit(1).get();
+  const queryRef = query(registrationFormCol, limit(1));
+  const snapshot = await getDocs(queryRef);
 
   if (snapshot.empty) {
     return null;

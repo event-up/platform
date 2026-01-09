@@ -56,25 +56,34 @@ const CreateRegistrationFormPage = () => {
         <CardContent className="pt-6">
           <FormEditor
             onSaveClick={async (formState) => {
-              debugger;
-
-              const res = await mutateAsync({
-                authentication: [],
-                eventId,
-                formSchema: {
-                  formDescription: formState.surveyDescription,
-                  formTitle: formState.surveyTitle,
-                  formFields: JSON.stringify(formState.fields),
-                },
-                organizerId: user.uid,
-                status: "active",
-              });
-              toast.success("Form Saved", {
-                description:
-                  "Your registration form has been saved successfully.",
-              });
-              setTimeout(() => {});
-              router.push(`/event/${eventId}/registration`);
+              try {
+                debugger;
+                const res = await mutateAsync({
+                  authentication: [],
+                  eventId,
+                  formSchema: {
+                    formDescription: formState.surveyDescription,
+                    formTitle: formState.surveyTitle,
+                    formFields: JSON.stringify(formState.fields),
+                  },
+                  organizerId: user.uid,
+                  status: "active",
+                });
+                toast.success("Form Saved", {
+                  description:
+                    "Your registration form has been saved successfully.",
+                });
+                setTimeout(() => {
+                  router.push(`/event/${eventId}/registration`);
+                }, 1000);
+              } catch (error) {
+                toast.error("Save Failed", {
+                  description:
+                    (error as any)?.message ||
+                    "Failed to save registration form.",
+                });
+                console.error("Error saving registration form:", error);
+              }
             }}
           />
         </CardContent>
