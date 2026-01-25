@@ -1,4 +1,5 @@
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
+import { FormField } from "../dynamic-form";
 
 export enum RegistrationFormAuth {
   GUEST = "GUEST",
@@ -13,11 +14,11 @@ export interface RegistrationForm {
   eventId: string;
   status: "active" | "inactive";
   formSchema: {
-    formTitle: string;
-    formDescription: string;
-    formFields: string;
+    title: string;
+    description: string;
+    fields: FormField[];
   };
   authentication: RegistrationFormAuth[];
-  createdAt: FieldValue | Timestamp;
-  updatedAt: FieldValue | Timestamp;
+  createdAt: FieldValue | Timestamp | string;
+  updatedAt: FieldValue | Timestamp | string;
 }

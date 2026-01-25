@@ -6,8 +6,16 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { useAuth } from "@/lib/auth-context";
 import { toast } from "sonner";
-import { useCreateRegistrationFormMutation } from "@/hooks/mutation/registration-form";
+import {
+  useCreateRegistrationFormMutation,
+  useUpdateRegistrationFormMutation,
+} from "@/hooks/mutation/registration-form";
 import { debug } from "console";
+import { useRegistrationFormQuery } from "@/hooks/query/registration-form";
+import { EditorState } from "@workspace/surveyjs/lib/models/types";
+import { useCallback, useState } from "react";
+import { FormState } from "react-hook-form";
+import { Loader2, Save, X } from "lucide-react";
 
 /**
  * Create Registration Form Page
@@ -17,14 +25,15 @@ const CreateRegistrationFormPage = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const { user } = useAuth();
   const router = useRouter();
-  const { mutate, mutateAsync } = useCreateRegistrationFormMutation();
-  const handleSaveForm = () => {
-    // TODO: Implement form save logic using createRegistrationFormServer
-    toast.success("Form Saved", {
-      description: "Your registration form has been saved successfully.",
-    });
-    router.push(`/event/${eventId}/registration`);
-  };
+  const [currentFormState, setCurrentFormState] = useState<EditorState | null>(
+    null,
+  );
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { registrations } = useRegistrationFormQuery(user.uid, eventId);
+  const { mutateAsync } = useCreateRegistrationFormMutation();
+  const { mutateAsync: updateMutateAsync } =
+    useUpdateRegistrationFormMutation();
 
   const handleCancelEdit = () => {
     toast.info("Edit Cancelled", {
@@ -32,6 +41,59 @@ const CreateRegistrationFormPage = () => {
     });
     router.push(`/event/${eventId}/registration`);
   };
+
+  const handleSaveForm = useCallback(async (formState: EditorState) => {
+    setIsSaving(true);
+    try {
+      console.log({ formState });
+      debugger;
+      if (registrations?.registrationFormId) {
+        await updateMutateAsync({
+          organizerId: user.uid,
+          eventId,
+          formId: registrations.registrationFormId,
+          formData: {
+            authentication: [],
+            formSchema: {
+              description: formState.surveyDescription,
+              title: formState.surveyTitle,
+              fields: formState.fields,
+            },
+            status: "active",
+          },
+        });
+        toast.success("Form Updated", {
+          description: "Your registration form has been updated successfully.",
+        });
+      } else {
+        await mutateAsync({
+          authentication: [],
+          eventId,
+          formSchema: {
+            description: formState.surveyDescription,
+            title: formState.surveyTitle,
+            fields: formState.fields,
+          },
+          organizerId: user.uid,
+          status: "active",
+        });
+        toast.success("Form Saved", {
+          description: "Your registration form has been saved successfully.",
+        });
+      }
+      setTimeout(() => {
+        router.push(`/event/${eventId}/registration`);
+      }, 1000);
+    } catch (error) {
+      toast.error("Save Failed", {
+        description:
+          (error as any)?.message || "Failed to save registration form.",
+      });
+      console.error("Error saving registration form:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  }, []);
 
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -46,45 +108,37 @@ const CreateRegistrationFormPage = () => {
         </div>
         <div className="flex gap-3">
           <Button variant="outline" onClick={handleCancelEdit}>
+            <X className="mr-2 h-4 w-4" />
             Cancel
           </Button>
-          <Button onClick={handleSaveForm}>Save Form</Button>
+          <Button
+            onClick={() => currentFormState && handleSaveForm(currentFormState)}
+            disabled={isSaving || !currentFormState}
+          >
+            {isSaving ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save
+              </>
+            )}
+          </Button>
         </div>
       </div>
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="">
           <FormEditor
-            onSaveClick={async (formState) => {
-              try {
-                debugger;
-                const res = await mutateAsync({
-                  authentication: [],
-                  eventId,
-                  formSchema: {
-                    formDescription: formState.surveyDescription,
-                    formTitle: formState.surveyTitle,
-                    formFields: JSON.stringify(formState.fields),
-                  },
-                  organizerId: user.uid,
-                  status: "active",
-                });
-                toast.success("Form Saved", {
-                  description:
-                    "Your registration form has been saved successfully.",
-                });
-                setTimeout(() => {
-                  router.push(`/event/${eventId}/registration`);
-                }, 1000);
-              } catch (error) {
-                toast.error("Save Failed", {
-                  description:
-                    (error as any)?.message ||
-                    "Failed to save registration form.",
-                });
-                console.error("Error saving registration form:", error);
-              }
+            initialState={{
+              surveyDescription: registrations?.formSchema.description,
+              surveyTitle: registrations?.formSchema.title,
+              fields: registrations?.formSchema.fields || [],
             }}
+            onStateChange={setCurrentFormState}
           />
         </CardContent>
       </Card>

@@ -11,10 +11,10 @@ export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
     icon: "📝",
     defaultProps: {
       type: "text",
-      title: "Text Question",
-      isRequired: false,
+      label: "Text Question",
       placeholder: "Enter your answer",
-      inputType: "text",
+      required: false,
+      name: "text_question",
     },
   },
   textarea: {
@@ -22,11 +22,10 @@ export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
     label: "Long Answer",
     icon: "📄",
     defaultProps: {
-      type: "textarea",
-      title: "Long Answer Question",
-      isRequired: false,
+      type: "text",
+      label: "Long Answer Question",
+      required: false,
       placeholder: "Enter your detailed answer",
-      rows: 4,
     },
   },
   date: {
@@ -34,10 +33,10 @@ export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
     label: "Date Picker",
     icon: "📅",
     defaultProps: {
-      type: "date",
-      title: "Date Question",
-      isRequired: false,
-      inputType: "date",
+      type: "text",
+      label: "Date Question",
+      required: false,
+      placeholder: "Select a date",
     },
   },
   phone: {
@@ -46,10 +45,9 @@ export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
     icon: "📱",
     defaultProps: {
       type: "phone",
-      title: "Phone Number",
-      isRequired: false,
+      label: "Phone Number",
+      required: false,
       placeholder: "+1 (555) 000-0000",
-      inputType: "tel",
     },
   },
 };

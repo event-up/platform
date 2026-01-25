@@ -35,10 +35,8 @@ const RegistrationPage = () => {
   // Fetch registrations to get count
   const { registrations, isRegistrationLoading } = useRegistrationFormQuery(
     user?.uid || "",
-    eventId
+    eventId,
   );
-
-  console.log({ eventId, user });
 
   const {
     mutateAsync: updateRegistrationForm,
@@ -120,7 +118,7 @@ const RegistrationPage = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <h2 className="text-xl font-bold">
-                      {registrations.formSchema.formTitle}
+                      {registrations.formSchema.title}
                     </h2>
                     <Button
                       variant="outline"

@@ -3,8 +3,15 @@
  * Follows Single Responsibility Principle - manages individual field display
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FieldDefinition } from "../../models/types";
+import { Input } from "@workspace/ui/components/input";
+import { Textarea } from "@workspace/ui/components/textarea";
+import { FormTitleInput } from "@workspace/ui/components/form-title-input";
+import { FormDescriptionInput } from "@workspace/ui/components/form-description-input";
+import { Button } from "@workspace/ui/components/button";
+import { GripVertical, Trash2 } from "lucide-react";
+import { cn } from "@workspace/ui/lib/utils";
 
 interface FieldItemProps {
   field: FieldDefinition;
@@ -12,10 +19,7 @@ interface FieldItemProps {
   isSelected: boolean;
   onSelect: () => void;
   onRemove: () => void;
-  onMoveUp: () => void;
-  onMoveDown: () => void;
-  canMoveUp: boolean;
-  canMoveDown: boolean;
+  onUpdate: (updates: Partial<FieldDefinition>) => void;
 }
 
 export const FieldItem: React.FC<FieldItemProps> = ({
@@ -24,187 +28,146 @@ export const FieldItem: React.FC<FieldItemProps> = ({
   isSelected,
   onSelect,
   onRemove,
-  onMoveUp,
-  onMoveDown,
-  canMoveUp,
-  canMoveDown,
+  onUpdate,
 }) => {
+  const [localLabel, setLocalLabel] = useState(field.label);
+  const [localDescription, setLocalDescription] = useState(
+    field.description || "",
+  );
+  const [localPlaceholder, setLocalPlaceholder] = useState(
+    field.placeholder || "",
+  );
+
+  // Update local state when field changes
+  useEffect(() => {
+    setLocalLabel(field.label);
+    setLocalDescription(field.description || "");
+    setLocalPlaceholder(field.placeholder || "");
+  }, [field.label, field.description, field.placeholder]);
+
+  // Update field when leaving edit mode
+  const handleBlur = () => {
+    if (isSelected) {
+      onUpdate({
+        label: localLabel,
+        description: localDescription,
+        placeholder: localPlaceholder,
+      });
+    }
+  };
+
   return (
     <div
       onClick={onSelect}
-      style={{
-        ...styles.container,
-        ...(isSelected ? styles.containerSelected : {}),
-      }}
+      className={cn(
+        "bg-white border rounded-lg cursor-pointer transition-all relative h-full flex flex-col",
+        isSelected
+          ? "border-purple-500 shadow-lg ring-2 ring-purple-100"
+          : "border-slate-200 hover:border-slate-300 hover:shadow-md opacity-80",
+      )}
     >
-      <div style={styles.header}>
-        <div style={styles.headerLeft}>
-          <span style={styles.index}>{index + 1}</span>
-          <span style={styles.type}>{field.type}</span>
+      <div className="p-6 no-drag field-content flex-1">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex items-center gap-3 drag-handle">
+            {/* Drag Handle */}
+            <GripVertical />
+
+            <span className="text-xs uppercase tracking-wide text-slate-500 font-medium">
+              {field.type}
+            </span>
+          </div>
+          <div className="flex gap-1">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove();
+              }}
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 "
+              title="Remove field"
+            >
+              <Trash2 />
+            </Button>
+          </div>
         </div>
-        <div style={styles.actions}>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onMoveUp();
-            }}
-            disabled={!canMoveUp}
-            style={styles.actionButton}
-            title="Move up"
-          >
-            ↑
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onMoveDown();
-            }}
-            disabled={!canMoveDown}
-            style={styles.actionButton}
-            title="Move down"
-          >
-            ↓
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove();
-            }}
-            style={styles.removeButton}
-            title="Remove field"
-          >
-            ×
-          </button>
-        </div>
-      </div>
-      <div style={styles.content}>
-        <div style={styles.title}>
-          {field.title}
-          {field.isRequired && <span style={styles.required}>*</span>}
-        </div>
-        {field.description && (
-          <div style={styles.description}>{field.description}</div>
+        {/* Question Label - Editable when selected */}
+        {isSelected ? (
+          <FormTitleInput
+            value={localLabel}
+            onChange={(e) => setLocalLabel(e.target.value)}
+            onBlur={handleBlur}
+            onClick={(e) => e.stopPropagation()}
+            placeholder="Question"
+            className="text-lg font-medium mb-2"
+          />
+        ) : (
+          <div className="text-lg font-medium text-slate-700 mb-2">
+            {field.label}
+            {field.required && <span className="text-red-500 ml-1">*</span>}
+          </div>
         )}
-        <div style={styles.preview}>
+
+        {/* Question Description - Editable when selected */}
+        {isSelected ? (
+          <FormDescriptionInput
+            value={localDescription}
+            onChange={(e) => setLocalDescription(e.target.value)}
+            onBlur={handleBlur}
+            onClick={(e) => e.stopPropagation()}
+            placeholder="Description (optional)"
+            className="text-sm text-slate-600 mb-3"
+            rows={1}
+          />
+        ) : (
+          field.description && (
+            <div className="text-sm text-slate-600 mb-3">
+              {field.description}
+            </div>
+          )
+        )}
+
+        {/* Answer Field Preview */}
+        <div className="pt-2">
           {field.type === "textarea" ? (
-            <textarea
-              style={styles.textareaPreview}
-              placeholder={field.placeholder}
-              disabled
-              rows={field.rows || 4}
+            isSelected ? (
+              <Textarea
+                value={localPlaceholder}
+                onChange={(e) => setLocalPlaceholder(e.target.value)}
+                onBlur={handleBlur}
+                onClick={(e) => e.stopPropagation()}
+                placeholder="Placeholder text"
+                rows={3}
+                className="w-full text-sm border border-slate-300 rounded focus:border-purple-500"
+              />
+            ) : (
+              <textarea
+                placeholder={field.placeholder}
+                disabled
+                rows={3}
+                className="w-full px-3 py-2 text-sm border border-slate-200 rounded bg-slate-50 text-slate-400 resize-none cursor-not-allowed"
+              />
+            )
+          ) : isSelected ? (
+            <Input
+              type="text"
+              value={localPlaceholder}
+              onChange={(e) => setLocalPlaceholder(e.target.value)}
+              onBlur={handleBlur}
+              onClick={(e) => e.stopPropagation()}
+              placeholder="Placeholder text"
+              className="text-sm border-slate-300 focus:border-purple-500"
             />
           ) : (
-            <input
-              type={field.inputType || "text"}
-              style={styles.inputPreview}
+            <Input
+              type="text"
               placeholder={field.placeholder}
               disabled
+              className="text-sm bg-slate-50 text-slate-400 cursor-not-allowed"
             />
           )}
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    backgroundColor: "#fff",
-    border: "1px solid #e0e0e0",
-    borderRadius: "8px",
-    padding: "16px",
-    marginBottom: "12px",
-    cursor: "pointer",
-    transition: "all 0.2s",
-  } as React.CSSProperties,
-  containerSelected: {
-    borderColor: "#4285f4",
-    boxShadow: "0 0 0 2px rgba(66, 133, 244, 0.2)",
-  } as React.CSSProperties,
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "12px",
-  } as React.CSSProperties,
-  headerLeft: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-  } as React.CSSProperties,
-  index: {
-    fontSize: "12px",
-    fontWeight: 600,
-    color: "#666",
-    backgroundColor: "#f5f5f5",
-    padding: "2px 8px",
-    borderRadius: "4px",
-  } as React.CSSProperties,
-  type: {
-    fontSize: "11px",
-    color: "#888",
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
-  } as React.CSSProperties,
-  actions: {
-    display: "flex",
-    gap: "4px",
-  } as React.CSSProperties,
-  actionButton: {
-    padding: "4px 8px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    backgroundColor: "#fff",
-    cursor: "pointer",
-    fontSize: "14px",
-    color: "#666",
-  } as React.CSSProperties,
-  removeButton: {
-    padding: "4px 8px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    backgroundColor: "#fff",
-    cursor: "pointer",
-    fontSize: "18px",
-    color: "#d32f2f",
-    fontWeight: 600,
-  } as React.CSSProperties,
-  content: {
-    marginTop: "8px",
-  } as React.CSSProperties,
-  title: {
-    fontSize: "16px",
-    fontWeight: 500,
-    color: "#333",
-    marginBottom: "4px",
-  } as React.CSSProperties,
-  required: {
-    color: "#d32f2f",
-    marginLeft: "4px",
-  } as React.CSSProperties,
-  description: {
-    fontSize: "13px",
-    color: "#666",
-    marginBottom: "12px",
-  } as React.CSSProperties,
-  preview: {
-    marginTop: "12px",
-  } as React.CSSProperties,
-  inputPreview: {
-    width: "100%",
-    padding: "8px 12px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    fontSize: "14px",
-    backgroundColor: "#fafafa",
-  } as React.CSSProperties,
-  textareaPreview: {
-    width: "100%",
-    padding: "8px 12px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    fontSize: "14px",
-    backgroundColor: "#fafafa",
-    resize: "vertical",
-  } as React.CSSProperties,
 };

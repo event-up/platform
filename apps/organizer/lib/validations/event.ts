@@ -9,6 +9,7 @@ export const eventSchema = z.object({
   description: z.string().min(1, "Description is required"),
   eventId: z.string().optional(),
   organizerId: z.string().optional(),
+  domainName: z.string().min(1, "Domain Name is required"),
 });
 
 export type EventSchema = z.infer<typeof eventSchema>;

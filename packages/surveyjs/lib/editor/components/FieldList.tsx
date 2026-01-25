@@ -4,15 +4,19 @@
  */
 
 import React from "react";
-import { FieldDefinition } from "../../models/types";
+import { FieldDefinition, FieldType } from "../../models/types";
 import { FieldItem } from "./FieldItem";
+import { AddFieldCard } from "./AddFieldCard";
+import { DraggableFieldList } from "./DraggableFieldList";
 
 interface FieldListProps {
   fields: FieldDefinition[];
   selectedFieldId: string | null;
   onSelectField: (id: string) => void;
   onRemoveField: (id: string) => void;
-  onMoveField: (fromIndex: number, toIndex: number) => void;
+  onReorderFields: (newFields: FieldDefinition[]) => void;
+  onAddField: (type: FieldType) => void;
+  onUpdateField: (id: string, updates: Partial<FieldDefinition>) => void;
 }
 
 export const FieldList: React.FC<FieldListProps> = ({
@@ -20,35 +24,45 @@ export const FieldList: React.FC<FieldListProps> = ({
   selectedFieldId,
   onSelectField,
   onRemoveField,
-  onMoveField,
+  onReorderFields,
+  onAddField,
+  onUpdateField,
 }) => {
   if (fields.length === 0) {
     return (
       <div style={styles.empty}>
         <p style={styles.emptyText}>No fields yet</p>
         <p style={styles.emptyHint}>
-          Click on a field type above to add your first question
+          Click on a field type below to add your first question
         </p>
+        <div className="mt-6">
+          <AddFieldCard onAddField={onAddField} />
+        </div>
       </div>
     );
   }
 
   return (
     <div style={styles.list}>
-      {fields.map((field, index) => (
-        <FieldItem
-          key={field.id}
-          field={field}
-          index={index}
-          isSelected={field.id === selectedFieldId}
-          onSelect={() => onSelectField(field.id)}
-          onRemove={() => onRemoveField(field.id)}
-          onMoveUp={() => onMoveField(index, index - 1)}
-          onMoveDown={() => onMoveField(index, index + 1)}
-          canMoveUp={index > 0}
-          canMoveDown={index < fields.length - 1}
-        />
-      ))}
+      <DraggableFieldList
+        fields={fields}
+        selectedFieldIndex={
+          selectedFieldId
+            ? fields.findIndex((f) => f.id === selectedFieldId)
+            : null
+        }
+        onSelectField={(index) => onSelectField(fields[index].id)}
+        onRemoveField={(index) => onRemoveField(fields[index].id)}
+        onUpdateField={(index, updates) =>
+          onUpdateField(fields[index].id, updates)
+        }
+        onReorderFields={onReorderFields}
+      />
+
+      {/* Floating Add Field Card */}
+      <div className="relative mt-4">
+        <AddFieldCard onAddField={onAddField} />
+      </div>
     </div>
   );
 };

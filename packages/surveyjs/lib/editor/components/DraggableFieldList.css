@@ -1,0 +1,140 @@
+/**
+ * CSS for react-grid-layout drag and drop functionality
+ */
+
+/* Import react-grid-layout styles */
+@import "react-grid-layout/css/styles.css";
+
+/* Custom overrides for single-column layout */
+.react-grid-layout {
+  position: relative;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, opacity, transform;
+}
+
+.react-grid-item:not(.react-grid-placeholder) {
+  background: transparent;
+  border: none;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: #f0f0f0;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  border: 2px dashed #d0d0d0;
+  border-radius: 8px;
+}
+
+.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  opacity: 0.8;
+  transform: scale(1.02);
+}
+
+/* Hide resize handles since we don't want resizing in single column */
+.react-resizable-handle {
+  display: none !important;
+}
+
+/* Custom styling for draggable field items */
+.draggable-field-list {
+  min-height: 200px;
+}
+
+.grid-item {
+  cursor: default; /* Default cursor for the grid item */
+}
+
+/* Ensure field items fit properly within grid items */
+.grid-item > * {
+  height: 100%;
+  min-height: fit-content;
+}
+
+/* Prevent dragging from content areas */
+.no-drag,
+.field-content {
+  cursor: default !important;
+  pointer-events: auto !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+}
+
+.no-drag *:not(.drag-handle):not(.drag-handle *),
+.field-content *:not(.drag-handle):not(.drag-handle *) {
+  cursor: default !important;
+  pointer-events: auto !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+}
+
+/* Specifically prevent dragging from form elements */
+input,
+textarea,
+button,
+select {
+  cursor: default !important;
+  pointer-events: auto !important;
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+}
+
+/* Drag handle specific styling */
+.drag-handle {
+  cursor: grab !important;
+  user-select: none;
+  pointer-events: auto !important;
+  z-index: 10;
+  position: relative;
+}
+
+.drag-handle:active {
+  cursor: grabbing !important;
+}
+
+/* Ensure drag handle takes precedence over everything */
+.drag-handle * {
+  cursor: grab !important;
+  pointer-events: none !important;
+}
+
+.drag-handle:active * {
+  cursor: grabbing !important;
+}
+
+/* Override react-grid-layout default drag behavior */
+.react-grid-item {
+  cursor: default !important;
+}
+
+.react-grid-item:not(.react-grid-placeholder) {
+  cursor: default !important;
+}
+
+/* Only allow dragging via handle */
+.react-grid-item .drag-handle {
+  cursor: grab !important;
+}
+
+.react-grid-item .drag-handle:active {
+  cursor: grabbing !important;
+}

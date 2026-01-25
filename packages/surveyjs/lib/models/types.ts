@@ -2,25 +2,19 @@
  * Type definitions for the form editor
  */
 
+import { FormField } from "lib/renderer";
+
 export type FieldType = "text" | "textarea" | "date" | "phone";
 
-export interface FieldDefinition {
+export interface FieldDefinition extends FormField {
   id: string;
-  type: FieldType;
-  name: string;
-  title: string;
-  isRequired: boolean;
-  placeholder?: string;
-  description?: string;
-  inputType?: string;
-  rows?: number;
 }
 
 export interface FieldTemplate {
   type: FieldType;
   label: string;
   icon: string;
-  defaultProps: Partial<FieldDefinition>;
+  defaultProps: Partial<FormField>;
 }
 
 export interface EditorState {
@@ -34,6 +28,6 @@ export interface FieldOperations {
   addField: (type: FieldType) => void;
   removeField: (id: string) => void;
   updateField: (id: string, updates: Partial<FieldDefinition>) => void;
-  moveField: (fromIndex: number, toIndex: number) => void;
+  reorderFields: (newFields: FieldDefinition[]) => void;
   selectField: (id: string | null) => void;
 }

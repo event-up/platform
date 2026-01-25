@@ -1,36 +1,17 @@
 "use client";
 /**
  * Preview component showing how the survey will look
- * Follows Dependency Inversion Principle - depends on abstractions (EditorState)
+ * Currently renders empty placeholder
  */
 
-import React, { useMemo } from "react";
-import { Survey } from "survey-react-ui";
+import React from "react";
 import { EditorState } from "../../models/types";
-import { SurveyConverter } from "../utils/surveyConverter";
-import "survey-core/survey-core.css";
 
 interface SurveyPreviewProps {
   state: EditorState;
 }
 
 export const SurveyPreview: React.FC<SurveyPreviewProps> = ({ state }) => {
-  const surveyModel = useMemo(() => {
-    return SurveyConverter.createModel(state);
-  }, [state]);
-
-  // Set to display mode (non-editable preview)
-  surveyModel.mode = "display";
-
-  if (state.fields.length === 0) {
-    return (
-      <div style={styles.empty}>
-        <p style={styles.emptyText}>Preview</p>
-        <p style={styles.emptyHint}>Your form preview will appear here</p>
-      </div>
-    );
-  }
-
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -40,7 +21,9 @@ export const SurveyPreview: React.FC<SurveyPreviewProps> = ({ state }) => {
         </p>
       </div>
       <div style={styles.preview}>
-        <Survey model={surveyModel} />
+        <p style={styles.placeholderText}>
+          Preview component - implementation pending
+        </p>
       </div>
     </div>
   );

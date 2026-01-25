@@ -5,6 +5,16 @@
 
 import React from "react";
 import { FieldDefinition } from "../../models/types";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@workspace/ui/components/select";
+import { Checkbox } from "@workspace/ui/components/checkbox";
 
 interface PropertyEditorProps {
   field: FieldDefinition;
@@ -16,197 +26,151 @@ export const PropertyEditor: React.FC<PropertyEditorProps> = ({
   onUpdate,
 }) => {
   return (
-    <div style={styles.container}>
-      <h3 style={styles.title}>Field Properties</h3>
+    <div className="bg-white border border-slate-200 rounded-lg p-5 sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
+      <h3 className="text-base font-semibold text-slate-900 mb-5">
+        Field Properties
+      </h3>
 
-      <div style={styles.section}>
-        <label style={styles.label}>
-          Question Title
-          <input
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="title" className="text-sm font-medium mb-2 block">
+            Question Title
+          </Label>
+          <Input
+            id="title"
             type="text"
             value={field.title}
             onChange={(e) => onUpdate({ title: e.target.value })}
-            style={styles.input}
             placeholder="Enter question title"
+            className="text-sm"
           />
-        </label>
-      </div>
+        </div>
 
-      <div style={styles.section}>
-        <label style={styles.label}>
-          Field Name (Internal)
-          <input
+        <div>
+          <Label htmlFor="name" className="text-sm font-medium mb-2 block">
+            Field Name (Internal)
+          </Label>
+          <Input
+            id="name"
             type="text"
             value={field.name}
             onChange={(e) => onUpdate({ name: e.target.value })}
-            style={styles.input}
             placeholder="field_name"
+            className="text-sm"
           />
-        </label>
-      </div>
+        </div>
 
-      <div style={styles.section}>
-        <label style={styles.label}>
-          Description
+        <div>
+          <Label
+            htmlFor="description"
+            className="text-sm font-medium mb-2 block"
+          >
+            Description
+          </Label>
           <textarea
+            id="description"
             value={field.description || ""}
             onChange={(e) => onUpdate({ description: e.target.value })}
-            style={styles.textarea}
             placeholder="Optional description or help text"
             rows={2}
+            className="flex h-20 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
           />
-        </label>
-      </div>
+        </div>
 
-      <div style={styles.section}>
-        <label style={styles.label}>
-          Placeholder Text
-          <input
+        <div>
+          <Label
+            htmlFor="placeholder"
+            className="text-sm font-medium mb-2 block"
+          >
+            Placeholder Text
+          </Label>
+          <Input
+            id="placeholder"
             type="text"
             value={field.placeholder || ""}
             onChange={(e) => onUpdate({ placeholder: e.target.value })}
-            style={styles.input}
             placeholder="Enter placeholder"
+            className="text-sm"
           />
-        </label>
-      </div>
+        </div>
 
-      {field.type === "textarea" && (
-        <div style={styles.section}>
-          <label style={styles.label}>
-            Number of Rows
-            <input
+        {field.type === "textarea" && (
+          <div>
+            <Label htmlFor="rows" className="text-sm font-medium mb-2 block">
+              Number of Rows
+            </Label>
+            <Input
+              id="rows"
               type="number"
               value={field.rows || 4}
               onChange={(e) =>
                 onUpdate({ rows: parseInt(e.target.value) || 4 })
               }
-              style={styles.input}
               min="2"
               max="20"
+              className="text-sm"
             />
-          </label>
-        </div>
-      )}
+          </div>
+        )}
 
-      {(field.type === "text" || field.type === "phone") && (
-        <div style={styles.section}>
-          <label style={styles.label}>
-            Input Type
-            <select
-              value={field.inputType || "text"}
-              onChange={(e) => onUpdate({ inputType: e.target.value })}
-              style={styles.select}
+        {(field.type === "text" || field.type === "phone") && (
+          <div>
+            <Label
+              htmlFor="inputType"
+              className="text-sm font-medium mb-2 block"
             >
-              {field.type === "text" && (
-                <>
-                  <option value="text">Text</option>
-                  <option value="email">Email</option>
-                  <option value="url">URL</option>
-                  <option value="number">Number</option>
-                </>
-              )}
-              {field.type === "phone" && (
-                <>
-                  <option value="tel">Phone</option>
-                  <option value="text">Text</option>
-                </>
-              )}
-            </select>
-          </label>
-        </div>
-      )}
+              Input Type
+            </Label>
+            <Select
+              value={field.inputType || "text"}
+              onValueChange={(value) => onUpdate({ inputType: value })}
+            >
+              <SelectTrigger id="inputType" className="text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {field.type === "text" && (
+                  <>
+                    <SelectItem value="text">Text</SelectItem>
+                    <SelectItem value="email">Email</SelectItem>
+                    <SelectItem value="url">URL</SelectItem>
+                    <SelectItem value="number">Number</SelectItem>
+                  </>
+                )}
+                {field.type === "phone" && (
+                  <>
+                    <SelectItem value="tel">Phone</SelectItem>
+                    <SelectItem value="text">Text</SelectItem>
+                  </>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
-      <div style={styles.section}>
-        <label style={styles.checkboxLabel}>
-          <input
-            type="checkbox"
+        <div className="flex items-center gap-2 pt-2">
+          <Checkbox
+            id="required"
             checked={field.isRequired}
-            onChange={(e) => onUpdate({ isRequired: e.target.checked })}
-            style={styles.checkbox}
+            onCheckedChange={(checked) => onUpdate({ isRequired: !!checked })}
           />
-          <span>Required field</span>
-        </label>
+          <Label
+            htmlFor="required"
+            className="text-sm font-medium cursor-pointer"
+          >
+            Required field
+          </Label>
+        </div>
       </div>
 
-      <div style={styles.info}>
-        <strong>Field Type:</strong> {field.type}
-        <br />
-        <strong>ID:</strong> {field.id}
+      <div className="mt-5 pt-4 border-t border-slate-200 space-y-1 text-xs text-slate-600">
+        <div>
+          <span className="font-semibold">Field Type:</span> {field.type}
+        </div>
+        <div>
+          <span className="font-semibold">ID:</span> {field.id}
+        </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    backgroundColor: "#fff",
-    border: "1px solid #e0e0e0",
-    borderRadius: "8px",
-    padding: "20px",
-    position: "sticky" as const,
-    top: "16px",
-  } as React.CSSProperties,
-  title: {
-    fontSize: "16px",
-    fontWeight: 600,
-    marginBottom: "16px",
-    color: "#333",
-  } as React.CSSProperties,
-  section: {
-    marginBottom: "16px",
-  } as React.CSSProperties,
-  label: {
-    display: "flex",
-    flexDirection: "column",
-    fontSize: "14px",
-    fontWeight: 500,
-    color: "#555",
-    gap: "6px",
-  } as React.CSSProperties,
-  input: {
-    padding: "8px 12px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    fontSize: "14px",
-    fontFamily: "inherit",
-  } as React.CSSProperties,
-  textarea: {
-    padding: "8px 12px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    fontSize: "14px",
-    fontFamily: "inherit",
-    resize: "vertical" as const,
-  } as React.CSSProperties,
-  select: {
-    padding: "8px 12px",
-    border: "1px solid #e0e0e0",
-    borderRadius: "4px",
-    fontSize: "14px",
-    fontFamily: "inherit",
-    backgroundColor: "#fff",
-  } as React.CSSProperties,
-  checkboxLabel: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    fontSize: "14px",
-    color: "#555",
-    cursor: "pointer",
-  } as React.CSSProperties,
-  checkbox: {
-    width: "18px",
-    height: "18px",
-    cursor: "pointer",
-  } as React.CSSProperties,
-  info: {
-    marginTop: "20px",
-    padding: "12px",
-    backgroundColor: "#f5f5f5",
-    borderRadius: "4px",
-    fontSize: "12px",
-    color: "#666",
-    lineHeight: "1.6",
-  } as React.CSSProperties,
 };

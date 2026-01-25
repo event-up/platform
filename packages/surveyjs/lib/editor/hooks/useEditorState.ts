@@ -23,6 +23,7 @@ export function useEditorState(initialState?: Partial<EditorState>) {
 
   const addField = useCallback(
     (type: FieldType) => {
+      debugger;
       const template = FIELD_TEMPLATES[type];
       const newField: FieldDefinition = {
         id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -36,7 +37,7 @@ export function useEditorState(initialState?: Partial<EditorState>) {
         selectedFieldId: newField.id,
       }));
     },
-    [state.fields.length]
+    [state.fields.length],
   );
 
   const removeField = useCallback((id: string) => {
@@ -53,22 +54,18 @@ export function useEditorState(initialState?: Partial<EditorState>) {
       setState((prev) => ({
         ...prev,
         fields: prev.fields.map((f) =>
-          f.id === id ? { ...f, ...updates } : f
+          f.id === id ? { ...f, ...updates } : f,
         ),
       }));
     },
-    []
+    [],
   );
 
-  const moveField = useCallback((fromIndex: number, toIndex: number) => {
-    setState((prev) => {
-      const newFields = [...prev.fields];
-      const [movedField] = newFields.splice(fromIndex, 1);
-      if (movedField) {
-        newFields.splice(toIndex, 0, movedField);
-      }
-      return { ...prev, fields: newFields };
-    });
+  const reorderFields = useCallback((newFields: FieldDefinition[]) => {
+    setState((prev) => ({
+      ...prev,
+      fields: newFields,
+    }));
   }, []);
 
   const selectField = useCallback((id: string | null) => {
@@ -83,14 +80,14 @@ export function useEditorState(initialState?: Partial<EditorState>) {
         surveyDescription: updates.description ?? prev.surveyDescription,
       }));
     },
-    []
+    [],
   );
 
   const operations: FieldOperations = {
     addField,
     removeField,
     updateField,
-    moveField,
+    reorderFields,
     selectField,
   };
 

@@ -11,11 +11,11 @@ import { firestore } from "firebase-admin";
 export async function updateRegistrationFormServer(
   organizerId: string,
   eventId: string,
-  formId: string,
+  registrationFormId: string,
   formData: Partial<Omit<RegistrationForm, "createdAt" | "updatedAt">>
 ): Promise<Partial<RegistrationForm>> {
   const registrationFormDocRef = db.doc(
-    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${REGISTRATION_FORM_COLLECTION}/${formId}`
+    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${REGISTRATION_FORM_COLLECTION}/${registrationFormId}`
   );
 
   const updateData = {
@@ -26,7 +26,7 @@ export async function updateRegistrationFormServer(
   await registrationFormDocRef.update(updateData);
 
   return {
-    registrationFormId: formId,
+    registrationFormId: registrationFormId,
     ...formData,
   };
 }

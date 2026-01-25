@@ -1,4 +1,6 @@
 import { ThemedContainer, type ThemeConfig } from "./components";
+import { getCurrentDomainName } from "./actions";
+import { RegistrationProvider } from "./registration-context";
 
 async function getThemeFromDB(): Promise<ThemeConfig> {
   // Replace with a real DB/query based on params/session
@@ -45,6 +47,13 @@ export default async function RegLayout({
   children: React.ReactNode;
 }) {
   const theme = await getThemeFromDB();
+  const domainName = await getCurrentDomainName();
 
-  return <ThemedContainer theme={theme}>{children}</ThemedContainer>;
+  return (
+    <ThemedContainer theme={theme}>
+      <RegistrationProvider domain={domainName}>
+        {children}
+      </RegistrationProvider>
+    </ThemedContainer>
+  );
 }

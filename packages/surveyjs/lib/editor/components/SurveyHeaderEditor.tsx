@@ -1,9 +1,11 @@
 /**
  * Component for editing survey metadata (title and description)
- * Follows Single Responsibility Principle
+ * Follows Single Responsibility Principle - Google Forms style
  */
 
 import React from "react";
+import { FormTitleInput } from "@workspace/ui/components/form-title-input";
+import { FormDescriptionInput } from "@workspace/ui/components/form-description-input";
 
 interface SurveyHeaderEditorProps {
   title: string;
@@ -19,52 +21,28 @@ export const SurveyHeaderEditor: React.FC<SurveyHeaderEditorProps> = ({
   onUpdateDescription,
 }) => {
   return (
-    <div style={styles.container}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => onUpdateTitle(e.target.value)}
-        style={styles.titleInput}
-        placeholder="Form Title"
-      />
-      <textarea
-        value={description}
-        onChange={(e) => onUpdateDescription(e.target.value)}
-        style={styles.descriptionInput}
-        placeholder="Form description (optional)"
-        rows={2}
-      />
+    <div className="relative">
+      {/* Google Forms style header container */}
+      <div className="bg-white rounded-lg  shadow-sm  border-gray-200 border-l-[5px] border-l-primary mb-4">
+        {/* Purple accent bar at top */}
+        <div className="h-2  rounded-t-lg"></div>
+
+        {/* Content container */}
+        <div className="p-6 space-y-2">
+          <FormTitleInput
+            value={title}
+            onChange={(e) => onUpdateTitle(e.target.value)}
+            placeholder="Untitled form"
+            className="text-3xl"
+          />
+          <FormDescriptionInput
+            value={description}
+            onChange={(e) => onUpdateDescription(e.target.value)}
+            placeholder="Form description"
+            rows={2}
+          />
+        </div>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    backgroundColor: "#fff",
-    border: "1px solid #e0e0e0",
-    borderRadius: "8px",
-    padding: "20px",
-    marginBottom: "16px",
-  } as React.CSSProperties,
-  titleInput: {
-    width: "100%",
-    fontSize: "24px",
-    fontWeight: 600,
-    border: "none",
-    outline: "none",
-    marginBottom: "12px",
-    padding: "8px 0",
-    borderBottom: "2px solid transparent",
-    transition: "border-color 0.2s",
-  } as React.CSSProperties,
-  descriptionInput: {
-    width: "100%",
-    fontSize: "14px",
-    border: "none",
-    outline: "none",
-    resize: "vertical" as const,
-    fontFamily: "inherit",
-    color: "#666",
-    padding: "8px 0",
-  } as React.CSSProperties,
 };

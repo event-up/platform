@@ -3,7 +3,6 @@
  * Follows Single Responsibility Principle
  */
 
-import { Model } from "survey-core";
 import { FieldDefinition, EditorState } from "../../models/types";
 
 export class SurveyConverter {
@@ -51,11 +50,11 @@ export class SurveyConverter {
   }
 
   /**
-   * Create a SurveyJS model from editor state
+   * Create a model object from editor state
+   * Returns the JSON representation (survey-core dependency removed)
    */
-  static createModel(state: EditorState): Model {
-    const json = this.toSurveyJSON(state);
-    return new Model(json);
+  static createModel(state: EditorState): any {
+    return this.toSurveyJSON(state);
   }
 
   /**

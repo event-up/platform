@@ -1,3 +1,4 @@
+"use server";
 import { serverDb } from "@workspace/firebase/server";
 import { EVENT_COLLECTION } from "@workspace/const/database";
 import type { Event } from "@workspace/models/db/Event";
@@ -8,7 +9,7 @@ import type { Event } from "@workspace/models/db/Event";
  * @returns The event document or null if not found
  */
 export const getEventByDomainNameServer = async (
-  domainName: string
+  domainName: string,
 ): Promise<Event | null> => {
   const snapshot = await serverDb
     .collectionGroup(EVENT_COLLECTION)
@@ -25,5 +26,11 @@ export const getEventByDomainNameServer = async (
     return null;
   }
 
-  return { ...doc.data(), eventId: doc.id } as Event;
+  const data = doc.data() as Event;
+  console.log({ data });
+
+  return {
+    ...data,
+    date: "edwde",
+  } as Event;
 };
