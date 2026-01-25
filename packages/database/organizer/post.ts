@@ -9,12 +9,11 @@ import { serverTimestamp } from "firebase/firestore";
  * @returns Promise<void>
  */
 export async function createOrganizer(
-  organizer: Organizer
+  organizer: Organizer,
 ): Promise<Organizer> {
   try {
     const organizersCollection = collection(db, ORGANIZER_COLLECTION);
     const organizerDoc = doc(organizersCollection, organizer.userId);
-    debugger;
     const organizerData: Organizer = {
       userId: organizer.userId,
       email: organizer.email,
@@ -29,7 +28,7 @@ export async function createOrganizer(
   } catch (error) {
     console.error("Error creating organizer:", error);
     throw new Error(
-      `Failed to create organizer: ${error instanceof Error ? error.message : "Unknown error"}`
+      `Failed to create organizer: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }

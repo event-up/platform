@@ -79,7 +79,7 @@ function ParticipantsPage() {
   const [lastDoc, setLastDoc] =
     useState<QueryDocumentSnapshot<DocumentData> | null>(null);
   const prevLastDocRef = useRef<QueryDocumentSnapshot<DocumentData> | null>(
-    null
+    null,
   );
   const pageSize = 10;
 
@@ -105,7 +105,7 @@ function ParticipantsPage() {
   };
 
   // const handlePreviousPage = () => {
-  //   debugger;
+  //   ;
   //   // if ( registrations?.lastDoc){
   //     setLastDoc(prevLastDocRef.current);
   //   // }
@@ -135,7 +135,7 @@ function ParticipantsPage() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -154,7 +154,7 @@ function ParticipantsPage() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

@@ -2,12 +2,13 @@
  * Type definitions for the form editor
  */
 
-import { FormField } from "lib/renderer";
+import { FieldType, FormField } from "lib/renderer";
 
-export type FieldType = "text" | "textarea" | "date" | "phone";
+export type ContactChannelType = "phone" | "email";
 
-export interface FieldDefinition extends FormField {
-  id: string;
+export interface ValidationResult {
+  isValid: boolean;
+  message: string;
 }
 
 export interface FieldTemplate {
@@ -18,7 +19,7 @@ export interface FieldTemplate {
 }
 
 export interface EditorState {
-  fields: FieldDefinition[];
+  fields: FormField[];
   selectedFieldId: string | null;
   surveyTitle: string;
   surveyDescription: string;
@@ -27,7 +28,7 @@ export interface EditorState {
 export interface FieldOperations {
   addField: (type: FieldType) => void;
   removeField: (id: string) => void;
-  updateField: (id: string, updates: Partial<FieldDefinition>) => void;
-  reorderFields: (newFields: FieldDefinition[]) => void;
+  updateField: (id: string, updates: Partial<FormField>) => void;
+  reorderFields: (newFields: FormField[]) => void;
   selectField: (id: string | null) => void;
 }

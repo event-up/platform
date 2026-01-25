@@ -4,19 +4,18 @@
  */
 
 import React from "react";
-import { FieldDefinition, FieldType } from "../../models/types";
-import { FieldItem } from "./FieldItem";
 import { AddFieldCard } from "./AddFieldCard";
 import { DraggableFieldList } from "./DraggableFieldList";
+import { FieldType, FormField } from "@workspace/models/dynamic-form";
 
 interface FieldListProps {
-  fields: FieldDefinition[];
+  fields: FormField[];
   selectedFieldId: string | null;
   onSelectField: (id: string) => void;
   onRemoveField: (id: string) => void;
-  onReorderFields: (newFields: FieldDefinition[]) => void;
+  onReorderFields: (newFields: FormField[]) => void;
   onAddField: (type: FieldType) => void;
-  onUpdateField: (id: string, updates: Partial<FieldDefinition>) => void;
+  onUpdateField: (id: string, updates: Partial<FormField>) => void;
 }
 
 export const FieldList: React.FC<FieldListProps> = ({

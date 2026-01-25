@@ -1,12 +1,5 @@
+import { FieldType } from "@workspace/models/dynamic-form";
 import { z } from "zod";
-
-export type FieldType =
-  | "text"
-  | "email"
-  | "phone"
-  | "select"
-  | "multiselect"
-  | "dropdown";
 
 export interface FormFieldOption {
   label: string;

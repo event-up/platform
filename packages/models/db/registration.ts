@@ -15,6 +15,12 @@ export interface ContactChannelJobResult {
   response: unknown;
   success: boolean;
 }
+
+export interface ContactChannel {
+  type: RegistrationContactChannels;
+  value: string;
+  jobResults: ContactChannelJobResult[];
+}
 export interface BaseRegistration {
   organizerId: string;
   eventId: string;
@@ -23,12 +29,7 @@ export interface BaseRegistration {
   status: ParticipantStatus;
   createdAt: string;
   updatedAt: string;
-  contactChannels: {
-    type: RegistrationContactChannels;
-    value: string;
-    jobResults: ContactChannelJobResult[];
-  }[];
-
+  contactChannels: ContactChannel[];
   token: RegistrationToken;
 }
 export interface Registration extends BaseRegistration {

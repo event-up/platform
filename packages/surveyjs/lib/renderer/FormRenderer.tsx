@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormSchema, FormValues } from "./types";
+import { FormValues } from "./types";
 import { createValidationSchema } from "./validation";
 import { FormFieldComponent } from "./components/FormField";
 import { Button } from "@workspace/ui/components/button";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert";
 import { AlertCircle } from "lucide-react";
+import { FormSchema } from "@workspace/models/dynamic-form";
 
 interface FormRendererProps {
   schema: FormSchema;
@@ -61,20 +62,13 @@ export const FormRenderer: React.FC<FormRendererProps> = ({
       setGeneralError(
         error instanceof Error
           ? error.message
-          : "An error occurred while submitting the form"
+          : "An error occurred while submitting the form",
       );
     }
   };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
-      {schema.title && (
-        <h1 className="text-2xl font-bold mb-2">{schema.title}</h1>
-      )}
-      {schema.description && (
-        <p className="text-muted-foreground mb-6">{schema.description}</p>
-      )}
-
       {generalError && (
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />

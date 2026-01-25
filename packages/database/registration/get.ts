@@ -30,7 +30,7 @@ import {
 export async function getRegistration(
   orgnizerId: string,
   eventId: string,
-  registrationId: string
+  registrationId: string,
 ): Promise<Registration> {
   try {
     const registrationCollection = collection(
@@ -39,7 +39,7 @@ export async function getRegistration(
       orgnizerId,
       EVENT_COLLECTION,
       eventId,
-      REGISTRATION_FORM_COLLECTION
+      REGISTRATION_FORM_COLLECTION,
     );
     const registrationRef = doc(registrationCollection, registrationId);
     const registrationDoc = await getDoc(registrationRef);
@@ -71,10 +71,9 @@ export interface PaginatedResponse<T> {
 export async function getEventRegistrations(
   organizerId: string,
   eventId: string,
-  options?: PaginationOptions
+  options?: PaginationOptions,
 ): Promise<PaginatedResponse<Registration>> {
   try {
-    debugger;
     console.log({
       ORGANIZER_COLLECTION,
       organizerId,
@@ -90,13 +89,13 @@ export async function getEventRegistrations(
       organizerId,
       EVENT_COLLECTION,
       eventId,
-      REGISTRATION_COLLECTION
+      REGISTRATION_COLLECTION,
     );
 
     let registrationsQuery = query(
       registrationCollection,
       orderBy("createdAt", "desc"),
-      limit(pageSize + 1) // Fetch one extra to determine if there are more
+      limit(pageSize + 1), // Fetch one extra to determine if there are more
     );
 
     if (options?.lastDoc) {
@@ -104,7 +103,7 @@ export async function getEventRegistrations(
         registrationCollection,
         orderBy("createdAt", "desc"),
         startAfter(options.lastDoc),
-        limit(pageSize + 1)
+        limit(pageSize + 1),
       );
     }
 
@@ -134,7 +133,7 @@ export async function getEventRegistrations(
 export async function getEventRegistrationsByStatus(
   organizerId: string,
   eventId: string,
-  status: ParticipantStatus
+  status: ParticipantStatus,
 ) {
   try {
     const collectionRef = collection(
@@ -143,10 +142,10 @@ export async function getEventRegistrationsByStatus(
       organizerId,
       EVENT_COLLECTION,
       eventId,
-      REGISTRATION_COLLECTION
+      REGISTRATION_COLLECTION,
     );
     const docRef = await getDocs(
-      query(collectionRef, where("status", "==", status))
+      query(collectionRef, where("status", "==", status)),
     );
 
     return docRef.docs.map((doc) => doc.data() as Registration);

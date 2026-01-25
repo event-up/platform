@@ -3,7 +3,8 @@
  * Follows Single Responsibility Principle
  */
 
-import { FieldDefinition, EditorState } from "../../models/types";
+import { EditorState } from "../../models/types";
+import { FormField } from "@workspace/models/dynamic-form";
 
 export class SurveyConverter {
   /**
@@ -64,19 +65,17 @@ export class SurveyConverter {
     const firstPage = json.pages?.[0];
     const elements = firstPage?.elements || [];
 
-    const fields: FieldDefinition[] = elements.map(
-      (element: any, index: number) => ({
-        id: `field_${Date.now()}_${index}`,
-        type: element.type,
-        name: element.name,
-        title: element.title || "",
-        isRequired: element.isRequired || false,
-        placeholder: element.placeholder,
-        description: element.description,
-        inputType: element.inputType,
-        rows: element.rows,
-      })
-    );
+    const fields: FormField[] = elements.map((element: any, index: number) => ({
+      id: `field_${Date.now()}_${index}`,
+      type: element.type,
+      name: element.name,
+      title: element.title || "",
+      isRequired: element.isRequired || false,
+      placeholder: element.placeholder,
+      description: element.description,
+      inputType: element.inputType,
+      rows: element.rows,
+    }));
 
     return {
       fields,

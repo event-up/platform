@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { FieldDefinition } from "../../models/types";
 import { Input } from "@workspace/ui/components/input";
 import { Textarea } from "@workspace/ui/components/textarea";
 import { FormTitleInput } from "@workspace/ui/components/form-title-input";
@@ -12,14 +11,14 @@ import { FormDescriptionInput } from "@workspace/ui/components/form-description-
 import { Button } from "@workspace/ui/components/button";
 import { GripVertical, Trash2 } from "lucide-react";
 import { cn } from "@workspace/ui/lib/utils";
-
+import { FormField } from "@workspace/models/dynamic-form";
 interface FieldItemProps {
-  field: FieldDefinition;
+  field: FormField;
   index: number;
   isSelected: boolean;
   onSelect: () => void;
   onRemove: () => void;
-  onUpdate: (updates: Partial<FieldDefinition>) => void;
+  onUpdate: (updates: Partial<FormField>) => void;
 }
 
 export const FieldItem: React.FC<FieldItemProps> = ({
@@ -66,7 +65,7 @@ export const FieldItem: React.FC<FieldItemProps> = ({
           : "border-slate-200 hover:border-slate-300 hover:shadow-md opacity-80",
       )}
     >
-      <div className="p-6 no-drag field-content flex-1">
+      <div className="p-6  field-content flex-1">
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center gap-3 drag-handle">
             {/* Drag Handle */}
@@ -76,7 +75,7 @@ export const FieldItem: React.FC<FieldItemProps> = ({
               {field.type}
             </span>
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-1 no-drag">
             <Button
               onClick={(e) => {
                 e.stopPropagation();
@@ -91,81 +90,83 @@ export const FieldItem: React.FC<FieldItemProps> = ({
             </Button>
           </div>
         </div>
-        {/* Question Label - Editable when selected */}
-        {isSelected ? (
-          <FormTitleInput
-            value={localLabel}
-            onChange={(e) => setLocalLabel(e.target.value)}
-            onBlur={handleBlur}
-            onClick={(e) => e.stopPropagation()}
-            placeholder="Question"
-            className="text-lg font-medium mb-2"
-          />
-        ) : (
-          <div className="text-lg font-medium text-slate-700 mb-2">
-            {field.label}
-            {field.required && <span className="text-red-500 ml-1">*</span>}
-          </div>
-        )}
-
-        {/* Question Description - Editable when selected */}
-        {isSelected ? (
-          <FormDescriptionInput
-            value={localDescription}
-            onChange={(e) => setLocalDescription(e.target.value)}
-            onBlur={handleBlur}
-            onClick={(e) => e.stopPropagation()}
-            placeholder="Description (optional)"
-            className="text-sm text-slate-600 mb-3"
-            rows={1}
-          />
-        ) : (
-          field.description && (
-            <div className="text-sm text-slate-600 mb-3">
-              {field.description}
+        <div className="no-drag">
+          {/* Question Label - Editable when selected */}
+          {isSelected ? (
+            <FormTitleInput
+              value={localLabel}
+              onChange={(e) => setLocalLabel(e.target.value)}
+              onBlur={handleBlur}
+              onClick={(e) => e.stopPropagation()}
+              placeholder="Question"
+              className="text-lg font-medium mb-2"
+            />
+          ) : (
+            <div className="text-lg font-medium text-slate-700 mb-2">
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
             </div>
-          )
-        )}
+          )}
 
-        {/* Answer Field Preview */}
-        <div className="pt-2">
-          {field.type === "textarea" ? (
-            isSelected ? (
-              <Textarea
+          {/* Question Description - Editable when selected */}
+          {isSelected ? (
+            <FormDescriptionInput
+              value={localDescription}
+              onChange={(e) => setLocalDescription(e.target.value)}
+              onBlur={handleBlur}
+              onClick={(e) => e.stopPropagation()}
+              placeholder="Description (optional)"
+              className="text-sm text-slate-600 mb-3"
+              rows={1}
+            />
+          ) : (
+            field.description && (
+              <div className="text-sm text-slate-600 mb-3">
+                {field.description}
+              </div>
+            )
+          )}
+
+          {/* Answer Field Preview */}
+          <div className="pt-2">
+            {field.type === "textarea" ? (
+              isSelected ? (
+                <Textarea
+                  value={localPlaceholder}
+                  onChange={(e) => setLocalPlaceholder(e.target.value)}
+                  onBlur={handleBlur}
+                  onClick={(e) => e.stopPropagation()}
+                  placeholder="Placeholder text"
+                  rows={3}
+                  className="w-full text-sm border border-slate-300 rounded focus:border-purple-500"
+                />
+              ) : (
+                <textarea
+                  placeholder={field.placeholder}
+                  disabled
+                  rows={3}
+                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded bg-slate-50 text-slate-400 resize-none cursor-not-allowed"
+                />
+              )
+            ) : isSelected ? (
+              <Input
+                type="text"
                 value={localPlaceholder}
                 onChange={(e) => setLocalPlaceholder(e.target.value)}
                 onBlur={handleBlur}
                 onClick={(e) => e.stopPropagation()}
                 placeholder="Placeholder text"
-                rows={3}
-                className="w-full text-sm border border-slate-300 rounded focus:border-purple-500"
+                className="text-sm border-slate-300 focus:border-purple-500"
               />
             ) : (
-              <textarea
+              <Input
+                type="text"
                 placeholder={field.placeholder}
                 disabled
-                rows={3}
-                className="w-full px-3 py-2 text-sm border border-slate-200 rounded bg-slate-50 text-slate-400 resize-none cursor-not-allowed"
+                className="text-sm bg-slate-50 text-slate-400 cursor-not-allowed"
               />
-            )
-          ) : isSelected ? (
-            <Input
-              type="text"
-              value={localPlaceholder}
-              onChange={(e) => setLocalPlaceholder(e.target.value)}
-              onBlur={handleBlur}
-              onClick={(e) => e.stopPropagation()}
-              placeholder="Placeholder text"
-              className="text-sm border-slate-300 focus:border-purple-500"
-            />
-          ) : (
-            <Input
-              type="text"
-              placeholder={field.placeholder}
-              disabled
-              className="text-sm bg-slate-50 text-slate-400 cursor-not-allowed"
-            />
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -63,7 +63,6 @@ const RegistrationPage = () => {
 
   const handleToggleCollection = async () => {
     if (!user?.uid || !registrations?.registrationFormId) return;
-    debugger;
     const newCollectingState = !isCollecting;
 
     try {

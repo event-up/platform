@@ -154,9 +154,9 @@ export default function RegistrationPage() {
         <div className="h-8" />
 
         <FormHeader
-          title={registrationSchema.title || "Event Registration"}
+          title={registrationForm?.formSchema.title || "Event Registration"}
           description={
-            registrationSchema.description ||
+            registrationForm?.formSchema.description ||
             "Complete the form below to register"
           }
         />
@@ -165,7 +165,7 @@ export default function RegistrationPage() {
 
         <div className="space-y-6">
           <FormRenderer
-            schema={registrationForm.formSchema}
+            schema={registrationForm?.formSchema}
             onSubmit={handleSubmit}
             submitButtonText="Complete Registration"
             cancelButtonText="Clear Form"

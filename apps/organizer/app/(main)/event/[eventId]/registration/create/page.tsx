@@ -5,22 +5,23 @@ import { FormEditor } from "@workspace/surveyjs/lib/editor/components";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardContent } from "@workspace/ui/components/card";
 import { useAuth } from "@/lib/auth-context";
-import { toast } from "sonner";
 import {
   useCreateRegistrationFormMutation,
   useUpdateRegistrationFormMutation,
 } from "@/hooks/mutation/registration-form";
-import { debug } from "console";
 import { useRegistrationFormQuery } from "@/hooks/query/registration-form";
 import { EditorState } from "@workspace/surveyjs/lib/models/types";
+import { validateFormForSave } from "@workspace/surveyjs/lib/editor/utils/validation";
 import { useCallback, useState } from "react";
 import { FormState } from "react-hook-form";
 import { Loader2, Save, X } from "lucide-react";
+import { toast } from "sonner";
 
 /**
  * Create Registration Form Page
  * Allows organizers to create a new registration form using the form editor
  */
+
 const CreateRegistrationFormPage = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const { user } = useAuth();
@@ -43,10 +44,19 @@ const CreateRegistrationFormPage = () => {
   };
 
   const handleSaveForm = useCallback(async (formState: EditorState) => {
+    // Validate form before saving
+    const validation = validateFormForSave(formState.fields);
+    if (!validation.isValid) {
+      toast.error("Form Validation Failed", {
+        description: validation.message,
+      });
+      return;
+    }
+
     setIsSaving(true);
     try {
       console.log({ formState });
-      debugger;
+
       if (registrations?.registrationFormId) {
         await updateMutateAsync({
           organizerId: user.uid,

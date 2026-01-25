@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { FieldDefinition } from "../../models/types";
+import { FormField } from "@workspace/models/dynamic-form";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import {
@@ -17,8 +17,8 @@ import {
 import { Checkbox } from "@workspace/ui/components/checkbox";
 
 interface PropertyEditorProps {
-  field: FieldDefinition;
-  onUpdate: (updates: Partial<FieldDefinition>) => void;
+  field: FormField;
+  onUpdate: (updates: Partial<FormField>) => void;
 }
 
 export const PropertyEditor: React.FC<PropertyEditorProps> = ({

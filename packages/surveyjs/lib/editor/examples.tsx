@@ -127,7 +127,7 @@ export function CustomLayoutExample() {
   });
 
   const selectedField = state.fields.find(
-    (f: any) => f.id === state.selectedFieldId
+    (f: any) => f.id === state.selectedFieldId,
   );
 
   return (
@@ -227,6 +227,7 @@ export function APIIntegrationExample() {
       {savedId && <div>Saved with ID: {savedId}</div>}
 
       <FormEditor
+        onSaveClick={handleSave}
         onStateChange={(state: any) => {
           // Auto-save or manual save trigger
           // handleSave(state);

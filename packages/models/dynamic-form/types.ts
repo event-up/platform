@@ -6,8 +6,8 @@ export type FieldType =
   | "phone"
   | "select"
   | "multiselect"
-  | "dropdown"
-  | "textarea";
+  | "textarea"
+  | "date";
 
 export interface FormFieldOption {
   label: string;
@@ -15,6 +15,7 @@ export interface FormFieldOption {
 }
 
 export interface FormField {
+  id: string;
   name: string;
   type: FieldType;
   label: string;

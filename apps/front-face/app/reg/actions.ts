@@ -1,10 +1,47 @@
 "use server";
-import { BaseRegistration } from "@workspace/models/db/registration";
+import {
+  BaseRegistration,
+  ContactChannel,
+  Registration,
+} from "@workspace/models/db/registration";
 import { getRegistrationFormServer } from "@workspace/database/registration-form/get.server";
+import { createRegistrationServer } from "@workspace/database/registration/post.server";
 import { getEventByDomainNameServer } from "@workspace/database/event/get.server";
 import { headers } from "next/headers";
+import { create } from "domain";
 
-const createRegistration = async (data: BaseRegistration) => {};
+export const createRegistration = async (
+  eventId: string,
+  organizerId: string,
+  contactChannels: Omit<ContactChannel, "jobResults">[],
+  data: Pick<Registration, "registrationData">,
+): Promise<{ success: boolean; message: string; data?: Registration }> => {
+  try {
+    const registration = await createRegistrationServer({
+      eventId,
+      organizerId,
+      status: "registered",
+      contactChannels: contactChannels.map((channel) => ({
+        ...channel,
+        jobResults: [],
+      })),
+      registrationData: data.registrationData,
+    });
+
+    return {
+      success: true,
+      message: "Registration created successfully",
+      data: registration,
+    };
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Failed to create registration";
+    return {
+      success: false,
+      message,
+    };
+  }
+};
 
 export async function getCurrentDomainName() {
   const headersList = await headers();

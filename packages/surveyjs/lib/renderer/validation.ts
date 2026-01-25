@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { FormField, FormSchema, ValidationSchema } from "./types";
+import { ValidationSchema } from "./types";
+import { FormSchema, FormField } from "@workspace/models/dynamic-form";
 
 /**
  * Helper function to create Zod validators for specific field types
@@ -17,7 +18,7 @@ function createFieldValidator(field: FormField): z.ZodType {
         .string()
         .regex(
           /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
-          "Invalid phone number"
+          "Invalid phone number",
         );
       break;
 
@@ -41,7 +42,7 @@ function createFieldValidator(field: FormField): z.ZodType {
       validator = (validator as z.ZodString).min(
         field.validation.minLength,
         field.validation.customMessage ||
-          `Minimum ${field.validation.minLength} characters required`
+          `Minimum ${field.validation.minLength} characters required`,
       );
     }
 
@@ -49,7 +50,7 @@ function createFieldValidator(field: FormField): z.ZodType {
       validator = (validator as z.ZodString).max(
         field.validation.maxLength,
         field.validation.customMessage ||
-          `Maximum ${field.validation.maxLength} characters allowed`
+          `Maximum ${field.validation.maxLength} characters allowed`,
       );
     }
 
@@ -58,12 +59,12 @@ function createFieldValidator(field: FormField): z.ZodType {
         const regex = new RegExp(field.validation.pattern);
         validator = (validator as z.ZodString).regex(
           regex,
-          field.validation.customMessage || "Format is invalid"
+          field.validation.customMessage || "Format is invalid",
         );
       } catch (e) {
         console.warn(
           `Invalid regex pattern for field ${field.name}:`,
-          field.validation.pattern
+          field.validation.pattern,
         );
       }
     }
@@ -74,12 +75,12 @@ function createFieldValidator(field: FormField): z.ZodType {
     if (field.type === "multiselect") {
       validator = (validator as z.ZodArray<any>).min(
         1,
-        `${field.label} is required`
+        `${field.label} is required`,
       );
     } else {
       validator = (validator as z.ZodString).min(
         1,
-        `${field.label} is required`
+        `${field.label} is required`,
       );
     }
   } else {
@@ -98,7 +99,7 @@ function createFieldValidator(field: FormField): z.ZodType {
  * Creates a Zod validation schema from a form schema
  */
 export function createValidationSchema(
-  formSchema: FormSchema
+  formSchema: FormSchema,
 ): ValidationSchema {
   const shape: Record<string, z.ZodType> = {};
 
@@ -114,7 +115,7 @@ export function createValidationSchema(
  */
 export async function validateFormData(
   data: Record<string, any>,
-  schema: ValidationSchema
+  schema: ValidationSchema,
 ): Promise<{
   success: boolean;
   errors?: Record<string, string>;
@@ -144,7 +145,7 @@ export async function validateFormData(
  */
 export function getFieldError(
   errors: Record<string, string>,
-  fieldName: string
+  fieldName: string,
 ): string | null {
   return errors[fieldName] || null;
 }

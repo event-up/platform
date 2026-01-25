@@ -3,19 +3,23 @@
  */
 
 import React from "react";
-import { Responsive, Layout, useContainerWidth } from "react-grid-layout";
-import { FieldDefinition } from "../../models/types";
+import {
+  Responsive,
+  Layout,
+  useContainerWidth,
+  LayoutItem,
+} from "react-grid-layout";
 import { FieldItem } from "./FieldItem";
 import "react-grid-layout/css/styles.css";
 import "./DraggableFieldList.css";
-
+import { FormField } from "@workspace/models/dynamic-form";
 interface DraggableFieldListProps {
-  fields: FieldDefinition[];
+  fields: FormField[];
   selectedFieldIndex: number | null;
   onSelectField: (index: number) => void;
   onRemoveField: (index: number) => void;
-  onUpdateField: (index: number, updates: Partial<FieldDefinition>) => void;
-  onReorderFields: (newFields: FieldDefinition[]) => void;
+  onUpdateField: (index: number, updates: Partial<FormField>) => void;
+  onReorderFields: (newFields: FormField[]) => void;
 }
 
 export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
@@ -32,7 +36,7 @@ export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
   });
 
   // Generate layout configuration for single column with dynamic heights
-  const generateLayout = (): Layout[] => {
+  const generateLayout = (): LayoutItem[] => {
     let currentY = 0;
 
     return fields.map((field, index) => {
@@ -54,7 +58,7 @@ export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
         height += 0.5; // Space for long labels
       }
 
-      const layoutItem = {
+      const layoutItem: LayoutItem = {
         i: field.id, // Use field ID instead of index for stable keys
         x: 0, // Single column, so x is always 0
         y: currentY, // Proper vertical position to prevent overlap
@@ -71,7 +75,14 @@ export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
     });
   };
 
-  const handleDragStop = (newLayout: Layout[]) => {
+  const handleDragStop = (
+    newLayout: Layout,
+    oldItem: LayoutItem | null,
+    newItem: LayoutItem | null,
+    placeholder: LayoutItem | null,
+    event: Event,
+    element?: HTMLElement,
+  ) => {
     // Sort layout by y position to get new order
     const sortedLayout = [...newLayout].sort((a, b) => a.y - b.y);
 
@@ -80,11 +91,11 @@ export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
       .map((layoutItem) => {
         return fields.find((f) => f.id === layoutItem.i);
       })
-      .filter(Boolean) as FieldDefinition[]; // Remove any undefined items
+      .filter(Boolean) as FormField[]; // Remove any undefined items
 
     // Check if order actually changed
     const orderChanged = newFields.some(
-      (field, index) => fields[index].id !== field.id,
+      (field, index) => fields[index]?.id !== field.id,
     );
 
     // Only update if the order actually changed
@@ -105,16 +116,11 @@ export const DraggableFieldList: React.FC<DraggableFieldListProps> = ({
           autoSize={true}
           rowHeight={65}
           onDragStop={handleDragStop}
-          isDraggable={false}
-          isResizable={false}
           margin={[0, 8]}
           containerPadding={[0, 0]}
-          useCSSTransforms={true}
-          compactType={null}
-          preventCollision={true}
-          dragHandleClassName="drag-handle"
-          cancel=".no-drag, .no-drag *, input, textarea, button, [contenteditable], .field-content"
-          draggableCancel=".no-drag, .no-drag *, input, textarea, button, [contenteditable], .field-content"
+          dragConfig={{
+            cancel: ".no-drag",
+          }}
         >
           {fields.map((field, index) => (
             <div key={field.id} className="grid-item">

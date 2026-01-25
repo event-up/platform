@@ -3,14 +3,18 @@
  * Follows Single Responsibility Principle - only handles state management
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
   EditorState,
-  FieldDefinition,
-  FieldType,
   FieldOperations,
+  ValidationResult,
 } from "../../models/types";
+import { FieldType, FormField } from "@workspace/models/dynamic-form";
 import { FIELD_TEMPLATES } from "../constants";
+import {
+  validateFormForSave,
+  hasContactChannelFields,
+} from "../utils/validation";
 
 export function useEditorState(initialState?: Partial<EditorState>) {
   const [state, setState] = useState<EditorState>({
@@ -23,13 +27,12 @@ export function useEditorState(initialState?: Partial<EditorState>) {
 
   const addField = useCallback(
     (type: FieldType) => {
-      debugger;
       const template = FIELD_TEMPLATES[type];
-      const newField: FieldDefinition = {
+      const newField: FormField = {
         id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         name: `question_${state.fields.length + 1}`,
         ...template.defaultProps,
-      } as FieldDefinition;
+      } as FormField;
 
       setState((prev) => ({
         ...prev,
@@ -49,19 +52,14 @@ export function useEditorState(initialState?: Partial<EditorState>) {
     }));
   }, []);
 
-  const updateField = useCallback(
-    (id: string, updates: Partial<FieldDefinition>) => {
-      setState((prev) => ({
-        ...prev,
-        fields: prev.fields.map((f) =>
-          f.id === id ? { ...f, ...updates } : f,
-        ),
-      }));
-    },
-    [],
-  );
+  const updateField = useCallback((id: string, updates: Partial<FormField>) => {
+    setState((prev) => ({
+      ...prev,
+      fields: prev.fields.map((f) => (f.id === id ? { ...f, ...updates } : f)),
+    }));
+  }, []);
 
-  const reorderFields = useCallback((newFields: FieldDefinition[]) => {
+  const reorderFields = useCallback((newFields: FormField[]) => {
     setState((prev) => ({
       ...prev,
       fields: newFields,
@@ -91,9 +89,20 @@ export function useEditorState(initialState?: Partial<EditorState>) {
     selectField,
   };
 
+  // Validation state
+  const validation = useMemo((): ValidationResult => {
+    return validateFormForSave(state.fields);
+  }, [state.fields]);
+
+  const hasContactFields = useMemo((): boolean => {
+    return hasContactChannelFields(state.fields);
+  }, [state.fields]);
+
   return {
     state,
     operations,
     updateSurveyMeta,
+    validation,
+    hasContactFields,
   };
 }
