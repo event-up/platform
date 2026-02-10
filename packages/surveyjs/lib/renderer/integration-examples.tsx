@@ -16,13 +16,13 @@ const basicSchema: FormSchema = {
   title: "Newsletter Signup",
   fields: [
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email Address",
       required: true,
     },
     {
-      name: "fullName",
+      id: "fullName",
       type: "text",
       label: "Full Name",
       required: false,
@@ -57,7 +57,7 @@ export function FormWithLoadingExample() {
     title: "Create Account",
     fields: [
       {
-        name: "username",
+        id: "username",
         type: "text",
         label: "Username",
         required: true,
@@ -70,7 +70,7 @@ export function FormWithLoadingExample() {
         },
       },
       {
-        name: "email",
+        id: "email",
         type: "email",
         label: "Email",
         required: true,
@@ -133,19 +133,19 @@ export function MultiStepFormExample() {
     description: "Personal Information",
     fields: [
       {
-        name: "firstName",
+        id: "firstName",
         type: "text",
         label: "First Name",
         required: true,
       },
       {
-        name: "lastName",
+        id: "lastName",
         type: "text",
         label: "Last Name",
         required: true,
       },
       {
-        name: "email",
+        id: "email",
         type: "email",
         label: "Email",
         required: true,
@@ -158,7 +158,7 @@ export function MultiStepFormExample() {
     description: "Event Details",
     fields: [
       {
-        name: "eventType",
+        id: "eventType",
         type: "dropdown",
         label: "Event Type",
         required: true,
@@ -168,7 +168,7 @@ export function MultiStepFormExample() {
         ],
       },
       {
-        name: "interests",
+        id: "interests",
         type: "multiselect",
         label: "Areas of Interest",
         required: true,
@@ -248,7 +248,7 @@ export function DynamicFormExample() {
     title: "Choose Account Type",
     fields: [
       {
-        name: "accountType",
+        id: "accountType",
         type: "select",
         label: "Account Type",
         required: true,
@@ -264,19 +264,19 @@ export function DynamicFormExample() {
     title: "Individual Account Setup",
     fields: [
       {
-        name: "firstName",
+        id: "firstName",
         type: "text",
         label: "First Name",
         required: true,
       },
       {
-        name: "lastName",
+        id: "lastName",
         type: "text",
         label: "Last Name",
         required: true,
       },
       {
-        name: "email",
+        id: "email",
         type: "email",
         label: "Email",
         required: true,
@@ -288,19 +288,19 @@ export function DynamicFormExample() {
     title: "Business Account Setup",
     fields: [
       {
-        name: "companyName",
+        id: "companyName",
         type: "text",
         label: "Company Name",
         required: true,
       },
       {
-        name: "businessEmail",
+        id: "businessEmail",
         type: "email",
         label: "Business Email",
         required: true,
       },
       {
-        name: "industry",
+        id: "industry",
         type: "dropdown",
         label: "Industry",
         required: true,
@@ -312,7 +312,7 @@ export function DynamicFormExample() {
         ],
       },
       {
-        name: "employees",
+        id: "employees",
         type: "select",
         label: "Number of Employees",
         required: true,
@@ -370,7 +370,7 @@ export function FormWithValidationExample() {
     description: "Apply for our open positions",
     fields: [
       {
-        name: "fullName",
+        id: "fullName",
         type: "text",
         label: "Full Name",
         required: true,
@@ -380,19 +380,19 @@ export function FormWithValidationExample() {
         },
       },
       {
-        name: "email",
+        id: "email",
         type: "email",
         label: "Email Address",
         required: true,
       },
       {
-        name: "phone",
+        id: "phone",
         type: "phone",
         label: "Phone Number",
         required: true,
       },
       {
-        name: "position",
+        id: "position",
         type: "dropdown",
         label: "Position Applied For",
         required: true,
@@ -404,7 +404,7 @@ export function FormWithValidationExample() {
         ],
       },
       {
-        name: "experience",
+        id: "experience",
         type: "select",
         label: "Years of Experience",
         required: true,
@@ -416,7 +416,7 @@ export function FormWithValidationExample() {
         ],
       },
       {
-        name: "skills",
+        id: "skills",
         type: "multiselect",
         label: "Key Skills",
         required: true,
@@ -429,7 +429,7 @@ export function FormWithValidationExample() {
         ],
       },
       {
-        name: "coverLetter",
+        id: "coverLetter",
         type: "text",
         label: "Cover Letter",
         required: false,

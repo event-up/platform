@@ -14,9 +14,9 @@ export class SurveyConverter {
     const elements = state.fields.map((field) => {
       const element: any = {
         type: field.type,
-        name: field.name,
-        title: field.title,
-        isRequired: field.isRequired,
+        id: field.id,
+        title: field.label,
+        isRequired: field.required,
       };
 
       if (field.placeholder) {
@@ -25,14 +25,6 @@ export class SurveyConverter {
 
       if (field.description) {
         element.description = field.description;
-      }
-
-      if (field.inputType) {
-        element.inputType = field.inputType;
-      }
-
-      if (field.rows && field.type === "textarea") {
-        element.rows = field.rows;
       }
 
       return element;
@@ -66,15 +58,12 @@ export class SurveyConverter {
     const elements = firstPage?.elements || [];
 
     const fields: FormField[] = elements.map((element: any, index: number) => ({
-      id: `field_${Date.now()}_${index}`,
+      id: element.id || `field_${Date.now()}_${index}`,
       type: element.type,
-      name: element.name,
-      title: element.title || "",
-      isRequired: element.isRequired || false,
+      label: element.title || "",
+      required: element.isRequired || false,
       placeholder: element.placeholder,
       description: element.description,
-      inputType: element.inputType,
-      rows: element.rows,
     }));
 
     return {

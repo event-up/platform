@@ -1,14 +1,12 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ChevronRight } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
-  getPaginationRowModel,
   flexRender,
-  createColumnHelper,
   type ColumnDef,
 } from "@tanstack/react-table";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
@@ -23,54 +21,36 @@ import {
   TableRow,
 } from "@workspace/ui/components/table";
 import { ParticipantCreateForm } from "@/app/(main)/event/[eventId]/participants/components/participant-create-form";
+import { ParticipantDrawer } from "@/app/(main)/event/[eventId]/participants/components/participant-drawer";
 import { useGetRegistrationQuery } from "@/hooks/query/registration";
+import { useRegistrationFormQuery } from "@/hooks/query/registration-form";
 import { useAuth } from "@/lib/auth-context";
 import { Registration } from "@workspace/models/db/registration";
+import { FormField } from "@workspace/models/dynamic-form";
 
-type Participant = {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-};
-
-// Dummy data for visualization
-const participants: Participant[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Attendee",
-    status: "Confirmed",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "Speaker",
-    status: "Pending",
-  },
-  {
-    id: "3",
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    role: "Attendee",
-    status: "Confirmed",
-  },
-];
-
-const columnHelper = createColumnHelper<Registration>();
-
-const columns = [
-  columnHelper.accessor("registrationData.name", {
-    header: "Name",
-    cell: (info) => <span className="font-medium">{info.getValue()}</span>,
-  }),
-  columnHelper.accessor("registrationData.email", {
-    header: "Email",
-  }),
-];
+/**
+ * Generate dynamic table columns based on registration form fields
+ */
+function generateColumnsFromFormFields(
+  fields: FormField[],
+): ColumnDef<Registration>[] {
+  return fields.map((field) => ({
+    id: field.id,
+    accessorFn: (row: Registration) => row.registrationData?.[field.id],
+    header: field.label,
+    cell: ({ getValue }) => {
+      const value = getValue();
+      if (value === undefined || value === null) {
+        return <span className="text-muted-foreground">-</span>;
+      }
+      // Handle array values (e.g., multiselect)
+      if (Array.isArray(value)) {
+        return <span>{value.join(", ")}</span>;
+      }
+      return <span>{String(value)}</span>;
+    },
+  }));
+}
 
 function ParticipantsPage() {
   const { eventId } = useParams<{ eventId: string }>();
@@ -83,11 +63,31 @@ function ParticipantsPage() {
   );
   const pageSize = 10;
 
+  // State for participant drawer
+  const [selectedParticipant, setSelectedParticipant] =
+    useState<Registration | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // Fetch registration form to get form schema fields
+  const {
+    registrations: registrationForm,
+    isRegistrationLoading: isFormLoading,
+  } = useRegistrationFormQuery(user?.uid || "", eventId);
+
+  // Fetch registrations (participants)
   const { registrations, isRegistrationLoading, registrationError } =
     useGetRegistrationQuery(user?.uid || "", eventId, {
       lastDoc: lastDoc,
       pageSize: pageSize,
     });
+
+  // Get form fields for drawer and column generation
+  const formFields = registrationForm?.formSchema?.fields || [];
+
+  // Generate columns dynamically based on form schema fields
+  const columns = useMemo<ColumnDef<Registration>[]>(() => {
+    return generateColumnsFromFormFields(formFields);
+  }, [formFields]);
 
   const table = useReactTable({
     data: registrations?.data || [],
@@ -96,6 +96,11 @@ function ParticipantsPage() {
     manualPagination: true,
     pageCount: -1, // Unknown page count for cursor-based pagination
   });
+
+  const handleRowClick = (participant: Registration) => {
+    setSelectedParticipant(participant);
+    setIsDrawerOpen(true);
+  };
 
   const handleNextPage = () => {
     if (registrations?.hasMore && registrations?.lastDoc) {
@@ -144,11 +149,22 @@ function ParticipantsPage() {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isFormLoading || isRegistrationLoading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length || 1}
+                  className="h-24 text-center"
+                >
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="cursor-pointer hover:bg-muted/50"
+                  onClick={() => handleRowClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -163,10 +179,12 @@ function ParticipantsPage() {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns.length || 1}
                   className="h-24 text-center"
                 >
-                  No participants found.
+                  {columns.length === 0
+                    ? "No registration form found for this event."
+                    : "No participants found."}
                 </TableCell>
               </TableRow>
             )}
@@ -196,6 +214,15 @@ function ParticipantsPage() {
           </Button>
         </div>
       </div>
+
+      {/* Participant Details Drawer */}
+      <ParticipantDrawer
+        participant={selectedParticipant}
+        formFields={formFields}
+        organizerId={user?.uid || ""}
+        open={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+      />
     </div>
   );
 }

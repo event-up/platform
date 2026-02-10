@@ -14,7 +14,7 @@ export const contactFormSchema: FormSchema = {
   description: "Please fill out this form to get in touch with us",
   fields: [
     {
-      name: "fullName",
+      id: "fullName",
       type: "text",
       label: "Full Name",
       placeholder: "John Doe",
@@ -26,7 +26,7 @@ export const contactFormSchema: FormSchema = {
       },
     },
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email Address",
       placeholder: "john@example.com",
@@ -34,14 +34,14 @@ export const contactFormSchema: FormSchema = {
       description: "We'll never share your email address",
     },
     {
-      name: "phone",
+      id: "phone",
       type: "phone",
       label: "Phone Number",
       placeholder: "+1 (555) 000-0000",
       required: false,
     },
     {
-      name: "message",
+      id: "message",
       type: "text",
       label: "Message",
       placeholder: "Your message here...",
@@ -63,25 +63,25 @@ export const eventRegistrationSchema: FormSchema = {
   description: "Register for our upcoming conference",
   fields: [
     {
-      name: "firstName",
+      id: "firstName",
       type: "text",
       label: "First Name",
       required: true,
     },
     {
-      name: "lastName",
+      id: "lastName",
       type: "text",
       label: "Last Name",
       required: true,
     },
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email",
       required: true,
     },
     {
-      name: "eventType",
+      id: "eventType",
       type: "dropdown",
       label: "Event Type",
       required: true,
@@ -93,7 +93,7 @@ export const eventRegistrationSchema: FormSchema = {
       ],
     },
     {
-      name: "ticketType",
+      id: "ticketType",
       type: "select",
       label: "Ticket Type",
       required: true,
@@ -104,7 +104,7 @@ export const eventRegistrationSchema: FormSchema = {
       ],
     },
     {
-      name: "interests",
+      id: "interests",
       type: "multiselect",
       label: "Areas of Interest",
       required: true,
@@ -128,7 +128,7 @@ export const surveyFormSchema: FormSchema = {
   description: "Help us improve by sharing your feedback",
   fields: [
     {
-      name: "customerName",
+      id: "customerName",
       type: "text",
       label: "Your Name",
       required: true,
@@ -138,13 +138,13 @@ export const surveyFormSchema: FormSchema = {
       },
     },
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email Address",
       required: false,
     },
     {
-      name: "department",
+      id: "department",
       type: "dropdown",
       label: "Which department did you interact with?",
       required: true,
@@ -156,7 +156,7 @@ export const surveyFormSchema: FormSchema = {
       ],
     },
     {
-      name: "satisfaction",
+      id: "satisfaction",
       type: "select",
       label: "How satisfied are you?",
       required: true,
@@ -169,7 +169,7 @@ export const surveyFormSchema: FormSchema = {
       ],
     },
     {
-      name: "feedback",
+      id: "feedback",
       type: "text",
       label: "Additional Feedback",
       required: false,
@@ -179,7 +179,7 @@ export const surveyFormSchema: FormSchema = {
       description: "Optional: Tell us more about your experience",
     },
     {
-      name: "topics",
+      id: "topics",
       type: "multiselect",
       label: "Topics you'd like us to focus on",
       options: [
@@ -201,7 +201,7 @@ export const userRegistrationSchema: FormSchema = {
   description: "Sign up for your free account",
   fields: [
     {
-      name: "username",
+      id: "username",
       type: "text",
       label: "Username",
       placeholder: "Enter your username",
@@ -215,19 +215,19 @@ export const userRegistrationSchema: FormSchema = {
       },
     },
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email Address",
       required: true,
     },
     {
-      name: "phone",
+      id: "phone",
       type: "phone",
       label: "Phone Number",
       required: true,
     },
     {
-      name: "country",
+      id: "country",
       type: "dropdown",
       label: "Country",
       required: true,
@@ -239,7 +239,7 @@ export const userRegistrationSchema: FormSchema = {
       ],
     },
     {
-      name: "interests",
+      id: "interests",
       type: "multiselect",
       label: "Your Interests",
       required: true,

@@ -1,6 +1,5 @@
 "use server";
 import {
-  BaseRegistration,
   ContactChannel,
   Registration,
 } from "@workspace/models/db/registration";
@@ -8,7 +7,6 @@ import { getRegistrationFormServer } from "@workspace/database/registration-form
 import { createRegistrationServer } from "@workspace/database/registration/post.server";
 import { getEventByDomainNameServer } from "@workspace/database/event/get.server";
 import { headers } from "next/headers";
-import { create } from "domain";
 
 export const createRegistration = async (
   eventId: string,

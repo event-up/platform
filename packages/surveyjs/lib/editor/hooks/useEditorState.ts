@@ -28,9 +28,9 @@ export function useEditorState(initialState?: Partial<EditorState>) {
   const addField = useCallback(
     (type: FieldType) => {
       const template = FIELD_TEMPLATES[type];
+      const fieldId = `${type}_${crypto.randomUUID()}`;
       const newField: FormField = {
-        id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        name: `question_${state.fields.length + 1}`,
+        id: fieldId,
         ...template.defaultProps,
       } as FormField;
 

@@ -47,15 +47,15 @@ export const PropertyEditor: React.FC<PropertyEditorProps> = ({
         </div>
 
         <div>
-          <Label htmlFor="name" className="text-sm font-medium mb-2 block">
-            Field Name (Internal)
+          <Label htmlFor="id" className="text-sm font-medium mb-2 block">
+            Field ID (Internal)
           </Label>
           <Input
-            id="name"
+            id="id"
             type="text"
-            value={field.name}
-            onChange={(e) => onUpdate({ name: e.target.value })}
-            placeholder="field_name"
+            value={field.id}
+            onChange={(e) => onUpdate({ id: e.target.value })}
+            placeholder="field_id"
             className="text-sm"
           />
         </div>

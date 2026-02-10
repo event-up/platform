@@ -27,10 +27,6 @@ function createFieldValidator(field: FormField): z.ZodType {
       break;
 
     case "select":
-    case "dropdown":
-      validator = z.string();
-      break;
-
     case "text":
     default:
       validator = z.string();
@@ -63,7 +59,7 @@ function createFieldValidator(field: FormField): z.ZodType {
         );
       } catch (e) {
         console.warn(
-          `Invalid regex pattern for field ${field.name}:`,
+          `Invalid regex pattern for field ${field.id}:`,
           field.validation.pattern,
         );
       }
@@ -104,7 +100,7 @@ export function createValidationSchema(
   const shape: Record<string, z.ZodType> = {};
 
   formSchema.fields.forEach((field) => {
-    shape[field.name] = createFieldValidator(field);
+    shape[field.id] = createFieldValidator(field);
   });
 
   return z.object(shape) as ValidationSchema;

@@ -7,7 +7,7 @@ export interface FormFieldOption {
 }
 
 export interface FormField {
-  name: string;
+  id: string;
   type: FieldType;
   label: string;
   placeholder?: string;

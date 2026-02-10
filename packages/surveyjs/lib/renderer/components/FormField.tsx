@@ -31,13 +31,13 @@ export function TextInputField<T extends FieldValues>({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={field.name}>{field.label}</Label>
+      <Label htmlFor={field.label}>{field.label}</Label>
       <Controller
-        name={field.name as Path<T>}
+        name={field.id as Path<T>}
         control={form.control}
         render={({ field: fieldProps }) => (
           <Input
-            id={field.name}
+            id={field.id}
             type="text"
             placeholder={field.placeholder}
             aria-invalid={!!error}
@@ -68,13 +68,13 @@ export function EmailInputField<T extends FieldValues>({
 }: BaseFieldProps<T>) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={field.name}>{field.label}</Label>
+      <Label htmlFor={field.id}>{field.label}</Label>
       <Controller
-        name={field.name as Path<T>}
+        name={field.id as Path<T>}
         control={form.control}
         render={({ field: fieldProps }) => (
           <Input
-            id={field.name}
+            id={field.id}
             type="email"
             placeholder={field.placeholder}
             aria-invalid={!!error}
@@ -105,13 +105,13 @@ export function PhoneInputField<T extends FieldValues>({
 }: BaseFieldProps<T>) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={field.name}>{field.label}</Label>
+      <Label htmlFor={field.id}>{field.label}</Label>
       <Controller
-        name={field.name as Path<T>}
+        name={field.id as Path<T>}
         control={form.control}
         render={({ field: fieldProps }) => (
           <Input
-            id={field.name}
+            id={field.id}
             type="tel"
             placeholder={field.placeholder || "+1 (555) 000-0000"}
             aria-invalid={!!error}
@@ -141,18 +141,18 @@ export function DropdownField<T extends FieldValues>({
   error,
 }: BaseFieldProps<T>) {
   const { watch } = form;
-  const value = watch(field.name as Path<T>);
+  const value = watch(field.id as Path<T>);
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={field.name}>{field.label}</Label>
+      <Label htmlFor={field.id}>{field.label}</Label>
       <Controller
-        name={field.name as Path<T>}
+        name={field.id as Path<T>}
         control={form.control}
         render={({ field: fieldProps }) => (
           <Select value={value || ""} onValueChange={fieldProps.onChange}>
             <SelectTrigger
-              id={field.name}
+              id={field.id}
               aria-invalid={!!error}
               className={
                 error
@@ -191,7 +191,7 @@ export function SingleSelectField<T extends FieldValues>({
   error,
 }: BaseFieldProps<T>) {
   const { watch } = form;
-  const value = watch(field.name as Path<T>);
+  const value = watch(field.id as Path<T>);
 
   return (
     <div className="space-y-2">
@@ -200,7 +200,7 @@ export function SingleSelectField<T extends FieldValues>({
         {field.options?.map((option) => (
           <Controller
             key={option.value}
-            name={field.name as Path<T>}
+            name={field.id as Path<T>}
             control={form.control}
             render={({ field: fieldProps }) => (
               <label className="flex items-center gap-2 cursor-pointer">
@@ -237,7 +237,7 @@ export function MultiSelectField<T extends FieldValues>({
   error,
 }: BaseFieldProps<T>) {
   const { watch } = form;
-  const value = (watch(field.name as Path<T>) || []) as string[];
+  const value = (watch(field.id as Path<T>) || []) as string[];
 
   return (
     <div className="space-y-2">
@@ -246,7 +246,7 @@ export function MultiSelectField<T extends FieldValues>({
         {field.options?.map((option) => (
           <Controller
             key={option.value}
-            name={field.name as Path<T>}
+            name={field.id as Path<T>}
             control={form.control}
             render={({ field: fieldProps }) => (
               <label className="flex items-center gap-2 cursor-pointer">
@@ -292,7 +292,6 @@ export function FormFieldComponent<T extends FieldValues>({
       return <EmailInputField field={field} form={form} error={error} />;
     case "phone":
       return <PhoneInputField field={field} form={form} error={error} />;
-    case "dropdown":
     case "select":
       return <DropdownField field={field} form={form} error={error} />;
     case "multiselect":

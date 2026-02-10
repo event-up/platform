@@ -13,10 +13,10 @@ import { contactFormSchema, eventRegistrationSchema } from "./examples";
 
 export function FormRendererDemo() {
   const [lastSubmittedData, setLastSubmittedData] = useState<FormValues | null>(
-    null
+    null,
   );
   const [selectedForm, setSelectedForm] = useState<"contact" | "event">(
-    "contact"
+    "contact",
   );
 
   const handleSubmit = async (data: FormValues) => {
@@ -155,7 +155,7 @@ const schema: FormSchema = {
   title: "My Form",
   fields: [
     {
-      name: "email",
+      id: "email",
       type: "email",
       label: "Email",
       required: true

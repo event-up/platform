@@ -15,7 +15,6 @@ export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
       label: "Text Question",
       placeholder: "Enter your answer",
       required: false,
-      name: "text_question",
     },
   },
   textarea: {

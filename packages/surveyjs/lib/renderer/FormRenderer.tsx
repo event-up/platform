@@ -78,11 +78,11 @@ export const FormRenderer: React.FC<FormRendererProps> = ({
 
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         {schema.fields.map((field) => (
-          <div key={field.name}>
+          <div key={field.id}>
             <FormFieldComponent
               field={field}
               form={form}
-              error={errors[field.name]?.message as string}
+              error={errors[field.id]?.message as string}
             />
           </div>
         ))}
