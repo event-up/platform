@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { FIELD_TEMPLATES, CONTACT_CHANNEL_FIELDS } from "../constants";
 import { Button } from "@workspace/ui/components/button";
 import { Plus, ChevronDown } from "lucide-react";
-import { FieldType } from "lib/renderer";
+import { FieldType } from "@workspace/models/dynamic-form";
 
 interface AddFieldCardProps {
   onAddField: (type: FieldType) => void;

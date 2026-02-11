@@ -75,4 +75,8 @@ const styles = {
     fontSize: "14px",
     color: "#999",
   } as React.CSSProperties,
+  placeholderText: {
+    fontSize: "14px",
+    color: "#999",
+  } as React.CSSProperties,
 };

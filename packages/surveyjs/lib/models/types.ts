@@ -2,7 +2,8 @@
  * Type definitions for the form editor
  */
 
-import { FieldType, FormField } from "lib/renderer";
+import type { FieldType } from "@workspace/models/dynamic-form";
+import type { FormField } from "../renderer/types";
 
 export type ContactChannelType = "phone" | "email";
 

@@ -50,11 +50,12 @@ export const FieldList: React.FC<FieldListProps> = ({
             ? fields.findIndex((f) => f.id === selectedFieldId)
             : null
         }
-        onSelectField={(index) => onSelectField(fields[index].id)}
-        onRemoveField={(index) => onRemoveField(fields[index].id)}
-        onUpdateField={(index, updates) =>
-          onUpdateField(fields[index].id, updates)
-        }
+        onSelectField={(index) => { const field = fields[index]; if (field) onSelectField(field.id); }}
+        onRemoveField={(index) => { const field = fields[index]; if (field) onRemoveField(field.id); }}
+        onUpdateField={(index, updates) => {
+          const field = fields[index];
+          if (field) onUpdateField(field.id, updates);
+        }}
         onReorderFields={onReorderFields}
       />
 

@@ -1,4 +1,4 @@
-import { Evßent } from "@workspace/models/db/event";
+import { Event } from "@workspace/models/db/event";
 import {
   collection,
   collectionGroup,

@@ -56,7 +56,7 @@ export const contactFormSchema: FormSchema = {
 
 /**
  * Event Registration Form Example
- * Demonstrates dropdown, single select, and multi-select
+ * Demonstrates select and multi-select
  */
 export const eventRegistrationSchema: FormSchema = {
   title: "Event Registration",
@@ -82,7 +82,7 @@ export const eventRegistrationSchema: FormSchema = {
     },
     {
       id: "eventType",
-      type: "dropdown",
+      type: "select",
       label: "Event Type",
       required: true,
       options: [
@@ -145,7 +145,7 @@ export const surveyFormSchema: FormSchema = {
     },
     {
       id: "department",
-      type: "dropdown",
+      type: "select",
       label: "Which department did you interact with?",
       required: true,
       options: [
@@ -228,7 +228,7 @@ export const userRegistrationSchema: FormSchema = {
     },
     {
       id: "country",
-      type: "dropdown",
+      type: "select",
       label: "Country",
       required: true,
       options: [

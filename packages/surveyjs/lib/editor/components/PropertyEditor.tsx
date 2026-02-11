@@ -33,15 +33,15 @@ export const PropertyEditor: React.FC<PropertyEditorProps> = ({
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="title" className="text-sm font-medium mb-2 block">
-            Question Title
+          <Label htmlFor="label" className="text-sm font-medium mb-2 block">
+            Question Label
           </Label>
           <Input
-            id="title"
+            id="label"
             type="text"
-            value={field.title}
-            onChange={(e) => onUpdate({ title: e.target.value })}
-            placeholder="Enter question title"
+            value={field.label}
+            onChange={(e) => onUpdate({ label: e.target.value })}
+            placeholder="Enter question label"
             className="text-sm"
           />
         </div>
@@ -94,65 +94,15 @@ export const PropertyEditor: React.FC<PropertyEditorProps> = ({
           />
         </div>
 
-        {field.type === "textarea" && (
-          <div>
-            <Label htmlFor="rows" className="text-sm font-medium mb-2 block">
-              Number of Rows
-            </Label>
-            <Input
-              id="rows"
-              type="number"
-              value={field.rows || 4}
-              onChange={(e) =>
-                onUpdate({ rows: parseInt(e.target.value) || 4 })
-              }
-              min="2"
-              max="20"
-              className="text-sm"
-            />
-          </div>
-        )}
 
-        {(field.type === "text" || field.type === "phone") && (
-          <div>
-            <Label
-              htmlFor="inputType"
-              className="text-sm font-medium mb-2 block"
-            >
-              Input Type
-            </Label>
-            <Select
-              value={field.inputType || "text"}
-              onValueChange={(value) => onUpdate({ inputType: value })}
-            >
-              <SelectTrigger id="inputType" className="text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {field.type === "text" && (
-                  <>
-                    <SelectItem value="text">Text</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="url">URL</SelectItem>
-                    <SelectItem value="number">Number</SelectItem>
-                  </>
-                )}
-                {field.type === "phone" && (
-                  <>
-                    <SelectItem value="tel">Phone</SelectItem>
-                    <SelectItem value="text">Text</SelectItem>
-                  </>
-                )}
-              </SelectContent>
-            </Select>
-          </div>
-        )}
+
+
 
         <div className="flex items-center gap-2 pt-2">
           <Checkbox
             id="required"
-            checked={field.isRequired}
-            onCheckedChange={(checked) => onUpdate({ isRequired: !!checked })}
+            checked={field.required}
+            onCheckedChange={(checked) => onUpdate({ required: !!checked })}
           />
           <Label
             htmlFor="required"

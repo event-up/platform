@@ -58,6 +58,7 @@ export function JobCreateForm({ onJobCreated }: JobCreateFormProps) {
         completedCount: 0,
         failedCount: 0,
         recipientsReference,
+        completedAt:null,
         notifyChannel: {
           channelType,
           messageTemplate,

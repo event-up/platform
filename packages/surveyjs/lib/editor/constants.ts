@@ -2,7 +2,7 @@
  * Constants for the form editor
  */
 
-import { FieldType } from "lib/renderer";
+import { FieldType } from "@workspace/models/dynamic-form";
 import { FieldTemplate } from "../models/types";
 
 export const FIELD_TEMPLATES: Record<FieldType, FieldTemplate> = {
