@@ -1,11 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 
 const HeroSection: React.FC = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const images = [
+    '/images/experience/image1.jpg',
+    '/images/experience/image2.jpg',
+    '/images/experience/image3.jpg'
+  ];
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % images.length);
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Background decorative elements - subtle and clean */}
@@ -15,45 +32,83 @@ const HeroSection: React.FC = () => {
       </div>
 
       <Container className="relative z-10 py-16 md:py-20 lg:py-32 px-4">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Eyebrow Label */}
-          <Badge variant="primary" className="mb-4 md:mb-6 animate-fade-in">
-            Event Attendance Management Platform
-          </Badge>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left Side - Content */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            {/* Eyebrow Label */}
+            {/* <Badge variant="primary" className="mb-4 md:mb-6 animate-fade-in">
+              Event Attendance Management Platform
+            </Badge> */}
 
-          {/* Headline */}
-          <h1 className="mb-4 md:mb-6 text-foreground animate-slide-up px-4">
-            Level up your event.
-          </h1>
+            {/* Headline */}
+            <div className="mb-4 md:mt-5 md:mb-6 text-5xl tracking-tight font-semibold md:text-6xl  text-foreground animate-slide-up">
+              Level up your event.
+            </div>
 
-          {/* Subheadline */}
-          <h2 className="mb-4 md:mb-6 text-xl md:text-2xl lg:text-3xl font-semibold text-muted animate-slide-up px-4" style={{ animationDelay: '0.1s' }}>
-            We handle registration and attendance. You run the event.
-          </h2>
+            {/* Subheadline */}
+            <div className="mb-4 md:mb-6 text-2xl md:text-3xl tracking lg:text-4xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              The check-in experience your event deserves.
+            </div>
 
-          {/* Supporting Text */}
-          <p className="mb-8 md:mb-10 text-base md:text-lg lg:text-xl text-muted max-w-3xl leading-relaxed animate-slide-up px-4" style={{ animationDelay: '0.2s' }}>
-            From the first sign-up to the last scan at the door, Eventup keeps everything organised — so your team stays calm, your guests move fast, and you always know what's happening.
-          </p>
+            {/* Supporting Text */}
+            <p className="mb-8 md:mb-10 hidden md:block  text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              From registration to the final scan, EventUp keeps your team in control and your guests moving.
+            </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8 animate-slide-up px-4" style={{ animationDelay: '0.3s' }}>
-            <Button variant="primary" size="lg" href="#get-started">
-              Get Started Free
-            </Button>
-            <Button variant="secondary" size="lg" href="#demo">
-              See It in Action
-            </Button>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8 animate-slide-up justify-center lg:justify-start" style={{ animationDelay: '0.3s' }}>
+              <Button variant="primary" size="md" href="#get-started">
+                Get Started Free
+              </Button>
+              <Button variant="secondary" className='border' size="md" href="#demo">
+                See It in Action
+              </Button>
+            </div>
+
+            {/* Reassurance Line
+            <p className="text-sm text-muted flex flex-wrap items-start gap-2 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <span>No credit card required</span>
+              <span className="hidden sm:inline">·</span>
+              <span>Any event type</span>
+              <span className="hidden sm:inline">·</span>
+              <span>Ready in minutes</span>
+            </p> */}
           </div>
 
-          {/* Reassurance Line */}
-          <p className="text-sm text-muted flex flex-wrap items-center justify-center gap-2 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <span>No credit card required</span>
-            <span className="hidden sm:inline">·</span>
-            <span>Any event type</span>
-            <span className="hidden sm:inline">·</span>
-            <span>Ready in minutes</span>
-          </p>
+          {/* Right Side - Auto-sliding Image Carousel */}
+          <div className="relative h-[500px] lg:h-[600px] rounded-2xl overflow-hidden ">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                  index === currentSlide 
+                    ? 'opacity-100 scale-100' 
+                    : 'opacity-0 scale-105'
+                }`}
+                style={{
+                  backgroundImage: `url(${image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            ))}
+            
+            {/* Slide Indicators */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide 
+                      ? 'w-8 bg-white' 
+                      : 'w-2 bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </Container>
 

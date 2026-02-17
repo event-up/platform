@@ -72,7 +72,7 @@ const HowItWorksSection: React.FC = () => {
             How It Works
           </Badge>
           <h2 className="mb-4 md:mb-6 text-foreground">
-            From setup to check-in<br className="hidden sm:block"/>in five simple steps
+            Form setup to check-in<br className="hidden sm:block"/>in five simple steps
           </h2>
           <p className="text-base md:text-lg text-muted max-w-2xl mx-auto">
             Everything you need to manage your event attendance — simplified and automated.

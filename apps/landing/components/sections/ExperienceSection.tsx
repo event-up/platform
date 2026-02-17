@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Container from '../ui/Container';
 import Badge from '../ui/Badge';
 
 const ExperienceSection: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const facts = [
@@ -23,21 +22,6 @@ const ExperienceSection: React.FC = () => {
     }
   ];
 
-  const images = [
-    '/images/experience/image1.jpg',
-    '/images/experience/image2.jpg',
-    '/images/experience/image3.jpg'
-  ];
-
-  // Auto-slide functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 4000); // Change slide every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [images.length]);
-
   return (
     <section className="py-20 lg:py-32 bg-white">
       <Container>
@@ -54,9 +38,8 @@ const ExperienceSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Fact Cards in Column */}
+        {/* Centered Fact Cards */}
+        <div className="max-w-4xl mx-auto">
           <div className="flex flex-col gap-6">
             {facts.map((fact, index) => (
               <div 
@@ -105,41 +88,6 @@ const ExperienceSection: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Right Side - Auto-sliding Image Carousel */}
-          <div className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-                  index === currentSlide 
-                    ? 'opacity-100 scale-100' 
-                    : 'opacity-0 scale-105'
-                }`}
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              />
-            ))}
-            
-            {/* Slide Indicators */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentSlide 
-                      ? 'w-8 bg-white' 
-                      : 'w-2 bg-white/50 hover:bg-white/75'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </Container>
