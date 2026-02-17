@@ -25,11 +25,11 @@ const FeaturesSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-b from-white to-secondary-cream/30">
+    <section className="py-16 md:py-20 lg:py-32 bg-gradient-to-b from-white to-secondary-cream/10">
       <Container>
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <Badge variant="primary" className="mb-6">
+        <div className="text-center mb-16 md:mb-20 px-4">
+          <Badge variant="primary" className="mb-4 md:mb-6">
             How It Works
           </Badge>
           <h2 className="text-foreground">

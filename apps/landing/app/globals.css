@@ -21,10 +21,10 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   
-  /* Blur */
-  --blur-sm: 8px;
-  --blur-md: 16px;
-  --blur-lg: 24px;
+  /* Blur - reduced for cleaner appearance */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 12px;
 }
 
 @theme inline {
@@ -67,7 +67,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: #FFFFFF;
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -95,17 +95,33 @@ h3 {
   font-size: 1.875rem;
 }
 
+/* Tablet breakpoint */
 @media (max-width: 768px) {
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   h2 {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
   
   h3 {
     font-size: 1.5rem;
+  }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
   }
 }
 
@@ -116,12 +132,32 @@ h3 {
 }
 
 .glass-effect {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(var(--blur-lg));
-  -webkit-backdrop-filter: blur(var(--blur-lg));
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .smooth-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Animations */
+@keyframes dash-flow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 16px 0;
+  }
+}
+
+.animate-dash-flow {
+  background-image: linear-gradient(to right, #0097B2 50%, transparent 50%);
+  background-size: 16px 2px;
+  background-repeat: repeat-x;
+  animation: dash-flow 0.8s linear infinite;
+  border: none !important;
+}
+
+

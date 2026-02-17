@@ -7,37 +7,37 @@ import Badge from '../ui/Badge';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-secondary-cream via-white to-primary/5">
-      {/* Background decorative elements */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+      {/* Background decorative elements - subtle and clean */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-0 w-96 h-96 bg-primary/20 rounded-full blur-xl animate-morph-1"></div>
-        <div className="absolute bottom-20 left-0 w-80 h-80 bg-primary/20 rounded-full blur-xl animate-morph-2"></div>
+        <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-morph-1"></div>
+        <div className="absolute bottom-20 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-morph-2"></div>
       </div>
 
-      <Container className="relative z-10 py-20 lg:py-32">
+      <Container className="relative z-10 py-16 md:py-20 lg:py-32 px-4">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Eyebrow Label */}
-          <Badge variant="primary" className="mb-6 animate-fade-in">
+          <Badge variant="primary" className="mb-4 md:mb-6 animate-fade-in">
             Event Attendance Management Platform
           </Badge>
 
           {/* Headline */}
-          <h1 className="mb-6 text-foreground animate-slide-up">
+          <h1 className="mb-4 md:mb-6 text-foreground animate-slide-up px-4">
             Level up your event.
           </h1>
 
           {/* Subheadline */}
-          <h2 className="mb-6 text-2xl lg:text-3xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <h2 className="mb-4 md:mb-6 text-xl md:text-2xl lg:text-3xl font-semibold text-muted animate-slide-up px-4" style={{ animationDelay: '0.1s' }}>
             We handle registration and attendance. You run the event.
           </h2>
 
           {/* Supporting Text */}
-          <p className="mb-10 text-lg lg:text-xl text-muted max-w-3xl leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="mb-8 md:mb-10 text-base md:text-lg lg:text-xl text-muted max-w-3xl leading-relaxed animate-slide-up px-4" style={{ animationDelay: '0.2s' }}>
             From the first sign-up to the last scan at the door, Eventup keeps everything organised — so your team stays calm, your guests move fast, and you always know what's happening.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8 animate-slide-up px-4" style={{ animationDelay: '0.3s' }}>
             <Button variant="primary" size="lg" href="#get-started">
               Get Started Free
             </Button>

@@ -24,9 +24,9 @@ const Navigation: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
+    <nav className="fixed top-2 md:top-4 left-0 right-0 z-50 flex justify-center px-2 md:px-4">
       <div
-        className={`flex items-center gap-6 px-6 py-3 rounded-full smooth-transition ${
+        className={`flex items-center gap-2 md:gap-4 lg:gap-6 px-3 md:px-4 lg:px-6 py-2 md:py-3 rounded-full smooth-transition ${
           isScrolled
             ? 'bg-white/90 backdrop-blur-lg shadow-lg'
             : 'bg-white/80 backdrop-blur-md shadow-md'
@@ -39,16 +39,16 @@ const Navigation: React.FC = () => {
             alt="Eventup Logo"
             width={120}
             height={32}
-            className="h-7 w-auto"
+            className="h-6 md:h-7 w-auto"
             priority
           />
         </Link>
 
         {/* Vertical Divider */}
-        <div className="h-6 w-px bg-gray-300" />
+        <div className="h-5 md:h-6 w-px bg-gray-300" />
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -61,10 +61,10 @@ const Navigation: React.FC = () => {
         </div>
 
         {/* Vertical Divider */}
-        <div className="hidden md:block h-6 w-px bg-gray-300" />
+        <div className="hidden md:block h-5 md:h-6 w-px bg-gray-300" />
 
         {/* Sign Up Button */}
-        <Button variant="primary" size="sm" href="#signup" className="flex-shrink-0">
+        <Button variant="primary" size="sm" href="#signup" className="flex-shrink-0 text-sm px-3 md:px-4">
           Sign Up
         </Button>
       </div>
