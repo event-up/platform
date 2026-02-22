@@ -1,79 +1,78 @@
 import React from 'react';
 import Container from '../ui/Container';
-import Badge from '../ui/Badge';
 
 const FeaturesSection: React.FC = () => {
   const features = [
     {
-      label: "Form Creation",
-      title: "Build your registration form",
-      description: "Create a clean, branded registration form in minutes. Share the link and watch your guest list fill up automatically — organised, searchable, and ready for event day without any manual work on your end.",
-      position: "right" as const
+      icon: (
+        <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      ),
+      title: "Built-In Registration Forms",
+      description: "Stop juggling spreadsheets. Create beautiful, branded registration forms that collect exactly what you need."
     },
     {
-      label: "Automated Invitations",
-      title: "Send invitations automatically",
-      description: "The moment someone registers, Eventup sends them a personalised invitation with their unique QR code — by SMS, email, or both. No bulk sending, no copy-pasting, no follow-up needed. Every attendee arrives prepared.",
-      position: "left" as const
+      icon: (
+        <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        </svg>
+      ),
+      title: "Personalized Invitations with QR Codes",
+      description: "Send every attendee a custom invitation automatically along with their unique QR code. No manual sending, no mix-ups."
     },
     {
-      label: "QR Check-In & Live Tracking",
-      title: "Scan in. Update instantly.",
-      description: "On the day, volunteers scan QR codes on any smartphone. Each scan is confirmed in under five seconds and your attendance dashboard updates live. Multiple entrances, one unified view. Nothing falls through the gaps.",
-      position: "right" as const
+      icon: (
+        <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+        </svg>
+      ),
+      title: "Fast Check-In via QR Scanner",
+      description: "Skip the chaos at the entrance. Scan attendees in seconds using any smartphone : no expensive hardware required."
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+      ),
+      title: "Real-Time Attendance Tracking",
+      description: "Know exactly who's arrived, who's missing, and how many guests you have—updated live as people check in."
     }
   ];
 
   return (
-    <section className="py-16 md:py-20 lg:py-32 bg-gradient-to-b from-white to-secondary-cream/10">
+    <section className="py-12 md:py-20 lg:py-28 bg-gradient-to-b from-white to-secondary-cream/10">
       <Container>
-        {/* Section Header */}
-        <div className="text-center mb-16 md:mb-20 px-4">
-          <Badge variant="primary" className="mb-4 md:mb-6">
-            How It Works
-          </Badge>
-          <h2 className="text-foreground">
-            Three things that make event day<br className="hidden sm:block"/>genuinely easier.
+        {/* Section Header - Mobile First */}
+        <div className="text-center mb-10 md:mb-16 px-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4">
+            What is EventUp?
           </h2>
+          <p className="text-base md:text-lg lg:text-xl text-muted max-w-2xl mx-auto leading-relaxed">
+            A platform that provides tools to streamline your event attendance management
+          </p>
         </div>
 
-        {/* Features */}
-        <div className="space-y-24 lg:space-y-32">
+        {/* Features Grid - Mobile First */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 px-4 md:px-0">
           {features.map((feature, index) => (
             <div 
               key={index}
-              className={`flex flex-col ${feature.position === 'left' ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-16 items-center`}
+              className="group p-6 md:p-8 rounded-2xl md:rounded-3xl bg-white/50 hover:bg-white border border-primary/10 hover:border-primary/30 smooth-transition hover:shadow-lg"
             >
-              {/* Animation Placeholder */}
-              <div className="flex-1 w-full">
-                <div className="aspect-video rounded-3xl bg-gradient-to-br from-primary/20 to-secondary-tan/20 glass-effect flex items-center justify-center group hover:scale-105 smooth-transition">
-                  <div className="text-center p-8">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-primary/20 flex items-center justify-center">
-                      <svg className="w-10 h-10 text-primary" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                        {index === 0 && <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>}
-                        {index === 1 && <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>}
-                        {index === 2 && <path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>}
-                      </svg>
-                    </div>
-                    <p className="text-sm text-muted font-medium">
-                      Animation placeholder - can be replaced later
-                    </p>
-                  </div>
-                </div>
+              {/* Icon */}
+              <div className="w-12 h-12 md:w-14 md:h-14 mb-4 md:mb-5 rounded-xl md:rounded-2xl bg-gradient-to-br from-primary/20 to-secondary-tan/20 flex items-center justify-center text-primary group-hover:scale-110 smooth-transition">
+                {feature.icon}
               </div>
 
               {/* Content */}
-              <div className="flex-1">
-                <Badge variant="secondary" className="mb-4">
-                  {feature.label}
-                </Badge>
-                <h3 className="mb-4 text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="text-lg text-muted leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
+              <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-foreground mb-2 md:mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-sm md:text-base text-muted leading-relaxed">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>

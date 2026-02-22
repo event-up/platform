@@ -8,7 +8,7 @@ const HowItWorksSection: React.FC = () => {
   const steps = [
     {
       number: 1,
-      title: "Create Registration Form",
+      title: "Create a Registration Form and share the link",
       description: "Build a custom registration form in minutes with your branding and required fields.",
       icon: (
         <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,7 +19,7 @@ const HowItWorksSection: React.FC = () => {
     },
     {
       number: 2,
-      title: "Participants Fill the Form",
+      title: "Get Registration",
       description: "Your attendees register with their details — everything is automatically organized in your dashboard.",
       icon: (
         <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,10 +72,10 @@ const HowItWorksSection: React.FC = () => {
             How It Works
           </Badge>
           <h2 className="mb-4 md:mb-6 text-foreground">
-            Form setup to check-in<br className="hidden sm:block"/>in five simple steps
+            Attendee Registration to Check-In<br className="hidden sm:block"/> in few simple steps
           </h2>
           <p className="text-base md:text-lg text-muted max-w-2xl mx-auto">
-            Everything you need to manage your event attendance — simplified and automated.
+            Everything you need to manage your event attendance alogn with the real time analytics
           </p>
         </div>
 
@@ -89,16 +89,16 @@ const HowItWorksSection: React.FC = () => {
                 <div className="relative mb-6 w-full flex items-center justify-center">
                   {/* Connecting Line - Left Side */}
                   {index > 0 && (
-                    <div className="absolute right-1/2 top-1/2 w-[calc(50%+1.5rem)] h-0.5 -translate-y-1/2 mr-10 overflow-hidden">
-                      <div className="h-full border-t-2 border-dashed border-primary/40 animate-dash-flow"></div>
-                    </div>
+                    <svg className="absolute right-1/2 top-1/2 w-[calc(50%+1.5rem)] h-1 -translate-y-1/2 mr-10" viewBox="0 0 100 2" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                      <line x1="0" y1="1" x2="100" y2="1" className="animate-dash-flow" stroke="rgb(139 92 246 / 0.4)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                    </svg>
                   )}
                   
                   {/* Connecting Line - Right Side */}
                   {index < steps.length - 1 && (
-                    <div className="absolute left-1/2 top-1/2 w-[calc(50%+1.5rem)] h-0.5 -translate-y-1/2 ml-10 overflow-hidden">
-                      <div className="h-full border-t-2 border-dashed border-primary/40 animate-dash-flow"></div>
-                    </div>
+                    <svg className="absolute left-1/2 top-1/2 w-[calc(50%+1.5rem)] h-1 -translate-y-1/2 ml-10" viewBox="0 0 100 2" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                      <line x1="0" y1="1" x2="100" y2="1" className="animate-dash-flow" stroke="rgb(139 92 246 / 0.4)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                    </svg>
                   )}
                   
                   {/* Flip Circle Container */}
@@ -129,7 +129,7 @@ const HowItWorksSection: React.FC = () => {
         </div>
 
         {/* Mobile Vertical Timeline */}
-        <div className="lg:hidden space-y-8">
+        <div className="lg:hidden space-y-4">
           {steps.map((step, index) => (
             <div key={index} className="flex gap-6 group">
               {/* Left: Icon and Connector */}
@@ -149,9 +149,11 @@ const HowItWorksSection: React.FC = () => {
                   </div>
                 </div>
                 
-                {/* Connector Line */}
+                {/* Connector Line - Dashed Animated */}
                 {index < steps.length - 1 && (
-                  <div className="w-1 h-16 bg-gradient-to-b from-primary/30 to-secondary-tan/30 mt-4"></div>
+                  <svg className="w-1 h-8 mt-2" viewBox="0 0 2 100" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                    <line x1="1" y1="0" x2="1" y2="100" className="animate-dash-flow" stroke="rgb(139 92 246 / 0.4)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                  </svg>
                 )}
               </div>
 
@@ -175,6 +177,19 @@ const HowItWorksSection: React.FC = () => {
           </div>
         </div>
       </Container>
+
+      <style jsx>{`
+        @keyframes dash-flow {
+          to {
+            stroke-dashoffset: -20;
+          }
+        }
+
+        .animate-dash-flow {
+          stroke-dasharray: 5 5;
+          animation: dash-flow 1s linear infinite;
+        }
+      `}</style>
     </section>
   );
 };

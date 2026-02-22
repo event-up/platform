@@ -2,7 +2,8 @@
 
 import BottomNav, { NavigationItem } from "@/components/BottomNav";
 import { Providers } from "@/components/providers";
-import { LucideIcon, ScanLineIcon, SearchIcon } from 'lucide-react';
+import { AuthProvider } from "@/lib/auth-context";
+import { ScanLineIcon, SearchIcon } from 'lucide-react';
 
 const navigationItems: NavigationItem[] = [
   { name: 'Scanner', value: 'scanner', icon: ScanLineIcon, path: '/scanner' },
@@ -16,10 +17,13 @@ export default function CheckerLayout({
 }) {
   return (
     <Providers>
-      <div className="min-h-screen pb-16">
-        {children}
-      </div>
-      <BottomNav items={navigationItems} />
+      <AuthProvider>
+        <div className="min-h-screen pb-16">
+          {children}
+        </div>
+        <BottomNav items={navigationItems} />
+      </AuthProvider>
     </Providers>
   );
 }
+

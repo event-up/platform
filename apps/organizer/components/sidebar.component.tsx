@@ -14,9 +14,9 @@ import {
 } from "@workspace/ui/components/sidebar";
 import { Button } from "@workspace/ui/components/button";
 import Link from "next/link";
-import { useParams, usePathname, useRouter } from "next/navigation"
+import Image from "next/image";
+import { useParams, usePathname, useRouter, useSelectedLayoutSegment } from "next/navigation"
 import {
-  Calendar,
   BarChart3,
   Users,
   Settings,
@@ -27,6 +27,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import { cn } from "@workspace/ui/lib/utils";
 interface NavItem {
   title: string;
   url: string;
@@ -67,10 +68,12 @@ export default function SidebarComponent() {
     },
   ];
   const isActive = (url: string) => {
-    if (url === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(url);
+   const pattern = url
+    .replace(/:[^/]+/g, "[^/]+")  // replace :id
+    .replace(/\*/g, ".*");        // wildcard
+
+  const regex = new RegExp(`^${pattern}$`);
+  return regex.test(pathname);
   };
 
   const handleSignOut = async () => {
@@ -89,7 +92,12 @@ export default function SidebarComponent() {
 
       return (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={active} tooltip={item.title}>
+          <SidebarMenuButton
+            asChild
+            // isActive={active}
+            tooltip={item.title}
+            className={cn(active && "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground")}
+          >
             <Link href={item.url}>
               <Icon className="size-4" />
               <span>{item.title}</span>
@@ -104,15 +112,14 @@ export default function SidebarComponent() {
     <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-2 px-2 py-2">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-            <Calendar className="size-4" />
-          </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Event Manager</span>
-            <span className="truncate text-xs text-muted-foreground">
-              Organizer Dashboard
-            </span>
-          </div>
+          <Image
+            src="/assets/images/eventup-logo.svg"
+            alt="EventUp"
+            width={120}
+            height={48}
+            className="h-8 w-auto"
+            priority
+          />
         </div>
       </SidebarHeader>
 

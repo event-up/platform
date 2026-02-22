@@ -25,7 +25,7 @@ export default function EventPage() {
 
   if (!eventId) {
     return (
-      <div className="p-6">
+      <div>
         <h1 className="text-2xl font-semibold mb-4">Event Not Found</h1>
         <p className="text-muted-foreground mb-4">
           The event with ID <strong>{eventId}</strong> could not be found.
@@ -39,7 +39,7 @@ export default function EventPage() {
 
   if (isEventLoading || !event) {
     return (
-      <div className="p-6">
+      <div>
         <h1 className="text-2xl font-semibold mb-4">Loading Event</h1>
         <div className="flex justify-center py-8">
           <Spinner />
@@ -50,7 +50,7 @@ export default function EventPage() {
 
   if (eventError) {
     return (
-      <div className="p-6">
+      <div>
         <h1 className="text-2xl font-semibold mb-4">Event Not Found</h1>
         <p className="text-muted-foreground mb-4">
           The event with ID <strong>{eventId}</strong> could not be found.
@@ -63,7 +63,7 @@ export default function EventPage() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <div className="mb-6">
         <Link href="/">
           <Button variant="ghost" className="mb-4">

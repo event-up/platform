@@ -41,7 +41,7 @@ const HeroSection: React.FC = () => {
             </Badge> */}
 
             {/* Headline */}
-            <div className="mb-4 md:mt-5 md:mb-6 text-5xl tracking-tight font-semibold md:text-6xl  text-foreground animate-slide-up">
+            <div className="mb-4 mt-6 md:mt-5 md:mb-6 text-4xl tracking-tight font-semibold md:text-6xl  text-foreground animate-slide-up">
               Level up your event.
             </div>
 
@@ -51,7 +51,7 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Supporting Text */}
-            <p className="mb-8 md:mb-10 hidden md:block  text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <p className="mb-8 md:mb-10 hidden md:block tracking-tight  text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
               From registration to the final scan, EventUp keeps your team in control and your guests moving.
             </p>
 
@@ -113,7 +113,7 @@ const HeroSection: React.FC = () => {
       </Container>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-0 right-0 md:left-1/2 md:right-auto flex justify-center md:block md:transform md:-translate-x-1/2 animate-bounce">
         <svg className="w-6 h-6 text-muted" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
@@ -201,10 +201,21 @@ const HeroSection: React.FC = () => {
 
         @keyframes bounce {
           0%, 100% {
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
           }
           50% {
-            transform: translateX(-50%) translateY(-10px);
+            transform: translateY(-10px);
+          }
+        }
+
+        @media (min-width: 768px) {
+          @keyframes bounce {
+            0%, 100% {
+              transform: translateX(-50%) translateY(0);
+            }
+            50% {
+              transform: translateX(-50%) translateY(-10px);
+            }
           }
         }
       `}</style>
