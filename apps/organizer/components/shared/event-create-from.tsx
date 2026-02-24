@@ -75,6 +75,9 @@ export function EventCreateForm() {
         description: data.description,
         organizerId: user?.uid,
         domainName: composedDomain,
+        entrances: null,
+        checkers: null,
+        scannerAccess: "anyone-have-link",
       });
 
       if (res && res.eventId) {
