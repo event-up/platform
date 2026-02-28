@@ -95,13 +95,14 @@ export function JobCreateForm({ onJobCreated }: JobCreateFormProps) {
           Create New Job
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent className="overflow-y-auto p-4">
         <SheetHeader>
           <SheetTitle>Create Invitation Job</SheetTitle>
           <SheetDescription>
             Set up a new invitation sending job for your event
           </SheetDescription>
         </SheetHeader>
+
         <form onSubmit={handleSubmit} className="space-y-6 mt-6">
           <div className="space-y-2">
             <Label htmlFor="jobName">Job Name</Label>

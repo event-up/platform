@@ -5,16 +5,12 @@ import Badge from '../ui/Badge';
 const ExperienceSection: React.FC = () => {
   const facts = [
     {
-      title: "Fully digitalized and robust attandance records",
+      title: "Fully digitalized and robust attandance record keeping",
       description: "No more manual entry, no more spreadsheets, no more lost attendees. EventUp handles everything digitally and you can access eveything from your mobile."
     },
     {
       title: "You always know exactly what's happening",
       description: "From the moment doors open, you have a live view of attendance — how many people have arrived, how many are still expected, and how each entrance is moving. You're not guessing or waiting until the end to find out. You're in control, in real time, from wherever you are."
-    },
-    {
-      title: "Your team can handle the day without you micromanaging it",
-      description: "Volunteers get a tool that's simple enough to use without any training. You set things up beforehand, share a link, and on the day your team runs the door confidently. Less briefing, fewer mistakes, less stress landing on you."
     }
   ];
 
@@ -27,7 +23,7 @@ const ExperienceSection: React.FC = () => {
             The Experience
           </Badge>
           <h2 className="mb-6 text-foreground">
-            We Took Attendance Off Your To-Do List
+            We Take Attendance Off Your To-Do List
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Let your guests check in with a scan while you focus on what actually matters, making your event unforgettable.

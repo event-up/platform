@@ -8,4 +8,7 @@ export type Event = {
   eventId: string;
   organizerId: string;
   domainName: string;
+  entrances: string[] | null;
+  checkers: { email: string, name: string, entrance: string }[] | null;
+  scannerAccess: "anyone-have-link" | "assigned-checkers"
 };

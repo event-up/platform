@@ -1,8 +1,6 @@
-import Navigation from '@/components/layout/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
-import HowItWorksSection from '@/components/sections/HowItWorksSection';
-import ExperienceSection from '@/components/sections/ExperienceSection';
 import FeaturesSection from '@/components/sections/FeaturesSection';
+import ControlSection from '@/components/sections/ControlSection';
 import StatsSection from '@/components/sections/StatsSection';
 import AudienceSection from '@/components/sections/AudienceSection';
 import CTASection from '@/components/sections/CTASection';
@@ -10,16 +8,22 @@ import CTASection from '@/components/sections/CTASection';
 export default function Home() {
   return (
     <>
-      <Navigation />
-      <main className="min-h-screen ">
+      <section id="hero">
         <HeroSection />
+      </section>
+      <section id="features">
         <FeaturesSection />
-        {/* <HowItWorksSection /> */}
-        <ExperienceSection />
-        <StatsSection />
+      </section>
+      <section id="how-it-works">
+        <ControlSection />
+      </section>
+      <StatsSection />
+      <section id="audience">
         <AudienceSection />
+      </section>
+      <section id="get-started">
         <CTASection />
-      </main>
+      </section>
     </>
   );
 }

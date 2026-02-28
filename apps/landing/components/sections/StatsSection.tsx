@@ -4,18 +4,19 @@ import Badge from '../ui/Badge';
 
 const StatsSection: React.FC = () => {
   const stats = [
+    // {
+    //   number: "500+",
+    //   label: "Events conducted on the platform"
+    // },
     {
-      number: "500+",
-      label: "Events conducted on the platform"
+      number: "3000+",
+      label: "Event Invitations sent"
     },
-    {
-      number: "50,000+",
+       {
+      number: "2500+",
       label: "Participants checked in"
     },
-    {
-      number: "~4 sec",
-      label: "Average check-in time per attendee"
-    }
+
   ];
 
   return (
@@ -33,12 +34,12 @@ const StatsSection: React.FC = () => {
             By the Numbers
           </Badge>
           <h2 className="text-foreground">
-            Organizers trust Eventup.<br className="hidden sm:block"/>The numbers back it up.
+            Organizers trust Eventup.<br className="hidden sm:block"/>
           </h2>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="flex justify-center flex-row gap-3">
           {stats.map((stat, index) => (
             <div 
               key={index}

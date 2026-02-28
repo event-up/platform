@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
+import { env } from '@/env';
 
 const HeroSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -56,10 +57,10 @@ const HeroSection: React.FC = () => {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8 animate-slide-up justify-center lg:justify-start" style={{ animationDelay: '0.3s' }}>
-              <Button variant="primary" size="md" href="#get-started">
-                Get Started Free
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8 animate-slide-up justify-center lg:justify-start items-center sm:items-stretch" style={{ animationDelay: '0.3s' }}>
+                <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
+                  Upgrade My Next Event
+                </Button>
               <Button variant="secondary" className='border' size="md" href="#demo">
                 See It in Action
               </Button>
