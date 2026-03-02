@@ -1,9 +1,10 @@
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
-  title: 'About Us — EventUp',
+  title: 'About Us | EventUp',
   description: 'Learn about EventUp, the event attendance management platform built for modern event organizers.',
 };
 
@@ -16,7 +17,7 @@ export default function AboutPage() {
         </svg>
       ),
       title: 'Built for Speed',
-      description: 'Every second at the door matters. EventUp is engineered to check in guests in under 4 seconds — no delays, no bottlenecks.',
+      description: 'Every second at the door matters. EventUp is engineered to check in guests in under 4 seconds - no delays, no bottlenecks.',
     },
     {
       icon: (
@@ -138,6 +139,53 @@ export default function AboutPage() {
                   <p className="text-muted leading-relaxed">{value.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Founders */}
+        <section className="py-16 md:py-24 bg-gray-50/50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 block">The Team</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-16">Founders of EventUp</h2>
+            
+            <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24 mb-16">
+              {/* Founder 1 */}
+              <div className="flex flex-col items-center">
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl relative">
+                  <Image
+                    src="/images/team/founder_1.png"
+                    alt="Founder 1"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">Alex Chen</h3>
+                <p className="text-primary font-medium">Co-Founder & CEO</p>
+              </div>
+
+              {/* Founder 2 */}
+              <div className="flex flex-col items-center">
+                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl relative">
+                  <Image
+                    src="/images/team/founder_2.png"
+                    alt="Founder 2"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-1">Sarah Jenkins</h3>
+                <p className="text-primary font-medium">Co-Founder & CTO</p>
+              </div>
+            </div>
+
+            <div className="max-w-3xl mx-auto relative">
+              <svg className="absolute -top-6 -left-8 w-16 h-16 text-primary/10 transform -rotate-6" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+              </svg>
+              <blockquote className="text-xl md:text-2xl font-medium text-foreground italic leading-relaxed relative z-10 px-6">
+                "We are empowering the event organizers with fully digitalized tools and workflows, EventUp is just the beginning."
+              </blockquote>
             </div>
           </div>
         </section>

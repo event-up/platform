@@ -11,11 +11,11 @@ const FAQSection: React.FC = () => {
     },
     {
       question: 'How much will EventUp cost?',
-      answer: <div>'We provide custom quotes based on your event size and requirements. <a href="/contact" className="text-primary hover:underline">Contact us</a> for a personalized pricing plan.'</div>
+      answer: <div>We provide custom quotes based on your event size and requirements. <a href="/contact" className="text-primary hover:underline">Contact us</a> for a personalized pricing plan.</div>
     },
     {
       question: 'Do you provide customized software solutions for events?',
-      answer: 'Yes! We offer custom add-ons to enhance your event experience: • Voting system for participants • Raffle draw tool • Welcome display app (shows scanned guest names with personalized welcome messages).'
+      answer: <div>Yes! We offer custom add-ons to enhance your event experience: <br/>• Voting system for participants <br/>• Raffle draw tool <br/>• Welcome display app (shows scanned guest names with personalized welcome messages).</div>
     },
     {
       question: 'Is my event data secure?',

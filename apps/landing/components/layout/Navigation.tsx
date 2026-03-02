@@ -81,7 +81,7 @@ const Navigation: React.FC = () => {
           <div className="hidden md:block h-5 md:h-6 w-px bg-gray-200" />
 
           {/* Sign Up Button */}
-          <Button variant="primary" size="sm" href="#get-started" className="flex-shrink-0 text-sm px-3 md:px-5 hidden md:flex">
+          <Button variant="primary" size="sm" href="/get-started" className="flex-shrink-0 text-sm px-3 md:px-5 hidden md:flex">
             Join the Waitlist
           </Button>
 
@@ -119,7 +119,7 @@ const Navigation: React.FC = () => {
               </Link>
             ))}
             <div className="h-px bg-gray-100 my-1" />
-            <Button variant="primary" size="sm" href="#get-started" className="w-full text-center justify-center">
+            <Button variant="primary" size="sm" href="/get-started" className="w-full text-center justify-center">
               Join the Waitlist
             </Button>
           </div>

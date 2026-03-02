@@ -78,17 +78,17 @@ const HeroSection: React.FC = () => {
                     Join the Waitlist
                   </Button>
                   
-                  {/* Hand-drawn arrow & text for Desktop/Tablet */}
-                  <div className="absolute top-[110%] left-1/2 -translate-x-1/4 sm:translate-x-0 sm:left-1/4 pt-1 w-max hidden sm:flex flex-row items-start text-muted">
-                    <svg className="w-10 h-10 text-primary transform -scale-x-100 rotate-[70deg] mt-1 -ml-4 mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                  {/* Hand-drawn arrow & text for Desktop */}
+                  <div className="absolute top-[80%] left-[40%] pt-1 w-max hidden lg:flex flex-row items-start pointer-events-none">
+                    <svg className="w-12 h-12 text-primary delay-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M 80 80 Q 40 50 20 20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M 20 20 L 40 22 M 20 20 L 22 40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     <span 
-                      className="text-2xl text-primary -rotate-6 transform translate-y-2 font-medium tracking-wide"
+                      className="text-2xl text-primary -rotate-3 transform translate-y-8 -ml-2 font-medium tracking-wide delay-400"
                       style={{ fontFamily: 'var(--font-caveat)' }}
                     >
-                      Be the first to know when we launch.
+                      Get exclusive offers<br/> when we launch.
                     </span>
                   </div>
                 </div>
@@ -98,19 +98,9 @@ const HeroSection: React.FC = () => {
                 </Button>
               </div>
               
-              {/* Fallback for Mobile */}
-              <div className="flex sm:hidden flex-col items-center mt-2 w-full gap-2 transition-opacity duration-500 delay-400">
-                <svg className="w-8 h-8 text-primary transform -rotate-45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span 
-                  className="text-xl text-primary font-medium tracking-wide -rotate-3"
-                  style={{ fontFamily: 'var(--font-caveat)' }}
-                >
-                  Be the first to know when we launch.
-                </span>
-              </div>
+              <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400 block lg:hidden">
+                Be the first to know when we launch.
+              </p>
             </div>
           </div>
 

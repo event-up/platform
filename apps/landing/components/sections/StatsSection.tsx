@@ -22,7 +22,15 @@ const StatsSection: React.FC = () => {
   return (
     <section className="py-20 lg:py-32 bg-white relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-30">
+      <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{ 
+          backgroundImage: "radial-gradient(#0097B2 2px, transparent 2px)", 
+          backgroundSize: "40px 40px",
+          opacity: 0.15
+        }}
+      ></div>
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-secondary-tan/5 rounded-full blur-3xl"></div>
       </div>
@@ -39,7 +47,7 @@ const StatsSection: React.FC = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="flex justify-center flex-row gap-3">
+        <div className="flex justify-center flex-wrap gap-3">
           {stats.map((stat, index) => (
             <div 
               key={index}

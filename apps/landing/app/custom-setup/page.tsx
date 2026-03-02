@@ -24,12 +24,8 @@ export default function CustomSetupPage() {
             <h1 className="text-4xl md:text-5xl font-semibold mb-6">
               Let Us Handle Everything
             </h1>
-            <p className="text-xl text-muted leading-relaxed max-w-2xl mx-auto">
-              You focus on your event. We'll manage the entire check-in experience — from QR generation to scanning at the door.
-            </p>
           </div>
 
-          {/* What's included */}
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div className="p-6 border-2 border-primary/10 rounded-2xl bg-white">
               <h3 className="text-xl font-semibold mb-4 text-primary">Managed QR Generation</h3>
@@ -71,9 +67,7 @@ export default function CustomSetupPage() {
                 Send an Email
               </Button>
             </div>
-            <p className="mt-6 text-sm text-muted">
-              Or reach us directly: <strong className="text-primary">+94 77 123 4567</strong>
-            </p>
+            
           </div>
         </div>
       </Container>

@@ -37,19 +37,7 @@ const CTASection: React.FC = () => {
                   Join the Waitlist
                 </Button>
                 
-                {/* Hand-drawn arrow & text for Desktop/Tablet */}
-                <div className="absolute top-[105%] left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-1/4 pt-2 w-max hidden sm:flex flex-row items-start text-white/90">
-                  <svg className="w-10 h-10 transform -scale-x-100 rotate-[70deg] mt-1 -ml-4 mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <span 
-                    className="text-2xl -rotate-6 transform translate-y-2 font-medium tracking-wide"
-                    style={{ fontFamily: 'var(--font-caveat)' }}
-                  >
-                    Be the first to know when we launch.
-                  </span>
-                </div>
+                
               </div>
               
               <Button 
@@ -63,18 +51,9 @@ const CTASection: React.FC = () => {
             </div>
             
             {/* Fallback for Mobile */}
-            <div className="flex sm:hidden flex-col items-center mt-6 w-full gap-2 text-white/90">
-              <svg className="w-8 h-8 transform -rotate-45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span 
-                className="text-xl font-medium tracking-wide -rotate-3"
-                style={{ fontFamily: 'var(--font-caveat)' }}
-              >
-                Be the first to know when we launch.
-              </span>
-            </div>
+            <p className="text-sm text-white/90 font-medium text-center mt-6 block lg:hidden">
+              Be the first to know when we launch.
+            </p>
           </div>
 
           {/* Reassurance Line */}

@@ -274,7 +274,7 @@ const ControlSection: React.FC = () => {
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed">
             Stop juggling spreadsheets, WhatsApp groups, and paper lists. EventUp handles
-            registration, invitations, and check-in — so your event runs like clockwork.
+            registration, invitations, and check-in so your event runs like clockwork.
           </p>
         </div>
 
