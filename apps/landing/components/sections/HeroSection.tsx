@@ -26,33 +26,37 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
-      {/* Animated morphing blobs with primary color gradients */}
+      {/* Animated morphing blobs with primary color gradients - more visible, larger, stronger blur */}
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[80px] animate-morph-1"
+          className="absolute top-[-15%] right-[-15%] w-[600px] h-[600px] rounded-full blur-[100px] animate-morph-1"
           style={{
-            background: 'radial-gradient(circle, rgba(0,151,178,0.25) 0%, rgba(0,184,217,0.15) 50%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(0,151,178,0.35) 0%, rgba(0,184,217,0.2) 50%, transparent 70%)',
           }}
         />
         <div
-          className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full blur-[80px] animate-morph-2"
+          className="absolute bottom-[-15%] left-[-15%] w-[500px] h-[500px] rounded-full blur-[100px] animate-morph-2"
           style={{
-            background: 'radial-gradient(circle, rgba(0,151,178,0.2) 0%, rgba(0,184,217,0.1) 50%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(0,184,217,0.25) 0%, rgba(0,151,178,0.15) 50%, transparent 70%)',
           }}
         />
       </div>
 
       <Container className="relative z-10 py-16 md:py-20 lg:py-32 px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Side - Content */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            {/* Eyebrow Label */}
-            {/* <Badge variant="primary" className="mb-4 md:mb-6 animate-fade-in">
-              Event Attendance Management Platform
-            </Badge> */}
+          {/* Left Side - Content with gradient overlay for readability */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left relative">
+            {/* Gradient overlay to ensure text readability over animated blobs */}
+            <div
+              className="absolute inset-0 -z-10 rounded-[2rem] opacity-30"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 50%, rgba(245,252,255,0.5) 100%)',
+                filter: 'blur(20px)',
+              }}
+            />
 
             {/* Headline */}
-            <div className="mb-4 mt-6 md:mt-5 md:mb-6 text-4xl tracking-tight font-semibold md:text-6xl  text-foreground animate-slide-up">
+            <div className="mb-4 mt-6 md:mt-5 md:mb-6 text-4xl tracking-tight font-semibold md:text-6xl text-foreground animate-slide-up">
               Level up your event.
             </div>
 
@@ -62,14 +66,14 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Supporting Text */}
-            <p className="mb-8 md:mb-10 hidden md:block tracking-tight  text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            <p className="mb-8 md:mb-10 hidden md:block tracking-tight text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
               From registration to the final scan, EventUp keeps your team in control and your guests moving.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3">
-                <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
+                <Button variant="primary" size="md" href="#get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
                   Join the Waitlist
                 </Button>
                 <Button variant="secondary" className='border' size="md" href="#demo">
@@ -80,15 +84,6 @@ const HeroSection: React.FC = () => {
                 Be the first to know when we launch in March 2026.
               </p>
             </div>
-
-            {/* Reassurance Line
-            <p className="text-sm text-muted flex flex-wrap items-start gap-2 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <span>No credit card required</span>
-              <span className="hidden sm:inline">·</span>
-              <span>Any event type</span>
-              <span className="hidden sm:inline">·</span>
-              <span>Ready in minutes</span>
-            </p> */}
           </div>
 
           {/* Right Side - Auto-sliding Image Carousel */}
@@ -162,15 +157,15 @@ const HeroSection: React.FC = () => {
             border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
           }
           25% {
-            transform: translate(-10px, 10px) scale(1.05);
-            border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            transform: translate(-20px, 20px) scale(1.08);
+            border-radius: 30% 70% 70% 30% / 30% 70% 70% 30%;
           }
           50% {
-            transform: translate(10px, -10px) scale(0.95);
+            transform: translate(20px, -20px) scale(0.92);
             border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
           }
           75% {
-            transform: translate(-5px, 5px) scale(1.02);
+            transform: translate(-10px, 10px) scale(1.04);
             border-radius: 70% 30% 50% 50% / 40% 50% 60% 50%;
           }
         }
@@ -181,15 +176,15 @@ const HeroSection: React.FC = () => {
             border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
           }
           30% {
-            transform: translate(10px, -10px) scale(1.03);
+            transform: translate(20px, -20px) scale(1.07);
             border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
           }
           60% {
-            transform: translate(-10px, 10px) scale(0.97);
+            transform: translate(-20px, 20px) scale(0.93);
             border-radius: 30% 70% 70% 30% / 40% 60% 50% 60%;
           }
           85% {
-            transform: translate(5px, -5px) scale(1.01);
+            transform: translate(10px, -10px) scale(1.03);
             border-radius: 50% 50% 40% 60% / 70% 30% 60% 40%;
           }
         }
