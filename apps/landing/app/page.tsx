@@ -4,7 +4,6 @@ import ControlSection from '@/components/sections/ControlSection';
 import StatsSection from '@/components/sections/StatsSection';
 import AudienceSection from '@/components/sections/AudienceSection';
 import CTASection from '@/components/sections/CTASection';
-import SocialProofSection from '@/components/sections/SocialProofSection';
 import FAQSection from '@/components/sections/FAQSection';
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
         <ControlSection />
       </section>
       <StatsSection />
-      <SocialProofSection />
       <section id="audience">
         <AudienceSection />
       </section>
