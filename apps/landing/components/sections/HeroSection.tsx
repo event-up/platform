@@ -73,11 +73,11 @@ const HeroSection: React.FC = () => {
             {/* CTAs */}
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3">
-                <Button variant="primary" size="md" href="#get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
+                <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
                   Join the Waitlist
                 </Button>
-                <Button variant="secondary" className='border' size="md" href="#demo">
-                  See It in Action
+                <Button variant="secondary" className='border' size="md" href="/custom-setup">
+                  Get a Custom Setup
                 </Button>
               </div>
               <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400">

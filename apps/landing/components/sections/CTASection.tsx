@@ -38,10 +38,10 @@ const CTASection: React.FC = () => {
               <Button 
                 variant="ghost" 
                 size="lg" 
-                href="#demo"
+                href="/custom-setup"
                 className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
               >
-                Request a Demo
+                Get a Custom Setup
               </Button>
             </div>
             <p className="text-sm text-white/90 font-medium text-center">
