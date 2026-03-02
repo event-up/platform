@@ -11,7 +11,7 @@ const FAQSection: React.FC = () => {
     },
     {
       question: 'How much will EventUp cost?',
-      answer: 'We provide custom quotes based on your event size and requirements. <a href="/contact" class="text-primary hover:underline">Contact us</a> for a personalized pricing plan.'
+      answer: <div>'We provide custom quotes based on your event size and requirements. <a href="/contact" className="text-primary hover:underline">Contact us</a> for a personalized pricing plan.'</div>
     },
     {
       question: 'Do you provide customized software solutions for events?',
@@ -72,7 +72,7 @@ const FAQSection: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
+      </div>
       </Container>
     </section>
   );

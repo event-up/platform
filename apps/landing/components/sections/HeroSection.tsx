@@ -72,17 +72,45 @@ const HeroSection: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3">
-                <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
-                  Join the Waitlist
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3 relative">
+                <div className="relative w-full sm:w-auto">
+                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block">
+                    Join the Waitlist
+                  </Button>
+                  
+                  {/* Hand-drawn arrow & text for Desktop/Tablet */}
+                  <div className="absolute top-[110%] left-1/2 -translate-x-1/4 sm:translate-x-0 sm:left-1/4 pt-1 w-max hidden sm:flex flex-row items-start text-muted">
+                    <svg className="w-10 h-10 text-primary transform -scale-x-100 rotate-[70deg] mt-1 -ml-4 mr-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span 
+                      className="text-2xl text-primary -rotate-6 transform translate-y-2 font-medium tracking-wide"
+                      style={{ fontFamily: 'var(--font-caveat)' }}
+                    >
+                      Be the first to know when we launch.
+                    </span>
+                  </div>
+                </div>
+                
                 <Button variant="secondary" className='border' size="md" href="/custom-setup">
                   Get a Custom Setup
                 </Button>
               </div>
-              <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400">
-                Be the first to know when we launch.
-              </p>
+              
+              {/* Fallback for Mobile */}
+              <div className="flex sm:hidden flex-col items-center mt-2 w-full gap-2 transition-opacity duration-500 delay-400">
+                <svg className="w-8 h-8 text-primary transform -rotate-45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 80 Q 40 20, 80 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M80 40 L 60 30 M 80 40 L 70 60" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span 
+                  className="text-xl text-primary font-medium tracking-wide -rotate-3"
+                  style={{ fontFamily: 'var(--font-caveat)' }}
+                >
+                  Be the first to know when we launch.
+                </span>
+              </div>
             </div>
           </div>
 
