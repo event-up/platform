@@ -26,10 +26,20 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
-      {/* Background decorative elements - subtle and clean */}
+      {/* Animated morphing blobs with primary color gradients */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-morph-1"></div>
-        <div className="absolute bottom-20 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-morph-2"></div>
+        <div
+          className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[80px] animate-morph-1"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,151,178,0.25) 0%, rgba(0,184,217,0.15) 50%, transparent 70%)',
+          }}
+        />
+        <div
+          className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full blur-[80px] animate-morph-2"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,151,178,0.2) 0%, rgba(0,184,217,0.1) 50%, transparent 70%)',
+          }}
+        />
       </div>
 
       <Container className="relative z-10 py-16 md:py-20 lg:py-32 px-4">
