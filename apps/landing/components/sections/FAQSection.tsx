@@ -10,12 +10,12 @@ const FAQSection: React.FC = () => {
       answer: 'No. EventUp works with any smartphone or tablet. You can use your existing devices or set up a simple kiosk. No expensive scanners required.'
     },
     {
-      question: 'What if my venue has poor internet connectivity?',
-      answer: 'The EventUp Scanner app works offline. Check-ins are synced automatically when connection is restored. Your event won\'t stop because of Wi-Fi issues.'
+      question: 'How much will EventUp cost?',
+      answer: 'We provide custom quotes based on your event size and requirements. <a href="/contact" class="text-primary hover:underline">Contact us</a> for a personalized pricing plan.'
     },
     {
-      question: 'How much will EventUp cost?',
-      answer: 'We offer a free tier for small events during our beta. Pricing for larger events will be announced soon — think simple, per-event pricing with no hidden fees.'
+      question: 'Do you provide customized software solutions for events?',
+      answer: 'Yes! We offer custom add-ons to enhance your event experience: • Voting system for participants • Raffle draw tool • Welcome display app (shows scanned guest names with personalized welcome messages).'
     },
     {
       question: 'Is my event data secure?',

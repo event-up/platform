@@ -81,7 +81,7 @@ const HeroSection: React.FC = () => {
                 </Button>
               </div>
               <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400">
-                Be the first to know when we launch in March 2026.
+                Be the first to know when we launch.
               </p>
             </div>
           </div>

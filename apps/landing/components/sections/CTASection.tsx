@@ -45,7 +45,7 @@ const CTASection: React.FC = () => {
               </Button>
             </div>
             <p className="text-sm text-white/90 font-medium text-center">
-              Be the first to know when we launch in March 2026.
+              Be the first to know when we launch.
             </p>
           </div>
 
