@@ -43,14 +43,14 @@ const StatsSection: React.FC = () => {
           {stats.map((stat, index) => (
             <div 
               key={index}
-              className="text-center p-8 rounded-2xl bg-gradient-to-br from-muted-light/50 to-white border border-border hover:border-primary/30 hover:shadow-xl smooth-transition group"
+              className="text-center p-8 group"
             >
               <div className="mb-4">
-                <span className="text-5xl lg:text-6xl font-bold text-primary group-hover:scale-110 inline-block smooth-transition">
+                <span className="text-6xl lg:text-8xl font-bold text-primary group-hover:scale-110 inline-block smooth-transition">
                   {stat.number}
                 </span>
               </div>
-              <p className="text-base lg:text-lg text-muted font-medium">
+              <p className="text-lg lg:text-xl text-muted font-medium">
                 {stat.label}
               </p>
             </div>

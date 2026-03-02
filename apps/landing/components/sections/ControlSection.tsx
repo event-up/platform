@@ -24,12 +24,12 @@ interface Feature {
 const FormBuilderVisual = () => (
   <div className="w-full h-full flex items-center justify-center p-6 md:p-8">
     <div className="w-full max-w-xs space-y-3 drop-shadow-2xl">
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-xl p-5">
+      <div className="rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
           <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
           <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-          <span className="ml-2 text-[10px] text-gray-400 font-bold uppercase tracking-wider">Registration Form</span>
+          <span className="ml-2 text-[10px] text-gray-600 font-bold uppercase tracking-wider">Registration Form</span>
         </div>
         {['Full Name', 'Email Address', 'Phone Number'].map((label, i) => (
           <div
@@ -37,7 +37,7 @@ const FormBuilderVisual = () => (
             className="mb-3 animate-[fadeSlideIn_0.6s_ease_forwards]"
             style={{ animationDelay: `${i * 0.15}s`, opacity: 0 }}
           >
-            <div className="text-[9px] font-bold text-gray-400 mb-1 uppercase tracking-wide">{label}</div>
+            <div className="text-[9px] font-bold text-gray-600 mb-1 uppercase tracking-wide">{label}</div>
             <div className="h-8 rounded-lg bg-gray-50 border border-gray-100 flex items-center px-3">
               <div
                 className="h-1.5 rounded-full bg-primary/20"
@@ -63,7 +63,7 @@ const FormBuilderVisual = () => (
 const InvitationVisual = () => (
   <div className="w-full h-full flex items-center justify-center p-6 md:p-8">
     <div className="w-full max-w-xs drop-shadow-2xl">
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-xl p-6 text-center">
+      <div className="rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-xl p-6 text-center">
         <div className="mb-4">
           <div className="text-xs text-gray-400 font-medium tracking-tight">Hello, Saharah 👋</div>
           <div className="text-base font-bold text-primary mt-1">You are invited!</div>
@@ -88,7 +88,7 @@ const InvitationVisual = () => (
 const CheckInSetupVisual = () => (
   <div className="w-full h-full flex items-center justify-center p-6 md:p-8">
     <div className="w-full max-w-xs space-y-4 drop-shadow-2xl">
-      <div className="flex items-center gap-4 rounded-2xl bg-white border border-gray-100 shadow-lg p-5">
+      <div className="flex items-center gap-4 rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-lg p-5">
         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -100,7 +100,7 @@ const CheckInSetupVisual = () => (
         </div>
         <div className="ml-auto w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
       </div>
-      <div className="flex items-center gap-4 rounded-2xl bg-white border border-gray-100 shadow-lg p-5">
+      <div className="flex items-center gap-4 rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-lg p-5">
         <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -121,7 +121,7 @@ const CheckInSetupVisual = () => (
 const CancellationVisual = () => (
   <div className="w-full h-full flex items-center justify-center p-6 md:p-8">
     <div className="w-full max-w-xs drop-shadow-2xl">
-      <div className="rounded-2xl bg-white border border-gray-100 shadow-xl p-6">
+      <div className="rounded-2xl bg-white/80 backdrop-blur-md border border-white/50 shadow-xl p-6">
         <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Live Guest List</div>
         {[
           { name: 'Alex Thompson', status: 'checked in', color: 'green' },
@@ -169,7 +169,7 @@ const QRScanVisual = () => (
           </svg>
         </div>
       </div>
-      <div className="flex items-center gap-3 bg-white rounded-2xl shadow-xl border border-green-100 px-5 py-3.5 animate-[fadeSlideIn_0.5s_ease_0.6s_forwards]" style={{ opacity: 0 }}>
+      <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-white/50 px-5 py-3.5 animate-[fadeSlideIn_0.5s_ease_0.6s_forwards]" style={{ opacity: 0 }}>
         <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 shadow-sm">
           <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -307,10 +307,10 @@ const ControlSection: React.FC = () => {
 
           <div className="col-span-3 sticky top-32">
             <div
-              className="relative rounded-[2.5rem] overflow-hidden w-full flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,151,178,0.15)]"
+              className="relative rounded-[2.5rem] overflow-hidden w-full flex items-center justify-center shadow-[0_32px_64px_-16px_rgba(0,151,178,0.18)]"
               style={{
                 background: 'linear-gradient(145deg, #eef9fb 0%, #e1f5f9 50%, #f0fbfc 100%)',
-                border: '1px solid rgba(0, 151, 178, 0.15)',
+                border: '1px solid rgba(0, 151, 178, 0.2)',
                 minHeight: '520px',
               }}
             >

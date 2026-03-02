@@ -57,13 +57,18 @@ const HeroSection: React.FC = () => {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8 animate-slide-up justify-center lg:justify-start items-center sm:items-stretch" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3">
                 <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
-                  Upgrade My Next Event
+                  Join the Waitlist
                 </Button>
-              <Button variant="secondary" className='border' size="md" href="#demo">
-                See It in Action
-              </Button>
+                <Button variant="secondary" className='border' size="md" href="#demo">
+                  See It in Action
+                </Button>
+              </div>
+              <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400">
+                Be the first to know when we launch in March 2026.
+              </p>
             </div>
 
             {/* Reassurance Line

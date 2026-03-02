@@ -28,7 +28,8 @@ const FeaturesSection: React.FC = () => {
         </svg>
       ),
       title: "Fast Check-In via QR Scanner",
-      description: "Skip the chaos at the entrance. Scan attendees in seconds using any smartphone — no expensive hardware required."
+      description: "Skip the chaos at the entrance. Scan attendees in seconds using any smartphone — no expensive hardware required.",
+      badge: "Works Offline"
     },
     {
       icon: (
@@ -107,6 +108,11 @@ const FeaturesSection: React.FC = () => {
                 <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-2 md:mb-3">
                   {feature.title}
                 </h3>
+                {feature.badge && (
+                  <span className="inline-block px-3 py-1 mb-3 text-xs font-bold uppercase tracking-wider text-primary bg-white/10 border border-primary/20 rounded-full">
+                    {feature.badge}
+                  </span>
+                )}
                 <p className="text-sm md:text-base text-white/65 leading-relaxed">
                   {feature.description}
                 </p>

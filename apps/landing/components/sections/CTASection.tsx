@@ -25,26 +25,28 @@ const CTASection: React.FC = () => {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-end mb-8">
-            <div className="flex flex-col items-center relative">
-             
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto mb-3">
               <Button 
                 variant="secondary" 
                 size="lg" 
                 href="/get-started"
-                className="bg-white text-primary hover:bg-secondary-cream hover:text-primary-dark border-0 shadow-xl"
+                className="bg-white text-primary hover:bg-secondary-cream hover:text-primary-dark border-0 shadow-xl w-full sm:w-auto"
               >
-                Upgrade My Next Event
+                Join the Waitlist
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="lg" 
+                href="#demo"
+                className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
+              >
+                Request a Demo
               </Button>
             </div>
-            <Button 
-              variant="ghost" 
-              size="lg" 
-              href="#demo"
-              className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
-            >
-              Request a Demo
-            </Button>
+            <p className="text-sm text-white/90 font-medium text-center">
+              Be the first to know when we launch in March 2026.
+            </p>
           </div>
 
           {/* Reassurance Line */}
