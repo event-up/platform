@@ -20,7 +20,7 @@ const HowItWorksSection: React.FC = () => {
     {
       number: 2,
       title: "Get Registration",
-      description: "Your attendees register with their details — everything is automatically organized in your dashboard.",
+      description: "Your attendees register with their details - everything is automatically organized in your dashboard.",
       icon: (
         <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -42,7 +42,7 @@ const HowItWorksSection: React.FC = () => {
     {
       number: 4,
       title: "Scan and Check In",
-      description: "At the entrance, volunteers scan QR codes — instant verification, live updates, zero hassle.",
+      description: "At the entrance, volunteers scan QR codes  -  instant verification, live updates, zero hassle.",
       icon: (
         <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
           <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>

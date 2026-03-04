@@ -194,7 +194,7 @@ const features: Feature[] = [
     eyebrow: 'Registration',
     title: 'Build Your Event Form in Minutes',
     tagline: '"No coding. No complexity. Just your event, ready to go."',
-    description: 'With EventUp\'s drag-and-drop form builder, create a fully custom registration form — tailored to your event — in minutes. Collect exactly the information you need, nothing more.',
+    description: 'With EventUp\'s drag-and-drop form builder, create a fully custom registration form - tailored to your event - in minutes. Collect exactly the information you need, nothing more.',
     visual: <FormBuilderVisual />,
   },
   {
@@ -202,7 +202,7 @@ const features: Feature[] = [
     eyebrow: 'Invitations',
     title: 'Invite Guests Automatically',
     tagline: '"Stop copy-pasting invitations. Let EventUp handle it."',
-    description: 'Send QR-code invitations the moment someone registers, or gather all registrations first and bulk-send when you\'re ready. Either way, every guest gets a personalized QR invitation — automatically.',
+    description: 'Send QR-code invitations the moment someone registers, or gather all registrations first and bulk-send when you\'re ready. Either way, every guest gets a personalized QR invitation - automatically.',
     visual: <InvitationVisual />,
   },
   {
@@ -210,7 +210,7 @@ const features: Feature[] = [
     eyebrow: 'Check-In Setup',
     title: 'Flexible Check-In, Your Way',
     tagline: '"Staff at the door? Tablet on a stand? We\'ve got both."',
-    description: 'Assign checkers to manage the entrance, or set up a dedicated scanning station — a tablet or phone on a stand, ready to go. Your event, your setup. No expensive hardware needed.',
+    description: 'Assign checkers to manage the entrance, or set up a dedicated scanning station - a tablet or phone on a stand, ready to go. Your event, your setup. No expensive hardware needed.',
     visual: <CheckInSetupVisual />,
   },
   {
@@ -218,7 +218,7 @@ const features: Feature[] = [
     eyebrow: 'Self-Management',
     title: 'Let Guests Manage Their Own Spot',
     tagline: '"Reduce no-shows. Keep your guest list accurate."',
-    description: 'Unexpected cancellations happen. With EventUp\'s optional self-cancellation feature, participants can withdraw their own registration — keeping your headcount accurate and freeing up spots for others, automatically.',
+    description: 'Unexpected cancellations happen. With EventUp\'s optional self-cancellation feature, participants can withdraw their own registration - keeping your headcount accurate and freeing up spots for others, automatically.',
     visual: <CancellationVisual />,
   },
   {
@@ -226,7 +226,7 @@ const features: Feature[] = [
     eyebrow: 'Check-In',
     title: 'Instant QR Check-In at the Door',
     tagline: '"Zero queues. Zero paper. Just scan and go."',
-    description: 'Your checkers open the EventUp Scanner App, scan each guest\'s QR code, and that\'s it — instant check-in, real-time updates. No paper lists, no manual ticking, no bottlenecks at the entrance.',
+    description: 'Your checkers open the EventUp Scanner App, scan each guest\'s QR code, and that\'s it - instant check-in, real-time updates. No paper lists, no manual ticking, no bottlenecks at the entrance.',
     visual: <QRScanVisual />,
   },
 ];

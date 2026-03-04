@@ -26,7 +26,7 @@ export default function AboutPage() {
         </svg>
       ),
       title: 'Reliability First',
-      description: 'Your event day is not the time for surprises. EventUp works even in low-connectivity environments — because we\'ve been there.',
+      description: 'Your event day is not the time for surprises. EventUp works even in low-connectivity environments - because we\'ve been there.',
     },
     {
       icon: (
@@ -49,8 +49,8 @@ export default function AboutPage() {
   ];
 
   const stats = [
-    { number: '500+', label: 'Events powered' },
-    { number: '50,000+', label: 'Guests checked in' },
+    { number: '10+', label: 'Events powered' },
+    { number: '2500+', label: 'Guests checked in' },
     { number: '~4 sec', label: 'Average check-in time' },
   ];
 
@@ -98,8 +98,8 @@ export default function AboutPage() {
                   professional check-in tells your guests: this is well-organized. You made the right choice coming here.
                 </p>
                 <p className="text-muted leading-relaxed text-lg">
-                  EventUp gives any organizer — from a corporate HR team running a company away-day to a 
-                  community group hosting a meetup — the tools to deliver that experience, without complexity or cost.
+                  EventUp gives any organizer from a corporate HR team running a company away-day to a 
+                  community group hosting a meetup the tools to deliver that experience.
                 </p>
               </div>
 
@@ -154,28 +154,28 @@ export default function AboutPage() {
               <div className="flex flex-col items-center">
                 <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl relative">
                   <Image
-                    src="/images/team/founder_1.png"
+                    src="/images/team/founder_11.png"
                     alt="Founder 1"
                     fill
                     className="object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-1">Alex Chen</h3>
-                <p className="text-primary font-medium">Co-Founder & CEO</p>
+                <h3 className="text-xl font-bold text-foreground mb-1">Seniya Dissanayake</h3>
+                <p className="text-primary font-medium">Co-Founder</p>
               </div>
 
               {/* Founder 2 */}
               <div className="flex flex-col items-center">
                 <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mb-6 border-4 border-white shadow-xl relative">
                   <Image
-                    src="/images/team/founder_2.png"
+                    src="/images/team/founder_2.jpg"
                     alt="Founder 2"
                     fill
                     className="object-cover"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-1">Sarah Jenkins</h3>
-                <p className="text-primary font-medium">Co-Founder & CTO</p>
+                <h3 className="text-xl font-bold text-foreground mb-1">Sandaru Vishwajith</h3>
+                <p className="text-primary font-medium">Co-Founder</p>
               </div>
             </div>
 

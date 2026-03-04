@@ -3,8 +3,8 @@ import Footer from '@/components/layout/Footer';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — EventUp',
-  description: 'EventUp Privacy Policy — how we collect, use, and protect your data.',
+  title: 'Privacy Policy  -  EventUp',
+  description: 'EventUp Privacy Policy  -  how we collect, use, and protect your data.',
 };
 
 export default function PrivacyPage() {
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
             <div className="mt-6 p-5 rounded-2xl bg-primary/5 border border-primary/15">
               <p className="text-sm text-muted leading-relaxed">
                 At EventUp, your privacy matters. This policy explains what data we collect, why we collect it, and how we protect it. 
-                If you have questions after reading this, <a href="/contact" className="text-primary hover:underline font-medium">contact us</a> — we're happy to help.
+                If you have questions after reading this, <a href="/contact" className="text-primary hover:underline font-medium">contact us</a> - we're happy to help.
               </p>
             </div>
           </div>

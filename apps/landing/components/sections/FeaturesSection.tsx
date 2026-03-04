@@ -28,7 +28,7 @@ const FeaturesSection: React.FC = () => {
         </svg>
       ),
       title: "Fast Check-In via QR Scanner",
-      description: "Skip the chaos at the entrance. Scan attendees in seconds using any smartphone — no expensive hardware required.",
+      description: "Skip the chaos at the entrance. Scan attendees in seconds using any smartphone  -  no expensive hardware required.",
     },
     {
       icon: (
@@ -37,7 +37,7 @@ const FeaturesSection: React.FC = () => {
         </svg>
       ),
       title: "Real-Time Attendance Tracking",
-      description: "Know exactly who's arrived, who's missing, and how many guests you have — updated live as people check in."
+      description: "Know exactly who's arrived, who's missing, and how many guests you have  -  updated live as people check in."
     }
   ];
 

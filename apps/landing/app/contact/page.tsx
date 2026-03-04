@@ -22,8 +22,8 @@ export default function ContactPage() {
         </svg>
       ),
       label: 'Email us',
-      value: 'hello@eventup.com',
-      href: 'mailto:hello@eventup.com',
+      value: 'info@eventup.com',
+      href: 'mailto:info@eventup.com',
     },
     {
       icon: (
@@ -55,7 +55,7 @@ export default function ContactPage() {
               We'd love to hear from you.
             </h1>
             <p className="text-lg text-muted leading-relaxed">
-              Whether you have a question, want a demo, or just want to talk about your upcoming event — we're here.
+              Whether you have a question, want a demo, or just want to talk about your upcoming event - we're here.
             </p>
           </div>
         </section>
@@ -65,7 +65,7 @@ export default function ContactPage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
 
-              {/* Left — info */}
+              {/* Left  -  info */}
               <div className="lg:col-span-2 space-y-8">
                 <div>
                   <h2 className="text-2xl font-bold text-foreground mb-4">Contact details</h2>
@@ -97,7 +97,7 @@ export default function ContactPage() {
                     <span className="text-sm font-semibold text-primary">Typically reply within 24 hours</span>
                   </div>
                   <p className="text-sm text-muted leading-relaxed">
-                    For urgent event-day support, reach us directly at the email above.
+                    For urgent event-day support, there is a seperate 24h support line when you conducting your event thought EventUp.
                   </p>
                 </div>
 
@@ -123,7 +123,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Right — form */}
+              {/* Right  -  form */}
               <div className="lg:col-span-3">
                 <div className="bg-white rounded-3xl border border-border shadow-sm p-7 md:p-10">
                   {submitted ? (
