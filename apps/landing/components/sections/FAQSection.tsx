@@ -14,6 +14,10 @@ const FAQSection: React.FC = () => {
       answer: <div>We provide custom quotes based on your event size and requirements. <a href="/contact" className="text-primary hover:underline">Contact us</a> for a personalized pricing plan.</div>
     },
     {
+      question: 'Can I sell tickets via EventUp?',
+      answer: 'Not at the moment. EventUp was designed for events where participants do not need to purchase tickets. However, ticket payment integration is on our roadmap.'
+    },
+    {
       question: 'Do you provide customized software solutions for events?',
       answer: <div>Yes! We offer custom add-ons to enhance your event experience: <br/>• Voting system for participants <br/>• Raffle draw tool <br/>• Welcome display app (shows scanned guest names with personalized welcome messages).</div>
     },
