@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   description: "Effortless registration and real-time attendance monitoring for any event, any size. Level up your event with Eventup.",
   keywords: ["event management", "attendance tracking", "QR check-in", "event registration", "event platform"],
   authors: [{ name: "Eventup" }],
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     title: "Eventup - Level up your event",
     description: "Effortless registration and real-time attendance monitoring for any event, any size.",

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
@@ -105,7 +106,7 @@ const HeroSection: React.FC = () => {
           </div>
 
           {/* Right Side - Auto-sliding Image Carousel */}
-          <div className="relative h-[500px] lg:h-[600px] rounded-2xl overflow-hidden ">
+          <div className="relative h-[500px] lg:h-[600px] rounded-2xl overflow-hidden">
             {images.map((image, index) => (
               <div
                 key={index}
@@ -114,12 +115,15 @@ const HeroSection: React.FC = () => {
                     ? 'opacity-100 scale-100' 
                     : 'opacity-0 scale-105'
                 }`}
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              />
+              >
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
             ))}
             
             {/* Slide Indicators */}
