@@ -115,8 +115,8 @@ const Footer: React.FC = () => {
               Product
             </h4>
             <ul className="space-y-3">
-              {links.product.map((link) => (
-                <li key={link.name}>
+              {links.product.map((link,i) => (
+                <li key={i}>
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
