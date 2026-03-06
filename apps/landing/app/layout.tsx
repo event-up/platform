@@ -24,17 +24,19 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  metadataBase: new URL('https://eventup.lk'),
   openGraph: {
     title: "Eventup - Level up your event",
     description: "Effortless registration and real-time attendance monitoring for any event, any size.",
-    url: "https://eventup.com",
+    url: "https://eventup.lk",
     siteName: "Eventup",
     images: [
       {
         url: "/images/eventup-logo-full.svg",
         width: 1200,
         height: 630,
-        alt: "Eventup Logo",
+        alt: "Eventup - Event Attendance Management Platform",
+        type: "image/svg+xml",
       },
     ],
     locale: "en_US",
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Eventup - Level up your event",
     description: "Effortless registration and real-time attendance monitoring for any event, any size.",
-    images: ["/images/eventup-logo-full.svg"],
+    images: [{ url: "/images/eventup-logo-full.svg", alt: "Eventup Logo", width: 1200, height: 630 }],
   },
   viewport: {
     width: "device-width",
