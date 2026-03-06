@@ -20,7 +20,7 @@ export default function CustomSetupPage() {
           </p>
 
           {/* Hero content for this page */}
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-semibold mb-6">
               Let Us Handle Everything
             </h1>
@@ -51,11 +51,11 @@ export default function CustomSetupPage() {
                 We design beautiful, customized invitation screens that match your event's branding.
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* CTA */}
           <div className="text-center bg-gradient-to-br from-primary/5 to-secondary/5 p-8 rounded-2xl border-2 border-primary/10">
-            <h2 className="text-2xl font-semibold mb-4">Ready to hand off the details?</h2>
+            <h2 className="text-2xl font-semibold mb-4">Ready to hand off the check-in process?</h2>
             <p className="text-lg text-muted mb-6">
               We'll set everything up for you. Just tell us about your event and we'll take it from there.
             </p>

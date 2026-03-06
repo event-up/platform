@@ -16,7 +16,7 @@ const CTASection: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Headline */}
           <h2 className="mb-6 text-white">
-            Your next event deserves<br className="hidden sm:block"/>a smoother entry.
+            Your next event deserves<br className="hidden sm:block"/> a smoother entry.
           </h2>
 
           {/* Supporting Text */}
