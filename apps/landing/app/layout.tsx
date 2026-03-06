@@ -71,6 +71,18 @@ export default function RootLayout({
         gtag('js', new Date());
         gtag('config', 'G-MD9R6R04MK');`}
       </Script> 
+      <Script id="analytics-click-tracking" strategy="afterInteractive">
+        {`
+          document.addEventListener("click", function (e) {
+            const el = e.target.closest("[data-analytics]");
+            if (!el) return;
+
+            const event = el.getAttribute("data-analytics");
+
+            window.gtag?.("event", event);
+          });
+        `}
+      </Script>
 
 
       </head>

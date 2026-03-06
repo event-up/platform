@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3 relative">
                 <div className="relative w-full sm:w-auto">
-                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block">
+                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block" data-analytics="hero_signup_click">
                     Join the Waitlist
                   </Button>
                   

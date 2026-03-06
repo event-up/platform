@@ -52,6 +52,7 @@ const FAQSection: React.FC = () => {
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none"
+                  data-analytics="faq_expand"
                 >
                   <span className="font-semibold text-foreground text-lg pr-4">{faq.question}</span>
                   <span className="text-primary flex-shrink-0">
