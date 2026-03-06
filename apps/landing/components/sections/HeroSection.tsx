@@ -6,7 +6,6 @@ import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import { env } from '@/env';
-import { event } from '@/helpers/analytics';
 
 const HeroSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -76,13 +75,7 @@ const HeroSection: React.FC = () => {
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3 relative">
                 <div className="relative w-full sm:w-auto">
-                  <Button 
-                    variant="primary" 
-                    size="md" 
-                    href="/get-started" 
-                    className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block"
-                    onClick={() => event({ action: 'click_join_waitlist', category: 'engagement', label: 'hero_section' })}
-                  >
+                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block">
                     Join the Waitlist
                   </Button>
                   
@@ -101,13 +94,7 @@ const HeroSection: React.FC = () => {
                   </div>
                 </div>
                 
-                <Button 
-                  variant="secondary" 
-                  className='border' 
-                  size="md" 
-                  href="/custom-setup"
-                  onClick={() => event({ action: 'click_custom_setup', category: 'engagement', label: 'hero_section' })}
-                >
+                <Button variant="secondary" className='border' size="md" href="/custom-setup">
                   Get a Custom Setup
                 </Button>
               </div>

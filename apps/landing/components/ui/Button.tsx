@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <Link href={href} onClick={onClick} className={combinedClasses}>
+      <Link href={href} className={combinedClasses}>
         {children}
       </Link>
     );

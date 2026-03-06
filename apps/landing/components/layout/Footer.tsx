@@ -1,25 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { event } from '@/helpers/analytics';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const links = {
     product: [
-      { name: 'Features', trackingLabel: 'Features', href: '#features' },
-      { name: 'How It Works', trackingLabel: 'How It Works', href: '#how-it-works' },
-      { name: <div className=''>Pricing <span className="text-xs border rounded-full px-2 py-0.5 text-white/50">Coming Soon</span> </div>, trackingLabel: 'Pricing', href: '' },
+      { name: 'Features', href: '#features' },
+      { name: 'How It Works', href: '#how-it-works' },
+      { name: <div className=''>Pricing <span className="text-xs border rounded-full px-2 py-0.5 text-white/50">Coming Soon</span> </div>, href: '' },
     ],
     company: [
-      { name: 'About Us', trackingLabel: 'About Us', href: '/about' },
-      { name: 'Contact', trackingLabel: 'Contact', href: '/contact' },
+      { name: 'About Us', href: '/about' },
+      { name: 'Contact', href: '/contact' },
     ],
     legal: [
-      { name: 'Privacy Policy', trackingLabel: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', trackingLabel: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy', trackingLabel: 'Cookie Policy', href: '/cookies' },
+      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Terms of Service', href: '/terms' },
+      { name: 'Cookie Policy', href: '/cookies' },
     ],
   };
 
@@ -76,11 +75,7 @@ const Footer: React.FC = () => {
 
           {/* Brand column  -  spans 2 cols on lg */}
           <div className="lg:col-span-2">
-            <Link 
-              href="/" 
-              className="inline-block mb-4"
-              onClick={() => event({ action: 'click_logo', category: 'navigation', label: 'footer' })}
-            >
+            <Link href="/" className="inline-block mb-4">
               <Image
                 src="/images/eventup-logo-full.svg"
                 alt="EventUp Logo"
@@ -102,7 +97,6 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  onClick={() => event({ action: 'click_social_link', category: 'engagement', label: social.name })}
                   className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.14] smooth-transition"
                   style={{
                     background: 'rgba(255,255,255,0.06)',
@@ -126,7 +120,6 @@ const Footer: React.FC = () => {
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
-                    onClick={() => event({ action: 'click_footer_link', category: 'navigation', label: link.trackingLabel })}
                   >
                     {link.name}
                   </Link>
@@ -146,7 +139,6 @@ const Footer: React.FC = () => {
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
-                    onClick={() => event({ action: 'click_footer_link', category: 'navigation', label: link.trackingLabel })}
                   >
                     {link.name}
                   </Link>
@@ -166,7 +158,6 @@ const Footer: React.FC = () => {
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
-                    onClick={() => event({ action: 'click_footer_link', category: 'navigation', label: link.trackingLabel })}
                   >
                     {link.name}
                   </Link>
@@ -182,7 +173,6 @@ const Footer: React.FC = () => {
               <a
                 href="mailto:info@eventup.com"
                 className="text-sm text-white/55 hover:text-white smooth-transition flex items-center gap-2"
-                onClick={() => event({ action: 'click_footer_contact', category: 'engagement', label: 'email' })}
               >
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />

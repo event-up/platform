@@ -2,7 +2,6 @@ import React from 'react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import { env } from '@/env';
-import { event } from '@/helpers/analytics';
 
 const CTASection: React.FC = () => {
   return (
@@ -34,7 +33,6 @@ const CTASection: React.FC = () => {
                   size="lg" 
                   href="/get-started"
                   className="bg-white text-primary hover:bg-secondary-cream hover:text-primary-dark border-0 shadow-xl w-full sm:w-auto relative z-10 block"
-                  onClick={() => event({ action: 'click_join_waitlist', category: 'engagement', label: 'cta_section' })}
                 >
                   Join the Waitlist
                 </Button>
@@ -47,7 +45,6 @@ const CTASection: React.FC = () => {
                 size="lg" 
                 href="/custom-setup"
                 className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
-                onClick={() => event({ action: 'click_custom_setup', category: 'engagement', label: 'cta_section' })}
               >
                 Get a Custom Setup
               </Button>

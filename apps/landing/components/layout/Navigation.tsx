@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '../ui/Button';
-import { event } from '@/helpers/analytics';
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,7 +25,6 @@ const Navigation: React.FC = () => {
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    event({ action: 'click_nav_link', category: 'navigation', label: href });
     if (href.startsWith('#')) {
       e.preventDefault();
       const id = href.slice(1);
@@ -51,7 +49,7 @@ const Navigation: React.FC = () => {
           }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0" onClick={() => event({ action: 'click_logo', category: 'navigation', label: 'logo' })}>
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src="/images/eventup-logo-full.svg"
               alt="EventUp Logo"
@@ -83,13 +81,7 @@ const Navigation: React.FC = () => {
           <div className="hidden md:block h-5 md:h-6 w-px bg-gray-200" />
 
           {/* Sign Up Button */}
-          <Button 
-            variant="primary" 
-            size="sm" 
-            href="/get-started" 
-            className="  flex-shrink-0 text-sm px-3 md:px-5 hidden md:flex"
-            onClick={() => event({ action: 'click_join_waitlist', category: 'engagement', label: 'navigation' })}
-          >
+          <Button variant="primary" size="sm" href="/get-started" className="  flex-shrink-0 text-sm px-3 md:px-5 hidden md:flex">
             Join the Waitlist
           </Button>
 
@@ -127,13 +119,7 @@ const Navigation: React.FC = () => {
               </Link>
             ))}
             <div className="h-px bg-gray-100 my-1" />
-            <Button 
-              variant="primary" 
-              size="sm" 
-              href="/get-started" 
-              className="w-full text-center justify-center"
-              onClick={() => event({ action: 'click_join_waitlist', category: 'engagement', label: 'navigation' })}
-            >
+            <Button variant="primary" size="sm" href="/get-started" className="w-full text-center justify-center">
               Join the Waitlist
             </Button>
           </div>
