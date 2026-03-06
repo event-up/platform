@@ -163,7 +163,7 @@ export function OnboardingFlow() {
               className={`w-full flex items-center justify-center font-medium rounded-full smooth-transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary h-14 text-lg bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Event Details"}
+              {isSubmitting ? "Submitting..." : "Join the Waitlist"}
             </button>
             <p className="text-xs text-center text-muted mt-4">
               By submitting, you agree to our Terms of Service and Privacy Policy.

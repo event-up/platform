@@ -42,7 +42,7 @@ const StatsSection: React.FC = () => {
             By the Numbers
           </Badge>
           <h2 className="text-foreground">
-            Organizers trust Eventup.<br className="hidden sm:block"/>
+            Organizers trust EventUp.<br className="hidden sm:block"/>
           </h2>
         </div>
 
@@ -63,6 +63,13 @@ const StatsSection: React.FC = () => {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Social Proof Line */}
+        <div className="text-center mt-12">
+          <p className="text-lg text-muted max-w-2xl mx-auto">
+            Trusted by the cooperate clubs and event organisers in Sri Lanka.
+          </p>
         </div>
       </Container>
     </section>

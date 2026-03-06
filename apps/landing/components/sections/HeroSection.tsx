@@ -6,6 +6,7 @@ import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import { env } from '@/env';
+import { event } from '@/helpers/analytics';
 
 const HeroSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -62,20 +63,26 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Subheadline */}
-            <div className="mb-4 md:mb-6 text-2xl md:text-3xl tracking lg:text-4xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <div className="mb-4 hidden md:block md:mb-6 text-2xl md:text-3xl tracking lg:text-4xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
               The check-in experience your event deserves.
             </div>
 
             {/* Supporting Text */}
-            <p className="mb-8 md:mb-10 hidden md:block tracking-tight text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              From registration to the final scan, EventUp keeps your team in control and your guests moving.
+            <p className="mb-8 md:mb-10  md:block tracking-tight text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              EventUp is a QR-based event check-in and registration platform.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3 relative">
                 <div className="relative w-full sm:w-auto">
-                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block">
+                  <Button 
+                    variant="primary" 
+                    size="md" 
+                    href="/get-started" 
+                    className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block"
+                    onClick={() => event({ action: 'click_join_waitlist', category: 'engagement', label: 'hero_section' })}
+                  >
                     Join the Waitlist
                   </Button>
                   
@@ -94,7 +101,13 @@ const HeroSection: React.FC = () => {
                   </div>
                 </div>
                 
-                <Button variant="secondary" className='border' size="md" href="/custom-setup">
+                <Button 
+                  variant="secondary" 
+                  className='border' 
+                  size="md" 
+                  href="/custom-setup"
+                  onClick={() => event({ action: 'click_custom_setup', category: 'engagement', label: 'hero_section' })}
+                >
                   Get a Custom Setup
                 </Button>
               </div>

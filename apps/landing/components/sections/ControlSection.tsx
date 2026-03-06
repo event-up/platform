@@ -194,7 +194,7 @@ const features: Feature[] = [
     eyebrow: 'Registration',
     title: 'Build Your Event Form in Minutes',
     tagline: '"No coding. No complexity. Just your event, ready to go."',
-    description: 'With EventUp\'s drag-and-drop form builder, create a fully custom registration form - tailored to your event - in minutes. Collect exactly the information you need, nothing more.',
+    description: 'With EventUp\'s form builder, create a fully custom registration form — tailored to your event — in minutes. Collect exactly the information you need, nothing more.',
     visual: <FormBuilderVisual />,
   },
   {
@@ -210,7 +210,7 @@ const features: Feature[] = [
     eyebrow: 'Check-In Setup',
     title: 'Flexible Check-In, Your Way',
     tagline: '"Staff at the door? Tablet on a stand? We\'ve got both."',
-    description: 'Assign checkers to manage the entrance, or set up a dedicated scanning station - a tablet or phone on a stand, ready to go. Your event, your setup. No expensive hardware needed.',
+    description: 'Assign check-in staff to manage entrances, or set up a dedicated scanning station. Your event, your setup. No expensive hardware needed.',
     visual: <CheckInSetupVisual />,
   },
   {

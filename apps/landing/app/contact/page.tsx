@@ -8,10 +8,26 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '', type: 'general' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, wire this to your backend
-    setSubmitted(true);
+    try {
+      const response = await fetch('https://formspree.io/f/xdawolvn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        console.error('Failed to submit form');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+    }
   };
 
   const contactDetails = [
@@ -134,7 +150,7 @@ export default function ContactPage() {
                         </svg>
                       </div>
                       <h3 className="text-2xl font-bold text-foreground mb-3">Message sent!</h3>
-                      <p className="text-muted">We'll get back to you within 24 hours. Thanks for reaching out!</p>
+                      <p className="text-muted">We'll get back to you ASAP. Thanks for reaching out!</p>
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-5">
@@ -221,7 +237,6 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -40,10 +40,10 @@ const AudienceSection: React.FC = () => {
             Who It&apos;s For
           </Badge>
           <h2 className="mb-6 text-foreground">
-            Built for any organizer<br className="hidden sm:block"/> running any event.
+            Built for organizers running events of any size.
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
-            Eventup fits into your workflow whether you&apos;re managing 30 people or 3,000.
+            EventUp fits into your workflow whether you&apos;re managing 30 people or 3,000.
           </p>
         </div>
 
