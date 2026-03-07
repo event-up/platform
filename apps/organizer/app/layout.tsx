@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "@workspace/ui/globals.css";
-import { Providers } from "@/components/providers";
 import { Toaster } from "sonner";
 
 const fontSans = Geist({
@@ -16,18 +15,20 @@ const fontMono = Geist_Mono({
 
 export const metadata = {
   title: "EventUp Organizer - Event Management Dashboard",
-  description: "Manage events, track registrations, and monitor check-ins in real-time with EventUp's organizer dashboard.",
+  description:
+    "Manage events, track registrations, and monitor check-ins in real-time with EventUp's organizer dashboard.",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
   openGraph: {
     title: "EventUp Organizer - Event Management Dashboard",
-    description: "Manage events, track registrations, and monitor check-ins in real-time.",
+    description:
+      "Manage events, track registrations, and monitor check-ins in real-time.",
     url: "https://eventup.lk/organizer",
     siteName: "EventUp",
     images: [
       {
-        url: "/images/eventup-logo-full.svg",
+        url: "https://eventup.lk/images/eventup-logo-full.svg",
         width: 1200,
         height: 630,
         alt: "EventUp Organizer Dashboard",
@@ -39,8 +40,16 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "EventUp Organizer - Event Management Dashboard",
-    description: "Manage events, track registrations, and monitor check-ins in real-time.",
-    images: [{ url: "/images/eventup-logo-full.svg", alt: "EventUp Organizer", width: 1200, height: 630 }],
+    description:
+      "Manage events, track registrations, and monitor check-ins in real-time.",
+    images: [
+      {
+        url: "/images/eventup-logo-full.svg",
+        alt: "EventUp Organizer",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
 };
 
