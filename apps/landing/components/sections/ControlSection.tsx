@@ -194,7 +194,7 @@ const features: Feature[] = [
     eyebrow: 'Registration',
     title: 'Build Your Event Form in Minutes',
     tagline: '"No coding. No complexity. Just your event, ready to go."',
-    description: 'With EventUp\'s form builder, create a fully custom registration form — tailored to your event — in minutes. Collect exactly the information you need, nothing more.',
+    description: 'With EventUp\'s form builder, create a fully custom registration form, tailored to your event, in minutes. Collect exactly the information you need, nothing more.',
     visual: <FormBuilderVisual />,
   },
   {

@@ -1,10 +1,11 @@
-import HeroSection from '@/components/sections/HeroSection';
-import FeaturesSection from '@/components/sections/FeaturesSection';
-import ControlSection from '@/components/sections/ControlSection';
-import StatsSection from '@/components/sections/StatsSection';
-import AudienceSection from '@/components/sections/AudienceSection';
-import CTASection from '@/components/sections/CTASection';
-import FAQSection from '@/components/sections/FAQSection';
+import HeroSection from "@/components/sections/HeroSection";
+import FeaturesSection from "@/components/sections/FeaturesSection";
+import EngagementSection from "@/components/sections/EngagementSection";
+import ControlSection from "@/components/sections/ControlSection";
+import StatsSection from "@/components/sections/StatsSection";
+import AudienceSection from "@/components/sections/AudienceSection";
+import CTASection from "@/components/sections/CTASection";
+import FAQSection from "@/components/sections/FAQSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,9 @@ export default function Home() {
       </section>
       <section id="how-it-works">
         <ControlSection />
+      </section>
+      <section id="engagement">
+        <EngagementSection />
       </section>
       <StatsSection />
       <section id="audience">
