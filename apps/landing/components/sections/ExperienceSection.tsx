@@ -10,7 +10,7 @@ const ExperienceSection: React.FC = () => {
     },
     {
       title: "You always know exactly what's happening",
-      description: "From the moment doors open, you have a live view of attendance — how many people have arrived, how many are still expected, and how each entrance is moving. You're not guessing or waiting until the end to find out. You're in control, in real time, from wherever you are."
+      description: "From the moment doors open, you have a live view of attendance - how many people have arrived, how many are still expected, and how each entrance is moving. You're not guessing or waiting until the end to find out. You're in control, in real time, from wherever you are."
     }
   ];
 

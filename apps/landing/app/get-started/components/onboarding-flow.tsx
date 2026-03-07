@@ -52,29 +52,29 @@ export function OnboardingFlow() {
             Great! You are In
           </h2>
           <p className="text-lg text-muted">
-            Since our platform is 
+            You will get notified when our platform is ready for you to use.
           </p>
         </div>
 
         <div className="bg-primary/5 rounded-2xl p-6 md:p-8 w-full border border-primary/10 text-left">
-          <h3 className="font-semibold text-lg mb-4 text-foreground">What you get right now:</h3>
+          <h3 className="font-semibold text-lg mb-4 text-foreground">Can not wait until the platofrm is ready ?</h3>
           <ul className="space-y-4">
             <li className="flex items-start">
               <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mr-3 mt-0.5" />
-              <span className="text-foreground">Automatic bulk <strong>invitation</strong> sending</span>
+              <span className="text-foreground">We can help you!</span>
             </li>
             <li className="flex items-start">
               <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mr-3 mt-0.5" />
-              <span className="text-foreground"><strong>Customized QR invites</strong> sent via SMS.</span>
+              <span className="text-foreground">Contact us and tell us about your event</span>
             </li>
             <li className="flex items-start">
               <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mr-3 mt-0.5" />
-              <span className="text-foreground"><strong>Free remote support</strong> for your scanning team.</span>
+              <span className="text-foreground">We will create you a beatiful customized invitations for your event </span>
             </li>
             <li className="flex items-start">
               <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mr-3 mt-0.5" />
-              <span className="text-foreground"><strong>Exclusive 'Founding Partner' pricing.</strong></span>
-            </li>
+              <span className="text-foreground">Send QR Invitations</span>
+              </li>
           </ul>
         </div>
 
@@ -163,7 +163,7 @@ export function OnboardingFlow() {
               className={`w-full flex items-center justify-center font-medium rounded-full smooth-transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary h-14 text-lg bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Event Details"}
+              {isSubmitting ? "Submitting..." : "Join the Waitlist"}
             </button>
             <p className="text-xs text-center text-muted mt-4">
               By submitting, you agree to our Terms of Service and Privacy Policy.

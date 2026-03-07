@@ -16,35 +16,44 @@ const CTASection: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Headline */}
           <h2 className="mb-6 text-white">
-            Your next event deserves<br className="hidden sm:block"/>a smoother entry.
+            Your next event deserves<br className="hidden sm:block"/> a smoother entry.
           </h2>
 
           {/* Supporting Text */}
           <p className="mb-10 text-lg lg:text-xl text-white/90 leading-relaxed">
-            Set up your event on Eventup and see the difference on day one. Getting started takes less time than building another spreadsheet.
+            Set up your event on EventUp and see the difference on day one. Getting started takes less time than building another spreadsheet.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-end mb-8">
-            <div className="flex flex-col items-center relative">
-             
+          <div className="flex flex-col items-center mb-10 mt-8 relative">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto relative">
+              <div className="relative w-full sm:w-auto">
+                <Button 
+                  variant="secondary" 
+                  size="lg" 
+                  href="/get-started"
+                  className="bg-white text-primary hover:bg-secondary-cream hover:text-primary-dark border-0 shadow-xl w-full sm:w-auto relative z-10 block"
+                >
+                  Join the Waitlist
+                </Button>
+                
+                
+              </div>
+              
               <Button 
-                variant="secondary" 
+                variant="ghost" 
                 size="lg" 
-                href="/get-started"
-                className="bg-white text-primary hover:bg-secondary-cream hover:text-primary-dark border-0 shadow-xl"
+                href="/custom-setup"
+                className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
               >
-                Upgrade My Next Event
+                Get a Custom Setup
               </Button>
             </div>
-            <Button 
-              variant="ghost" 
-              size="lg" 
-              href="#demo"
-              className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
-            >
-              Request a Demo
-            </Button>
+            
+            {/* Fallback for Mobile */}
+            <p className="text-sm text-white/90 font-medium text-center mt-6 block lg:hidden">
+              Be the first to know when we launch.
+            </p>
           </div>
 
           {/* Reassurance Line */}

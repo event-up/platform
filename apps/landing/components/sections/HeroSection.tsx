@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
@@ -26,58 +27,86 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
-      {/* Background decorative elements - subtle and clean */}
+      {/* Animated morphing blobs with primary color gradients - more visible, larger, stronger blur */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-morph-1"></div>
-        <div className="absolute bottom-20 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-morph-2"></div>
+        <div
+          className="absolute top-[-15%] right-[-15%] w-[600px] h-[600px] rounded-full blur-[100px] animate-morph-1"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,151,178,0.35) 0%, rgba(0,184,217,0.2) 50%, transparent 70%)',
+          }}
+        />
+        <div
+          className="absolute bottom-[-15%] left-[-15%] w-[500px] h-[500px] rounded-full blur-[100px] animate-morph-2"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,184,217,0.25) 0%, rgba(0,151,178,0.15) 50%, transparent 70%)',
+          }}
+        />
       </div>
 
       <Container className="relative z-10 py-16 md:py-20 lg:py-32 px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Side - Content */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            {/* Eyebrow Label */}
-            {/* <Badge variant="primary" className="mb-4 md:mb-6 animate-fade-in">
-              Event Attendance Management Platform
-            </Badge> */}
+          {/* Left Side - Content with gradient overlay for readability */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left relative">
+            {/* Gradient overlay to ensure text readability over animated blobs */}
+            <div
+              className="absolute inset-0 -z-10 rounded-[2rem] opacity-30"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 50%, rgba(245,252,255,0.5) 100%)',
+                filter: 'blur(20px)',
+              }}
+            />
 
             {/* Headline */}
-            <div className="mb-4 mt-6 md:mt-5 md:mb-6 text-4xl tracking-tight font-semibold md:text-6xl  text-foreground animate-slide-up">
+            <div className="mb-4 mt-6 md:mt-5 md:mb-6 text-4xl tracking-tight font-semibold md:text-6xl text-foreground animate-slide-up">
               Level up your event.
             </div>
 
             {/* Subheadline */}
-            <div className="mb-4 md:mb-6 text-2xl md:text-3xl tracking lg:text-4xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
+            <div className="mb-4 hidden md:block md:mb-6 text-2xl md:text-3xl tracking lg:text-4xl font-semibold text-muted animate-slide-up" style={{ animationDelay: '0.1s' }}>
               The check-in experience your event deserves.
             </div>
 
             {/* Supporting Text */}
-            <p className="mb-8 md:mb-10 hidden md:block tracking-tight  text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              From registration to the final scan, EventUp keeps your team in control and your guests moving.
+            <p className="mb-8 md:mb-10  md:block tracking-tight text-lg md:text-xl lg:text-2xl text-muted leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              EventUp is a QR-based event check-in and registration platform.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8 animate-slide-up justify-center lg:justify-start items-center sm:items-stretch" style={{ animationDelay: '0.3s' }}>
-                <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20">
-                  Upgrade My Next Event
+            <div className="flex flex-col animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center sm:items-stretch mb-3 relative">
+                <div className="relative w-full sm:w-auto">
+                  <Button variant="primary" size="md" href="/get-started" className="w-full sm:w-auto shadow-lg shadow-primary/20 relative z-10 block" data-analytics="hero_signup_click">
+                    Join the Waitlist
+                  </Button>
+                  
+                  {/* Hand-drawn arrow & text for Desktop */}
+                  <div className="absolute top-[80%] left-[40%] pt-1 w-max hidden lg:flex flex-row items-start pointer-events-none">
+                    <svg className="w-12 h-12 text-primary delay-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M 80 80 Q 40 50 20 20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M 20 20 L 40 22 M 20 20 L 22 40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span 
+                      className="text-2xl text-primary -rotate-3 transform translate-y-8 -ml-2 font-medium tracking-wide delay-400"
+                      style={{ fontFamily: 'var(--font-caveat)' }}
+                    >
+                      Get exclusive offers<br/> when we launch.
+                    </span>
+                  </div>
+                </div>
+                
+                <Button variant="secondary" className='border' size="md" href="/custom-setup">
+                  Get a Custom Setup
                 </Button>
-              <Button variant="secondary" className='border' size="md" href="#demo">
-                See It in Action
-              </Button>
+              </div>
+              
+              <p className="text-sm text-muted text-center lg:text-left transition-opacity duration-500 delay-400 block lg:hidden">
+                Be the first to know when we launch.
+              </p>
             </div>
-
-            {/* Reassurance Line
-            <p className="text-sm text-muted flex flex-wrap items-start gap-2 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <span>No credit card required</span>
-              <span className="hidden sm:inline">·</span>
-              <span>Any event type</span>
-              <span className="hidden sm:inline">·</span>
-              <span>Ready in minutes</span>
-            </p> */}
           </div>
 
           {/* Right Side - Auto-sliding Image Carousel */}
-          <div className="relative h-[500px] lg:h-[600px] rounded-2xl overflow-hidden ">
+          <div className="relative h-[500px] lg:h-[600px] rounded-2xl overflow-hidden">
             {images.map((image, index) => (
               <div
                 key={index}
@@ -86,12 +115,15 @@ const HeroSection: React.FC = () => {
                     ? 'opacity-100 scale-100' 
                     : 'opacity-0 scale-105'
                 }`}
-                style={{
-                  backgroundImage: `url(${image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              />
+              >
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
             ))}
             
             {/* Slide Indicators */}
@@ -147,15 +179,15 @@ const HeroSection: React.FC = () => {
             border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
           }
           25% {
-            transform: translate(-10px, 10px) scale(1.05);
-            border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            transform: translate(-20px, 20px) scale(1.08);
+            border-radius: 30% 70% 70% 30% / 30% 70% 70% 30%;
           }
           50% {
-            transform: translate(10px, -10px) scale(0.95);
+            transform: translate(20px, -20px) scale(0.92);
             border-radius: 50% 50% 30% 70% / 30% 70% 70% 30%;
           }
           75% {
-            transform: translate(-5px, 5px) scale(1.02);
+            transform: translate(-10px, 10px) scale(1.04);
             border-radius: 70% 30% 50% 50% / 40% 50% 60% 50%;
           }
         }
@@ -166,15 +198,15 @@ const HeroSection: React.FC = () => {
             border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
           }
           30% {
-            transform: translate(10px, -10px) scale(1.03);
+            transform: translate(20px, -20px) scale(1.07);
             border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
           }
           60% {
-            transform: translate(-10px, 10px) scale(0.97);
+            transform: translate(-20px, 20px) scale(0.93);
             border-radius: 30% 70% 70% 30% / 40% 60% 50% 60%;
           }
           85% {
-            transform: translate(5px, -5px) scale(1.01);
+            transform: translate(10px, -10px) scale(1.03);
             border-radius: 50% 50% 40% 60% / 70% 30% 60% 40%;
           }
         }

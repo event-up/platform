@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  'data-analytics'?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ 
@@ -18,7 +19,8 @@ const Button: React.FC<ButtonProps> = ({
   href,
   onClick,
   className = '',
-  disabled = false
+  disabled = false,
+  'data-analytics': dataAnalytics,
 }) => {
   const baseClasses = 'inline-flex items-center justify-center font-medium rounded-full smooth-transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed';
   
@@ -38,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <Link href={href} className={combinedClasses}>
+      <Link href={href} className={combinedClasses} data-analytics={dataAnalytics}>
         {children}
       </Link>
     );
@@ -49,6 +51,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick} 
       disabled={disabled}
       className={combinedClasses}
+      data-analytics={dataAnalytics}
     >
       {children}
     </button>
