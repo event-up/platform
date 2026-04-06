@@ -1,24 +1,39 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   const links = {
     product: [
-      { name: 'Features', href: '#features' },
-      { name: 'How It Works', href: '#how-it-works' },
-      { name: <div className=''>Pricing <span className="text-xs border rounded-full px-2 py-0.5 text-white/50">Coming Soon</span> </div>, href: '', 'data-analytics': 'pricing_view_click' },
+      { name: "Features", href: "#features" },
+      { name: "How It Works", href: "#how-it-works" },
+      {
+        name: (
+          <div className="">
+            Pricing{" "}
+            <span className="text-xs border rounded-full px-2 py-0.5 text-white/50">
+              Coming Soon
+            </span>{" "}
+          </div>
+        ),
+        href: "",
+        "data-analytics": "pricing_view_click",
+      },
     ],
     company: [
-      { name: 'About Us', href: '/about' },
-      { name: 'Contact', href: '/contact', 'data-analytics': 'footer_contact_click' },
+      { name: "About Us", href: "/about" },
+      {
+        name: "Contact",
+        href: "/contact",
+        "data-analytics": "footer_contact_click",
+      },
     ],
     legal: [
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy', href: '/cookies' },
+      { name: "Privacy Policy", href: "/privacy" },
+      { name: "Terms of Service", href: "/terms" },
+      { name: "Cookie Policy", href: "/cookies" },
     ],
   };
 
@@ -33,10 +48,15 @@ const Footer: React.FC = () => {
     //   ),
     // },
     {
-      name: 'LinkedIn',
-      href: 'https://www.linkedin.com/company/eventup-lk',
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/eventup-lk",
       icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <svg
+          className="w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
         </svg>
       ),
@@ -64,15 +84,13 @@ const Footer: React.FC = () => {
   return (
     <footer
       style={{
-        background: 'linear-gradient(to bottom, #0f0f13 0%, #0a0a0d 100%)',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        background: "linear-gradient(to bottom, #0f0f13 0%, #0a0a0d 100%)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-
         {/* Top grid: Brand + Link columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 pb-12 border-b border-white/[0.06]">
-
           {/* Brand column  -  spans 2 cols on lg */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-4">
@@ -85,7 +103,8 @@ const Footer: React.FC = () => {
               />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-xs mb-6">
-              Effortless event attendance management. From registration to real‑time check‑in, all in one platform.
+              Effortless event attendance management. From registration to
+              real‑time check‑in, all in one platform.
             </p>
 
             {/* Social icons */}
@@ -99,8 +118,8 @@ const Footer: React.FC = () => {
                   aria-label={social.name}
                   className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.14] smooth-transition"
                   style={{
-                    background: 'rgba(255,255,255,0.06)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                   }}
                 >
                   {social.icon}
@@ -115,12 +134,14 @@ const Footer: React.FC = () => {
               Product
             </h4>
             <ul className="space-y-3">
-              {links.product.map((link,i) => (
+              {links.product.map((link, i) => (
                 <li key={i}>
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
-                    {...(link['data-analytics'] ? { 'data-analytics': link['data-analytics'] } : {})}
+                    {...(link["data-analytics"]
+                      ? { "data-analytics": link["data-analytics"] }
+                      : {})}
                   >
                     {link.name}
                   </Link>
@@ -140,7 +161,9 @@ const Footer: React.FC = () => {
                   <Link
                     href={link.href}
                     className="text-sm text-white/55 hover:text-white smooth-transition"
-                    {...(link['data-analytics'] ? { 'data-analytics': link['data-analytics'] } : {})}
+                    {...(link["data-analytics"]
+                      ? { "data-analytics": link["data-analytics"] }
+                      : {})}
                   >
                     {link.name}
                   </Link>
@@ -173,14 +196,24 @@ const Footer: React.FC = () => {
                 Get In Touch
               </h4>
               <a
-                href="mailto:info@eventup.com"
+                href="mailto:info@eventup.lk"
                 className="text-sm text-white/55 hover:text-white smooth-transition flex items-center gap-2"
                 data-analytics="footer_contact_click"
               >
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                <svg
+                  className="w-4 h-4 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  />
                 </svg>
-                info@eventup.com
+                info@eventup.lk
               </a>
             </div>
           </div>
@@ -191,8 +224,16 @@ const Footer: React.FC = () => {
           <p>© {currentYear} EventUp. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Made with
-            <svg className="w-3.5 h-3.5 text-red-500/70 mx-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+            <svg
+              className="w-3.5 h-3.5 text-red-500/70 mx-0.5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                clipRule="evenodd"
+              />
             </svg>
             for event organizers everywhere
           </p>
