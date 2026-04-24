@@ -8,6 +8,7 @@ import {
   signInWithGoogle as firebaseSignInWithGoogle,
   signOut as firebaseSignOut,
 } from "@workspace/firebase/auth";
+import { destroySession } from "@/actions/auth-actions";
 interface AuthContextType {
   user: User;
   loading: boolean;
@@ -44,6 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = async () => {
     try {
       setLoading(true);
+      await destroySession();
       await firebaseSignOut();
     } catch (error) {
       console.error("Sign out error:", error);

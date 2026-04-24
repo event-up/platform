@@ -46,6 +46,22 @@ export const nextJsConfig = [
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@workspace/models/db/Event"],
+              message:
+                "Use lowercase import path '@workspace/models/db/event'.",
+            },
+            {
+              group: ["*get.sever*"],
+              message: "Use '*.get.server*' naming convention.",
+            },
+          ],
+        },
+      ],
     },
   },
 ]

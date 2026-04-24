@@ -1,3 +1,5 @@
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
+
 export type ParticipantStatus =
   | "registered"
   | "self-cancelled"
@@ -16,6 +18,12 @@ export interface ContactChannelJobResult {
   success: boolean;
 }
 
+export interface CheckInData {
+  timeStamp: Timestamp | string | FieldValue;
+  entranceCode: string;
+  inputToken: string;
+}
+
 export interface ContactChannel {
   type: RegistrationContactChannels;
   value: string;
@@ -27,10 +35,11 @@ export interface BaseRegistration {
   registrationId: string;
   // ......
   status: ParticipantStatus;
+  checkInData: CheckInData[];
   createdAt: string;
   updatedAt: string;
   contactChannels: ContactChannel[];
-  token: RegistrationToken;
+  token: string;
 }
 export interface Registration extends BaseRegistration {
   registrationData?: {
@@ -38,10 +47,10 @@ export interface Registration extends BaseRegistration {
   };
 }
 
-export interface RegistrationToken {
-  verifyToken: string;
-  type: "QR" | "PIN";
-}
+// export interface RegistrationToken {
+//   verifyToken: string;
+//   type: "QR" | "PIN";
+// }
 
 // export interface QRRegistrationToken extends RegistrationToken {
 //   qrText: string;

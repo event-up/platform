@@ -1,10 +1,6 @@
 import { InvitationJob } from "@workspace/models/db/invitations";
 import { serverDb } from "@workspace/firebase/server";
-import {
-  EVENT_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-  ORGANIZER_COLLECTION,
-} from "@workspace/const/database";
+import { firestorePaths } from "../paths";
 
 export const updateInvitationJobServer = async (
   organizerId: string,
@@ -12,16 +8,16 @@ export const updateInvitationJobServer = async (
   jobId: string,
   job: Partial<InvitationJob>
 ) => {
-  const invitationJobRef = serverDb.collection(
-    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${INVITATION_JOB_COLLECTION}`
+  const invitationJobDocRef = serverDb.doc(
+    firestorePaths.invitationJobDoc(organizerId, eventId, jobId).join("/")
   );
-  const invitationJobSnap = await invitationJobRef.doc(jobId).get();
+  const invitationJobSnap = await invitationJobDocRef.get();
 
   if (!invitationJobSnap.exists) {
     throw new Error("Invitation job does not exist");
   }
 
-  const result = await invitationJobRef.doc(jobId).update(job);
+  const result = await invitationJobDocRef.update(job);
 
   return result;
 };

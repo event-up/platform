@@ -35,10 +35,7 @@ export async function createRegistration(
     const newRegistration: Registration = {
       ...registration,
       registrationId: registrationRef.id,
-      token: {
-        verifyToken: JSON.stringify(tokenObject),
-        type: "QR",
-      },
+      token: JSON.stringify(tokenObject),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

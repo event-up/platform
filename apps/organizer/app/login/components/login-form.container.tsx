@@ -13,8 +13,7 @@ import {
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { signInWithGoogle, onAuthStateChange } from "@workspace/firebase/auth";
+import { useState } from "react";
 import { signInWithGoogleWithOrganizerProfile } from "@/helper/auth";
 
 export function LoginForm() {
@@ -22,21 +21,12 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChange((user) => {
-      if (user) {
-        router.push("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
-
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
       setIsSigningIn(true);
       await signInWithGoogleWithOrganizerProfile();
+      router.push("/");
     } catch (err: any) {
       console.error("Sign in error:", err);
       setError(err.message || "Failed to sign in with Google");

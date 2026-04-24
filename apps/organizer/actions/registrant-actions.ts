@@ -1,29 +1,28 @@
 "use server";
+import { z } from "zod";
+import { authActionClient } from "@/lib/safe-action";
+import { updateRegistrationServer } from "@workspace/database/server/registration";
 
-import {
-  Registration,
-  ParticipantStatus,
-} from "@workspace/models/db/registration";
-import { createRegistration } from "@workspace/database/registration/post";
-import { updateRegistrationServer } from "@workspace/database/registration/put.server";
-
-const createNewRegistration = async (data: Registration) => {
-  const res = await createRegistration({
-    ...data,
-  });
-};
-
-export async function updateRegistrationStatus(
-  organizerId: string,
-  eventId: string,
-  registrationId: string,
-  status: ParticipantStatus
-) {
-  const result = await updateRegistrationServer(
+const updateRegistrationStatusSchema = z.object({
+  eventId: z.string().min(1),
+  registrationId: z.string().min(1),
+  status: z.enum(["registered", "self-cancelled", "blocked", "checked-in"]),
+});
+const updateRegistrationStatusAction = async ({
+  parsedInput,
+  ctx: { organizerId },
+}: {
+  parsedInput: z.infer<typeof updateRegistrationStatusSchema>;
+  ctx: { organizerId: string };
+}) => {
+  await updateRegistrationServer(
     organizerId,
-    eventId,
-    registrationId,
-    { status }
+    parsedInput.eventId,
+    parsedInput.registrationId,
+    { status: parsedInput.status },
   );
-  return { success: true, message: `Status updated to ${status}` };
-}
+  return { message: `Status updated to ${parsedInput.status}` };
+};
+export const updateRegistrationStatus = authActionClient
+  .inputSchema(updateRegistrationStatusSchema)
+  .action(updateRegistrationStatusAction);

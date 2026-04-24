@@ -4,7 +4,6 @@ import { updateRegistrationStatus } from "@/actions/registrant-actions";
 import { toast } from "sonner";
 
 interface UpdateStatusParams {
-  organizerId: string;
   eventId: string;
   registrationId: string;
   status: ParticipantStatus;
@@ -14,13 +13,12 @@ export const useUpdateRegistrationStatusMutation = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({
-      organizerId,
-      eventId,
-      registrationId,
-      status,
-    }: UpdateStatusParams) =>
-      updateRegistrationStatus(organizerId, eventId, registrationId, status),
+    mutationFn: async ({ eventId, registrationId, status }: UpdateStatusParams) => {
+      const result = await updateRegistrationStatus({ eventId, registrationId, status });
+      if (result?.serverError) throw new Error(result.serverError);
+      if (result?.validationErrors) throw new Error("Invalid input provided");
+      return result?.data;
+    },
     onSuccess: (data, variables) => {
       const statusMessages: Record<ParticipantStatus, string> = {
         registered: "Participant restored to registered",
@@ -31,7 +29,6 @@ export const useUpdateRegistrationStatusMutation = () => {
       toast.success("Status Updated", {
         description: statusMessages[variables.status],
       });
-      // Invalidate registrations query to refetch data
       queryClient.invalidateQueries(["registration", variables.eventId]);
     },
     onError: (error: any) => {

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getInvitationJobsByEvent } from "@workspace/database/invitation-job/get";
+import { getInvitationJobsByEvent } from "@workspace/database/client/invitation-job";
 
 export const useAllInvitationJobGet = (
   organizerId: string,

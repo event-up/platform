@@ -22,10 +22,9 @@ import {
 } from "@workspace/ui/components/select";
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useAuth } from "@/lib/auth-context";
-import { InvitationJob } from "@workspace/models/db/invitations";
 import { useMutation } from "react-query";
-import { createInvitationJob } from "@workspace/database/invitation-job/post"
+import { createInvitationJobAction } from "@/actions/invitation-job-actions";
+import { toast } from "sonner";
 
 interface JobCreateFormProps {
   onJobCreated?: () => void;
@@ -34,7 +33,6 @@ interface JobCreateFormProps {
 type ChannelType = "SMS" | "EMAIL";
 
 export function JobCreateForm({ onJobCreated }: JobCreateFormProps) {
-  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [jobName, setJobName] = useState("");
   const [recipientsReference, setRecipientsReference] = useState("");
@@ -44,35 +42,40 @@ export function JobCreateForm({ onJobCreated }: JobCreateFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { eventId } = useParams<{ eventId: string }>();
+  const mutation = useMutation({
+    mutationFn: async (values: {
+      eventId: string;
+      jobName: string;
+      recipientsReference: string;
+      notifyChannel:
+        | { channelType: "EMAIL"; messageTemplate: string }
+        | { channelType: "SMS"; messageTemplate: string; smsMaskId: string };
+    }) => {
+      const result = await createInvitationJobAction(values);
+      if (result?.serverError) throw new Error(result.serverError);
+      if (result?.validationErrors) throw new Error("Invalid invitation job input");
+      return result?.data;
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // TODO: Implement job creation logic with createInvitationJob
-      const jobData: InvitationJob = {
+      const notifyChannel =
+        channelType === "SMS"
+          ? { channelType, messageTemplate, smsMaskId }
+          : { channelType, messageTemplate };
+
+      await mutation.mutateAsync({
         eventId,
         jobName,
-        status: "created" as const,
-        completedCount: 0,
-        failedCount: 0,
         recipientsReference,
-        completedAt:null,
-        notifyChannel: {
-          channelType,
-          messageTemplate,
-          ...(channelType === "SMS" && { smsMaskId }),
-        },
-      };
+        notifyChannel,
+      });
+      toast.success("Invitation job created");
 
-      if(user?.uid){
-        const result = createInvitationJob(user?.uid,jobData)
-        
-      }
-
-      console.log("Creating new invitation job...", jobData);
-      
       // Reset form
       setJobName("");
       setRecipientsReference("");
@@ -82,6 +85,9 @@ export function JobCreateForm({ onJobCreated }: JobCreateFormProps) {
       onJobCreated?.();
     } catch (error) {
       console.error("Error creating invitation job:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create invitation job"
+      );
     } finally {
       setIsSubmitting(false);
     }

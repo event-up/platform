@@ -2,15 +2,19 @@ import { Registration } from '@workspace/models/db/registration';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
-
-const COLLECTION_NAME = 'registrations';
-const registrationsCollection = collection(db, COLLECTION_NAME);
+import { firestorePaths } from "../paths";
 
 export async function updateRegistration(
+    organizerId: string,
+    eventId: string,
     registrationId: string,
     updates: Partial<Omit<Registration, 'id' | 'createdAt'>>
 ): Promise<Registration> {
     try {
+        const registrationsCollection = collection(
+          db,
+          ...firestorePaths.registrationsCollection(organizerId, eventId)
+        );
         const registrationRef = doc(registrationsCollection, registrationId);
         const registrationDoc = await getDoc(registrationRef);
 

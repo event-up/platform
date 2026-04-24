@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import type { Event } from "@workspace/models/db/Event";
+import type { Event } from "@workspace/models/db/event";
 import { fetchEventRegistrationByDomain } from "@/app/reg/actions";
 
 export const useEventFromDomainQuery = (domain: string) => {

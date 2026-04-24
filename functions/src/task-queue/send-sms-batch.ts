@@ -4,12 +4,12 @@ import { SMSNotifyChannel } from "@workspace/models/db/invitations";
 import { notifyRegistrationUsingSMS } from "@workspace/channels";
 import { ChannelsError, ChannelsErrorCode } from "@workspace/utils";
 import { getFunctions } from "firebase-admin/functions";
-import { getInvitationJobByIdServer } from "@workspace/database/invitation-job/get.server";
-import { getInvitationBatchByIdServer } from "@workspace/database/invitation-job/invitation-batch/get.server";
-import { updateRegistrationServer } from "@workspace/database/registration/put.server";
-import { updateInvitationJobBatchServer } from "@workspace/database/invitation-job/invitation-batch/put.server";
+import { getInvitationJobByIdServer } from "@workspace/database/server/invitation-job";
+import { getInvitationBatchByIdServer } from "@workspace/database/server/invitation-batch";
+import { updateRegistrationServer } from "@workspace/database/server/registration";
+import { updateInvitationJobBatchServer } from "@workspace/database/server/invitation-batch";
 import { firestore } from "firebase-admin";
-import { updateInvitationJobServer } from "@workspace/database/invitation-job/put.server";
+import { updateInvitationJobServer } from "@workspace/database/server/invitation-job";
 
 interface InvitationTaskData {
   organizerId: string;
@@ -41,6 +41,10 @@ const handleSendSMSBatch = async (req: tasks.Request<InvitationTaskData>) => {
       ChannelsErrorCode.CONFIGURATION_ERROR
     );
   const { recipients } = batch;
+  if (batch.status === "completed") {
+    console.debug(`Batch ${batchId} already completed, skipping`);
+    return;
+  }
 
   const invitationJob = await getInvitationJobByIdServer(
     organizerId,
@@ -53,6 +57,10 @@ const handleSendSMSBatch = async (req: tasks.Request<InvitationTaskData>) => {
       ChannelsErrorCode.CONFIGURATION_ERROR
     );
   const { notifyChannel } = invitationJob;
+  if (invitationJob.status === "completed") {
+    console.debug(`Invitation job ${jobId} already completed, skipping`);
+    return;
+  }
 
   console.debug(
     `EventId: ${eventId} : Notify channel type: ${notifyChannel.channelType}`
@@ -69,58 +77,72 @@ const handleSendSMSBatch = async (req: tasks.Request<InvitationTaskData>) => {
   //   Only processing SMS
   if (notifyChannel.channelType === "SMS") {
     console.debug("Notify channel is SMS, processing batch....");
+    try {
+      for (const recipient of recipients) {
+        console.debug(`Sending SMS to recipient ${recipient.registrationId}`);
+        const { registration: updatedRecipientResponse, success } =
+          await notifyRegistrationUsingSMS(
+            jobId,
+            recipient,
+            (notifyChannel as SMSNotifyChannel).messageTemplate,
+            (notifyChannel as SMSNotifyChannel).smsMaskId
+          );
 
-    for (const recipient of recipients) {
-      // Send the SMS
-      console.debug(`Sending SMS to recipient ${recipient.registrationId}`);
-      const { registration: updatedRecipientResponse, success } =
-        await notifyRegistrationUsingSMS(
-          jobId,
-          recipient,
-          (notifyChannel as SMSNotifyChannel).messageTemplate,
-          (notifyChannel as SMSNotifyChannel).smsMaskId
+        await updateRegistrationServer(
+          organizerId,
+          eventId,
+          recipient.registrationId,
+          {
+            contactChannels: updatedRecipientResponse.contactChannels,
+          }
         );
 
-      console.debug(
-        `Received response for recipient ${recipient.registrationId}: ${JSON.stringify({ recipientResponse: updatedRecipientResponse })}`
-      );
-      await updateRegistrationServer(
+        if (success) {
+          successCount++;
+        }
+        await delay(500);
+      }
+
+      await updateInvitationJobBatchServer(
         organizerId,
         eventId,
-        recipient.registrationId,
+        jobId,
+        batchId,
         {
-          contactChannels: updatedRecipientResponse.contactChannels,
+          status: "completed",
+          completedAt: firestore.FieldValue
+            ? firestore.FieldValue.serverTimestamp()
+            : null,
+          successCount,
         }
       );
 
-      if (success) {
-        successCount++;
+      if (isLastBatch) {
+        await updateInvitationJobServer(organizerId, eventId, jobId, {
+          status: "completed",
+          completedAt: firestore.FieldValue
+            ? firestore.FieldValue.serverTimestamp()
+            : null,
+        });
       }
-      console.debug("Updated registration with SMS response");
-      await delay(500);
-    }
-    console.debug("Updating batch status to completed");
-    // update Batch status
-    await updateInvitationJobBatchServer(organizerId, eventId, jobId, batchId, {
-      status: "completed",
-      completedAt: firestore.FieldValue
-        ? firestore.FieldValue.serverTimestamp()
-        : null,
-      successCount,
-    });
-
-    console.debug(`######Batch Completed processing : ${batchId}`);
-    if (isLastBatch) {
-      console.debug(`*######Invitation Job Completed processing : ${jobId}`);
-
+    } catch (error) {
+      await updateInvitationJobBatchServer(
+        organizerId,
+        eventId,
+        jobId,
+        batchId,
+        {
+          status: "failed",
+        }
+      );
       await updateInvitationJobServer(organizerId, eventId, jobId, {
-        status: "completed",
+        status: "failed",
         completedAt: firestore.FieldValue
           ? firestore.FieldValue.serverTimestamp()
           : null,
       });
+      throw error;
     }
-    // TODO: Delete the registrations
   }
 };
 

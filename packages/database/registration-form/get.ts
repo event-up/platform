@@ -1,11 +1,7 @@
-import {
-  ORGANIZER_COLLECTION,
-  EVENT_COLLECTION,
-  REGISTRATION_FORM_COLLECTION,
-} from "@workspace/const/database";
 import { db } from "@workspace/firebase";
 import { RegistrationForm } from "@workspace/models/db/registration-form";
 import { collection, query, limit, getDocs } from "firebase/firestore";
+import { firestorePaths } from "../paths";
 
 export async function getRegistrationForm(
   organizerId: string,
@@ -13,7 +9,7 @@ export async function getRegistrationForm(
 ): Promise<RegistrationForm | null> {
   const registrationFormCol = collection(
     db,
-    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${REGISTRATION_FORM_COLLECTION}`
+    ...firestorePaths.registrationFormsCollection(organizerId, eventId)
   );
 
   const queryRef = query(registrationFormCol, limit(1));

@@ -13,7 +13,7 @@ export interface InvitationJob {
   notifyChannel: NotifyChannel | SMSNotifyChannel;
 }
 
-interface NotifyChannel {
+export interface NotifyChannel {
   channelType: "SMS" | "EMAIL";
   messageTemplate: string;
 }

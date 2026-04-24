@@ -2,11 +2,7 @@ import { InvitationJob } from "@workspace/models/db/invitations";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "@workspace/firebase";
 import { DatabaseError } from "@workspace/utils/src/errors/database";
-import {
-  EVENT_COLLECTION,
-  ORGANIZER_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-} from "@workspace/const/database";
+import { firestorePaths } from "../paths";
 
 export async function createInvitationJob(
   organizerId: string,
@@ -18,11 +14,7 @@ export async function createInvitationJob(
     // organizer > event > invitationJob
     const invitationJobsCollection = collection(
       db,
-      ORGANIZER_COLLECTION,
-      organizerId,
-      EVENT_COLLECTION,
-      job.eventId,
-      INVITATION_JOB_COLLECTION
+      ...firestorePaths.invitationJobsCollection(organizerId, job.eventId)
     );
     const invitationJobRef = doc(invitationJobsCollection);
 

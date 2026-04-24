@@ -1,13 +1,10 @@
 import {
-  ORGANIZER_COLLECTION,
-  EVENT_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-  INVITATION_BATCH_COLLECTION,
 } from "@workspace/const/database";
 import { serverDb as db } from "@workspace/firebase/server";
 import { InvitationJobBatch } from "@workspace/models/db/invitations";
 import { Registration } from "@workspace/models/db/registration";
 import { firestore } from "firebase-admin";
+import { firestorePaths } from "../../paths";
 
 export async function createBatch(
   organizerId: string,
@@ -19,7 +16,7 @@ export async function createBatch(
   // 3. Write each batch as a separate doc under job -> batches
   const batchWrites = db.batch();
   const batchesCol = db.collection(
-    `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${INVITATION_JOB_COLLECTION}/${jobId}/${INVITATION_BATCH_COLLECTION}`
+    firestorePaths.invitationBatchesCollection(organizerId, eventId, jobId).join("/")
   );
   const createdBatches: InvitationJobBatch[] = [];
   batches.forEach((batchList) => {

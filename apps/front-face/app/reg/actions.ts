@@ -3,9 +3,9 @@ import {
   ContactChannel,
   Registration,
 } from "@workspace/models/db/registration";
-import { getRegistrationFormServer } from "@workspace/database/registration-form/get.server";
-import { createRegistrationServer } from "@workspace/database/registration/post.server";
-import { getEventByDomainNameServer } from "@workspace/database/event/get.server";
+import { getRegistrationFormServer } from "@workspace/database/server/registration-form";
+import { createRegistrationServer } from "@workspace/database/server/registration";
+import { getEventByDomainNameServer } from "@workspace/database/server/event";
 import { headers } from "next/headers";
 
 export const createRegistration = async (
@@ -23,6 +23,7 @@ export const createRegistration = async (
         ...channel,
         jobResults: [],
       })),
+      checkInData: [],
       registrationData: data.registrationData,
     });
 

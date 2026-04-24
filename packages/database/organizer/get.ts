@@ -2,9 +2,9 @@ import { Organizer } from '@workspace/models/db/organizer';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
+import { ORGANIZER_COLLECTION } from "@workspace/const/database";
 
-const COLLECTION_NAME = 'organizers';
-const organizersCollection = collection(db, COLLECTION_NAME);
+const organizersCollection = collection(db, ORGANIZER_COLLECTION);
 
 export async function getOrganizer(userId: string): Promise<Organizer> {
     try {
@@ -42,6 +42,5 @@ export async function getOrganizerByEmail(email: string): Promise<Organizer | nu
         throw DatabaseError.fromFirebaseError(error as any);
     }
 }
-
 
 

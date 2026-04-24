@@ -11,9 +11,9 @@ import {
   DatabaseError,
   NotFoundError,
 } from "@workspace/utils/src/errors/database";
+import { ORGANIZER_COLLECTION } from "@workspace/const/database";
 
-const COLLECTION_NAME = "organizers";
-const organizersCollection = collection(db, COLLECTION_NAME);
+const organizersCollection = collection(db, ORGANIZER_COLLECTION);
 
 export async function updateOrganizer(
   userId: string,

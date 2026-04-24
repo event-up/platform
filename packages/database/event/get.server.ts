@@ -1,7 +1,7 @@
 "use server";
 import { serverDb } from "@workspace/firebase/server";
 import { EVENT_COLLECTION } from "@workspace/const/database";
-import type { Event } from "@workspace/models/db/Event";
+import type { Event } from "@workspace/models/db/event";
 
 /**
  * Get an event by its domain name
@@ -27,10 +27,5 @@ export const getEventByDomainNameServer = async (
   }
 
   const data = doc.data() as Event;
-  console.log({ data });
-
-  return {
-    ...data,
-    date: "edwde",
-  } as Event;
+  return data;
 };

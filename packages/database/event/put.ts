@@ -2,12 +2,15 @@ import { Event } from '@workspace/models/db/event';
 import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
+import { firestorePaths } from "../paths";
 
-const COLLECTION_NAME = 'events';
-const eventsCollection = collection(db, COLLECTION_NAME);
-
-export async function updateEvent(eventId: string, updates: Partial<Event>): Promise<Event> {
+export async function updateEvent(
+    organizerId: string,
+    eventId: string,
+    updates: Partial<Event>
+): Promise<Event> {
     try {
+        const eventsCollection = collection(db, ...firestorePaths.eventsCollection(organizerId));
         const eventRef = doc(eventsCollection, eventId);
         const eventDoc = await getDoc(eventRef);
 

@@ -1,8 +1,9 @@
-import { getOrganizer } from "@workspace/database/organizer/get";
-import { createOrganizer } from "@workspace/database/organizer/post";
+import { getOrganizer } from "@workspace/database/client/organizer";
+import { createOrganizer } from "@workspace/database/client/organizer";
 import { signInWithGoogle } from "@workspace/firebase/auth";
 import { UserRole } from "@workspace/models/db/user";
 import { NotFoundError } from "@workspace/utils/src/errors/database";
+import { createSession } from "@/actions/auth-actions";
 
 export const signInWithGoogleWithOrganizerProfile = async () => {
   try {
@@ -23,6 +24,8 @@ export const signInWithGoogleWithOrganizerProfile = async () => {
         console.log("Organizer document created successfully");
       }
     }
+    const idToken = await user.getIdToken();
+    await createSession(idToken);
   } catch (error) {
     console.error("Sign in error:", error);
     throw error;

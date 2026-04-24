@@ -24,11 +24,10 @@ import {
   EVENT_COLLECTION,
   ORGANIZER_COLLECTION,
   REGISTRATION_COLLECTION,
-  REGISTRATION_FORM_COLLECTION,
 } from "@workspace/const/database";
 
 export async function getRegistration(
-  orgnizerId: string,
+  organizerId: string,
   eventId: string,
   registrationId: string,
 ): Promise<Registration> {
@@ -36,10 +35,10 @@ export async function getRegistration(
     const registrationCollection = collection(
       db,
       ORGANIZER_COLLECTION,
-      orgnizerId,
+      organizerId,
       EVENT_COLLECTION,
       eventId,
-      REGISTRATION_FORM_COLLECTION,
+      REGISTRATION_COLLECTION,
     );
     const registrationRef = doc(registrationCollection, registrationId);
     const registrationDoc = await getDoc(registrationRef);

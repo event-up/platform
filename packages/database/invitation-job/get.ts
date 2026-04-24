@@ -1,12 +1,8 @@
-import {
-  EVENT_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-  ORGANIZER_COLLECTION,
-} from "@workspace/const/database";
 import { db } from "@workspace/firebase";
 import { InvitationJob } from "@workspace/models/db/invitations";
 import { DatabaseError } from "@workspace/utils/src/errors/database";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { firestorePaths } from "../paths";
 
 export async function getInvitationJobsByEvent(
   organizerId: string,
@@ -15,11 +11,7 @@ export async function getInvitationJobsByEvent(
   try {
     const jobCollectionRef = collection(
       db,
-      ORGANIZER_COLLECTION,
-      organizerId,
-      EVENT_COLLECTION,
-      eventId,
-      INVITATION_JOB_COLLECTION
+      ...firestorePaths.invitationJobsCollection(organizerId, eventId)
     );
 
     const snapshot = await getDocs(jobCollectionRef);
@@ -47,12 +39,7 @@ export async function getInvitationJobById(
   try {
     const jobDocRef = doc(
       db,
-      ORGANIZER_COLLECTION,
-      organizerId,
-      EVENT_COLLECTION,
-      eventId,
-      INVITATION_JOB_COLLECTION,
-      jobId
+      ...firestorePaths.invitationJobDoc(organizerId, eventId, jobId)
     );
 
     const jobSnapshot = await getDoc(jobDocRef);
