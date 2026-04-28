@@ -34,6 +34,11 @@ export interface FormSchema {
   title?: string;
   description?: string;
   fields: FormField[];
+  registrationBranding?: {
+    coverImageUrl?: string;
+    organizerName?: string;
+    organizerLogoUrl?: string;
+  };
 }
 
 export interface FormValues {

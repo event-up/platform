@@ -1,4 +1,21 @@
 {
-  "tailwindCSS.experimental.configFile": "packages/ui/src/styles/globals.css",
+  "tailwindCSS.experimental.configFile": {
+    "packages/ui/src/styles/globals.css": [
+      "apps/organizer/**/*.{js,jsx,ts,tsx,md,mdx}",
+      "apps/checker/**/*.{js,jsx,ts,tsx,md,mdx}",
+      "apps/front-face/**/*.{js,jsx,ts,tsx,md,mdx}",
+      "packages/ui/**/*.{js,jsx,ts,tsx,md,mdx}",
+      "packages/surveyjs/**/*.{js,jsx,ts,tsx,md,mdx}"
+    ],
+    "apps/landing/app/globals.css": [
+      "apps/landing/**/*.{js,jsx,ts,tsx,md,mdx}"
+    ]
+  },
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript",
+    "javascriptreact": "javascript"
+  },
+  "tailwindCSS.validate": true,
   "editor.formatOnSave": true
 }

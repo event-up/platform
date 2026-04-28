@@ -1,9 +1,15 @@
 "use server";
 
-export {
+import {
   getEventRegistrationsByStatus,
   getRegistrationById,
 } from "../registration/get.server";
-export { createRegistrationServer } from "../registration/post.server";
-export { updateRegistrationServer } from "../registration/put.server";
+import { createRegistrationServer } from "../registration/post.server";
+import { updateRegistrationServer } from "../registration/put.server";
 
+export {
+  getEventRegistrationsByStatus,
+  getRegistrationById,
+  createRegistrationServer,
+  updateRegistrationServer,
+};

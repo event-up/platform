@@ -17,6 +17,13 @@ const createRegistrationFormSchema = z.object({
     title: z.string().optional().default(""),
     description: z.string().optional().default(""),
     fields: z.array(z.any()),
+    registrationBranding: z
+      .object({
+        coverImageUrl: z.string().optional().default(""),
+        organizerName: z.string().optional().default(""),
+        organizerLogoUrl: z.string().optional().default(""),
+      })
+      .optional(),
   }),
 });
 

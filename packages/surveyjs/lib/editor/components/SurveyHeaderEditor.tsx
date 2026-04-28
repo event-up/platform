@@ -1,11 +1,6 @@
-/**
- * Component for editing survey metadata (title and description)
- * Follows Single Responsibility Principle - Google Forms style
- */
+"use client";
 
 import React from "react";
-import { FormTitleInput } from "@workspace/ui/components/form-title-input";
-import { FormDescriptionInput } from "@workspace/ui/components/form-description-input";
 
 interface SurveyHeaderEditorProps {
   title: string;
@@ -21,27 +16,24 @@ export const SurveyHeaderEditor: React.FC<SurveyHeaderEditorProps> = ({
   onUpdateDescription,
 }) => {
   return (
-    <div className="relative">
-      {/* Google Forms style header container */}
-      <div className="bg-white rounded-lg  shadow-sm  border-gray-200 border-l-[5px] border-l-primary mb-4">
-        {/* Purple accent bar at top */}
-        <div className="h-2  rounded-t-lg"></div>
+    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      {/* Teal accent bar */}
+      <div className="h-2 bg-gradient-to-r from-[#0097B2] via-[#00B8D9] to-[#0097B2]" />
 
-        {/* Content container */}
-        <div className="p-6 space-y-2">
-          <FormTitleInput
-            value={title}
-            onChange={(e) => onUpdateTitle(e.target.value)}
-            placeholder="Untitled form"
-            className="text-3xl"
-          />
-          <FormDescriptionInput
-            value={description}
-            onChange={(e) => onUpdateDescription(e.target.value)}
-            placeholder="Form description"
-            rows={2}
-          />
-        </div>
+      <div className="px-6 pt-5 pb-6">
+        <input
+          value={title}
+          onChange={(e) => onUpdateTitle(e.target.value)}
+          placeholder="Form title"
+          className="w-full text-[22px] font-semibold tracking-tight bg-transparent outline-none focus:border-b-2 focus:border-[#0097B2] pb-1 -mb-px placeholder:text-slate-400"
+        />
+        <textarea
+          rows={2}
+          value={description}
+          onChange={(e) => onUpdateDescription(e.target.value)}
+          placeholder="Add a short description for attendees…"
+          className="mt-3 w-full resize-none text-[14px] text-slate-700 bg-transparent outline-none focus:border-b-2 focus:border-[#0097B2] pb-1 -mb-px placeholder:text-slate-400"
+        />
       </div>
     </div>
   );

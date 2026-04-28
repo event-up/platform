@@ -8,7 +8,7 @@ import {
   signInWithGoogle as firebaseSignInWithGoogle,
   signOut as firebaseSignOut,
 } from "@workspace/firebase/auth";
-import { destroySession } from "@/actions/auth-actions";
+import { destroySession, verifySession } from "@/actions/auth-actions";
 interface AuthContextType {
   user: User;
   loading: boolean;
@@ -41,6 +41,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       router.push("/login");
     }
   }, [user, loading, router]);
+
+  useEffect(() => {
+    if (!user) return;
+    verifySession().then(({ valid }) => {
+      if (!valid) firebaseSignOut();
+    });
+  }, [user]);
 
   const signOut = async () => {
     try {

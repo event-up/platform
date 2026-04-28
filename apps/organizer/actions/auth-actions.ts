@@ -33,3 +33,15 @@ export async function destroySession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE_NAME);
 }
+
+export async function verifySession(): Promise<{ valid: boolean }> {
+  try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+    if (!session) return { valid: false };
+    await serverAuth.verifySessionCookie(session, true);
+    return { valid: true };
+  } catch {
+    return { valid: false };
+  }
+}

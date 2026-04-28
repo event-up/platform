@@ -24,6 +24,9 @@ export interface EditorState {
   selectedFieldId: string | null;
   surveyTitle: string;
   surveyDescription: string;
+  coverImageUrl?: string;
+  organizerName?: string;
+  organizerLogoUrl?: string;
 }
 
 export interface FieldOperations {

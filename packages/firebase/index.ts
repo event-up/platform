@@ -1,7 +1,7 @@
-import { initializeApp, getApps, FirebaseApp } from "firebase/app";
-import { getAuth, Auth } from "firebase/auth";
-import { getFirestore, Firestore } from "firebase/firestore";
-import { getStorage, FirebaseStorage } from "firebase/storage";
+import { initializeApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { env } from "./env";
 
 const firebaseConfig = {
@@ -13,7 +13,7 @@ const firebaseConfig = {
   appId: env().NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps()[0] ?? initializeApp(firebaseConfig);
 
 export const getServerApp = () => app;
 export const db = getFirestore(app);

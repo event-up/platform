@@ -22,6 +22,9 @@ export function useEditorState(initialState?: Partial<EditorState>) {
     selectedFieldId: null,
     surveyTitle: "Untitled Form",
     surveyDescription: "",
+    coverImageUrl: "",
+    organizerName: "EventUp",
+    organizerLogoUrl: "",
     ...initialState,
   });
 
@@ -81,6 +84,22 @@ export function useEditorState(initialState?: Partial<EditorState>) {
     [],
   );
 
+  const updateBrandingMeta = useCallback(
+    (updates: {
+      coverImageUrl?: string;
+      organizerName?: string;
+      organizerLogoUrl?: string;
+    }) => {
+      setState((prev) => ({
+        ...prev,
+        coverImageUrl: updates.coverImageUrl ?? prev.coverImageUrl,
+        organizerName: updates.organizerName ?? prev.organizerName,
+        organizerLogoUrl: updates.organizerLogoUrl ?? prev.organizerLogoUrl,
+      }));
+    },
+    [],
+  );
+
   const operations: FieldOperations = {
     addField,
     removeField,
@@ -102,6 +121,7 @@ export function useEditorState(initialState?: Partial<EditorState>) {
     state,
     operations,
     updateSurveyMeta,
+    updateBrandingMeta,
     validation,
     hasContactFields,
   };
