@@ -7,7 +7,6 @@ import {
   getRegistrationById,
 } from "@workspace/database/server/registration";
 import { CheckInData } from "@workspace/models/db/registration";
-import { serverTimestamp } from "firebase/firestore";
 
 class ActionError extends Error {
   data: unknown = null;
@@ -41,7 +40,7 @@ export const checkInParticipant = async (params: {
       {
         entranceCode: params.entranceCode,
         inputToken: params.registrationId,
-        timeStamp: serverTimestamp(),
+        timeStamp: new Date().toISOString(),
       },
     ];
 

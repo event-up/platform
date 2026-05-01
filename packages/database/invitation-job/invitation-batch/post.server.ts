@@ -5,6 +5,7 @@ import { InvitationJobBatch } from "@workspace/models/db/invitations";
 import { Registration } from "@workspace/models/db/registration";
 import { firestore } from "firebase-admin";
 import { firestorePaths } from "../../paths";
+import { isoStringsToFirestoreTimestamps } from "../../timestamps";
 
 export async function createBatch(
   organizerId: string,
@@ -21,7 +22,7 @@ export async function createBatch(
   const createdBatches: InvitationJobBatch[] = [];
   batches.forEach((batchList) => {
     const batchDocRef = batchesCol.doc(); // auto-ID
-    const batch: InvitationJobBatch = {
+    const persistedBatch: InvitationJobBatch<FirebaseFirestore.FieldValue | FirebaseFirestore.Timestamp | string | null> = isoStringsToFirestoreTimestamps({
       recipients: batchList,
       batchId: batchDocRef.id,
       status: "created",
@@ -33,9 +34,20 @@ export async function createBatch(
         ? firestore.FieldValue.serverTimestamp()
         : null,
       successCount: 0,
-    };
-    createdBatches.push(batch);
-    batchWrites.set(batchDocRef, batch);
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+    }, (date) => firestore.Timestamp.fromDate(date));
+    const nowIso = new Date().toISOString();
+    createdBatches.push({
+      recipients: batchList,
+      batchId: batchDocRef.id,
+      status: "created",
+      createdAt: nowIso,
+      completedAt: nowIso,
+      updatedAt: nowIso,
+      successCount: 0,
+      message,
+    });
+    batchWrites.set(batchDocRef, persistedBatch);
   });
 
   await batchWrites.commit();

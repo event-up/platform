@@ -31,7 +31,7 @@ export async function createRegistrationFormServer(
 
   const registrationFormDocRef = registrationFormCol.doc();
 
-  const registrationForm: RegistrationForm = {
+  const registrationForm: RegistrationForm<FirebaseFirestore.FieldValue> = {
     ...formData,
     registrationFormId: registrationFormDocRef.id,
     createdAt: firestore.FieldValue.serverTimestamp(),

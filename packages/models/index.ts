@@ -1,4 +1,5 @@
 export * from "./db/event";
+export * from "./db/event-page";
 export * from "./db/invitations";
 export * from "./db/registration";
 export * from "./db/user";

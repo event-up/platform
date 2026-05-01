@@ -6,6 +6,7 @@ import {
 import { serverDb } from "@workspace/firebase/server";
 import { firestore } from "firebase-admin";
 import { firestorePaths } from "../paths";
+import { isoStringsToFirestoreTimestamps } from "../timestamps";
 
 export async function updateRegistrationServer(
   organizerId: string,
@@ -22,7 +23,10 @@ export async function updateRegistrationServer(
     }
 
     const updateData = {
-      ...updates,
+      ...isoStringsToFirestoreTimestamps(
+        updates,
+        (date) => firestore.Timestamp.fromDate(date),
+      ),
       updatedAt: firestore.FieldValue
         ? firestore.FieldValue.serverTimestamp()
         : null,

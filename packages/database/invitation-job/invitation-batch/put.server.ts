@@ -6,6 +6,7 @@ import {
 } from "@workspace/utils/src/errors/database";
 import { firestore } from "firebase-admin";
 import { firestorePaths } from "../../paths";
+import { isoStringsToFirestoreTimestamps } from "../../timestamps";
 
 export async function updateInvitationJobBatchServer(
   organizerId: string,
@@ -29,7 +30,10 @@ export async function updateInvitationJobBatchServer(
   }
 
   await batchDocRef.update({
-    ...updateData,
+    ...isoStringsToFirestoreTimestamps(
+      updateData,
+      (date) => firestore.Timestamp.fromDate(date),
+    ),
     updatedAt: firestore.FieldValue
       ? firestore.FieldValue.serverTimestamp()
       : null,

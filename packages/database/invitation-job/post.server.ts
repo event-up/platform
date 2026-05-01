@@ -2,6 +2,7 @@ import { firestore } from "firebase-admin";
 import { serverDb } from "@workspace/firebase/server";
 import { InvitationJob } from "@workspace/models/db/invitations";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 type CreateInvitationJobInput = {
   organizerId: string;
@@ -58,7 +59,7 @@ export const createInvitationJobServer = async ({
   );
   const jobRef = jobsCollection.doc();
 
-  const data = {
+  const data: InvitationJob<FirebaseFirestore.FieldValue | null> = {
     eventId,
     jobId: jobRef.id,
     jobName: jobName.trim(),
@@ -73,5 +74,9 @@ export const createInvitationJobServer = async ({
   };
 
   await jobRef.set(data);
-  return { ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+  return {
+    ...firestoreTimestampsToIsoStrings(data),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
 };

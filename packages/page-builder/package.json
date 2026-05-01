@@ -1,0 +1,30 @@
+{
+  "name": "@workspace/page-builder",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@puckeditor/core": "^0.21.2",
+    "@workspace/typescript-config": "workspace:*",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./config": "./src/config.tsx",
+    "./config/client": "./src/config/client.tsx",
+    "./config/server": "./src/config/server.tsx",
+    "./defaults": "./src/defaults.ts",
+    "./renderer": "./src/renderer.tsx",
+    "./types": "./src/types.ts",
+    "./validation": "./src/validation.ts"
+  }
+}

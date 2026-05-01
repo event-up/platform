@@ -1,6 +1,8 @@
 import { InvitationJob } from "@workspace/models/db/invitations";
 import { serverDb } from "@workspace/firebase/server";
 import { firestorePaths } from "../paths";
+import { firestore } from "firebase-admin";
+import { isoStringsToFirestoreTimestamps } from "../timestamps";
 
 export const updateInvitationJobServer = async (
   organizerId: string,
@@ -17,7 +19,12 @@ export const updateInvitationJobServer = async (
     throw new Error("Invitation job does not exist");
   }
 
-  const result = await invitationJobDocRef.update(job);
+  const result = await invitationJobDocRef.update(
+    isoStringsToFirestoreTimestamps(
+      job,
+      (date) => firestore.Timestamp.fromDate(date),
+    ),
+  );
 
   return result;
 };

@@ -1,8 +1,9 @@
 import { db } from "@workspace/firebase";
 import { InvitationJob } from "@workspace/models/db/invitations";
 import { DatabaseError } from "@workspace/utils/src/errors/database";
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, Timestamp } from "firebase/firestore";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getInvitationJobsByEvent(
   organizerId: string,
@@ -20,9 +21,9 @@ export async function getInvitationJobsByEvent(
       return [];
     }
 
-    return snapshot.docs.map(
-      (doc) => doc.data() as InvitationJob
-    ) as InvitationJob[];
+    return snapshot.docs.map((doc) =>
+      firestoreTimestampsToIsoStrings(doc.data() as InvitationJob<Timestamp>)
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;
@@ -48,7 +49,9 @@ export async function getInvitationJobById(
       return null;
     }
 
-    return jobSnapshot.data() as InvitationJob;
+    return firestoreTimestampsToIsoStrings(
+      jobSnapshot.data() as InvitationJob<Timestamp>
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;

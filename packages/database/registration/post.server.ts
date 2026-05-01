@@ -22,19 +22,20 @@ export async function createRegistrationServer(
 
     const registrationRef = registrationsCollection.doc();
 
-    const newRegistration: Registration = {
+    const newRegistration: Registration<FirebaseFirestore.FieldValue | string> = {
       ...registration,
       registrationId: registrationRef.id,
-      token: generateRegistrationToken(registrationRef.id, registration.eventId, registration.organizerId),
-      createdAt: firestore.FieldValue.serverTimestamp() as any,
-      updatedAt: firestore.FieldValue.serverTimestamp() as any,
+      token: await generateRegistrationToken(registrationRef.id, registration.eventId, registration.organizerId),
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
     await registrationRef.set(newRegistration);
 
-    // Return the registration with ISO string timestamps for consistency
     return {
-      ...newRegistration,
+      ...registration,
+      registrationId: registrationRef.id,
+      token: newRegistration.token,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

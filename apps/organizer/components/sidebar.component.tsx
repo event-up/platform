@@ -25,6 +25,7 @@ import {
   Bell,
   LayoutDashboard,
   LogOut,
+  Palette,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@workspace/ui/lib/utils";
@@ -50,6 +51,11 @@ export default function SidebarComponent() {
       title: "Registration",
       url: `/event/${eventId}/registration`,
       icon: BarChart3,
+    },
+    {
+      title: "Event Page",
+      url: `/event/${eventId}/page-builder`,
+      icon: Palette,
     },
     {
       title: "Participants",

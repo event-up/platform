@@ -10,6 +10,7 @@
     "./client/registration-form": "./client/registration-form.ts",
     "./client/invitation-job": "./client/invitation-job.ts",
     "./server/event": "./server/event.ts",
+    "./server/event-page": "./server/event-page.ts",
     "./server/registration": "./server/registration.ts",
     "./server/registration-form": "./server/registration-form.ts",
     "./server/invitation-job": "./server/invitation-job.ts",

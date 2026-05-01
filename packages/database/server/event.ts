@@ -1,4 +1,4 @@
-"use server";
-
-export { getEventByDomainNameServer } from "../event/get.server";
-
+export {
+  getEventByDomainNameServer,
+  getEventByIdServer,
+} from "../event/get.server";

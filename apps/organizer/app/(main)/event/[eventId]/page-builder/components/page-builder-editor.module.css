@@ -1,0 +1,126 @@
+.editorSurface {
+  --puck-color-black: var(--foreground);
+  --puck-color-white: var(--background);
+  --puck-color-grey-01: var(--foreground);
+  --puck-color-grey-02: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  --puck-color-grey-03: color-mix(in oklch, var(--foreground) 76%, var(--background));
+  --puck-color-grey-04: var(--muted-foreground);
+  --puck-color-grey-05: color-mix(in oklch, var(--muted-foreground) 72%, var(--background));
+  --puck-color-grey-06: color-mix(in oklch, var(--muted-foreground) 58%, var(--background));
+  --puck-color-grey-07: color-mix(in oklch, var(--muted-foreground) 42%, var(--background));
+  --puck-color-grey-08: color-mix(in oklch, var(--muted-foreground) 30%, var(--background));
+  --puck-color-grey-09: var(--border);
+  --puck-color-grey-10: var(--accent);
+  --puck-color-grey-11: var(--muted);
+  --puck-color-grey-12: var(--background);
+  --puck-color-azure-02: color-mix(in oklch, var(--primary) 78%, var(--foreground));
+  --puck-color-azure-03: color-mix(in oklch, var(--primary) 88%, var(--foreground));
+  --puck-color-azure-04: var(--primary);
+  --puck-color-azure-05: var(--ring);
+  --puck-color-azure-06: color-mix(in oklch, var(--primary) 80%, var(--background));
+  --puck-color-azure-07: color-mix(in oklch, var(--primary) 68%, var(--background));
+  --puck-color-azure-08: color-mix(in oklch, var(--primary) 44%, var(--background));
+  --puck-color-azure-09: color-mix(in oklch, var(--primary) 26%, var(--background));
+  --puck-color-azure-10: color-mix(in oklch, var(--primary) 16%, var(--background));
+  --puck-color-azure-11: var(--accent);
+  --puck-color-azure-12: var(--background);
+  --puck-font-family: var(--font-sans);
+  --puck-font-family-monospaced: var(--font-mono);
+  min-height: 720px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: var(--shadow-sm);
+}
+
+.editorSurface :global([class*="_PuckLayout-inner_"]) {
+  background: var(--muted);
+}
+
+.editorSurface :global([class*="_PuckHeader_"]),
+.editorSurface :global([class*="_MenuBar_"]),
+.editorSurface :global([class*="_Sidebar--right_"]),
+.editorSurface :global([class*="_SidebarSection-title_"]) {
+  background: var(--background);
+  border-color: var(--border);
+}
+
+.editorSurface :global([class*="_PuckLayout-nav_"]),
+.editorSurface :global([class*="_Sidebar--left_"]),
+.editorSurface :global([class*="_PuckCanvas_"]) {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+.editorSurface :global([class*="_PuckCanvas-root_"]) {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  outline-color: var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.editorSurface :global([class*="_DrawerItem-draggable_"]),
+.editorSurface :global([class*="_ObjectField_"]) {
+  border-color: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  box-shadow: var(--shadow-xs);
+}
+
+.editorSurface :global([class*="_DrawerItem-draggable_"]:hover),
+.editorSurface :global([class*="_ComponentList-title_"]:hover),
+.editorSurface :global([class*="_Layer_"]:not([class*="_Layer--isSelected_"]) > [class*="_Layer-inner_"]:hover) {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.editorSurface :global([class*="_Input-input_"]),
+.editorSurface :global([class*="_RichTextEditor--editor_"]) {
+  border-color: var(--input);
+  border-radius: var(--radius-md);
+  background: transparent;
+  box-shadow: var(--shadow-xs);
+  color: var(--foreground);
+}
+
+.editorSurface :global([class*="_Input-input_"]:focus),
+.editorSurface :global([class*="_RichTextEditor--editor_"]:focus-within) {
+  border-color: var(--ring);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 45%, transparent);
+}
+
+.editorSurface :global([class*="_Button_"]) {
+  min-height: 36px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  letter-spacing: 0;
+  box-shadow: var(--shadow-xs);
+}
+
+.editorSurface :global([class*="_Button--primary_"]) {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.editorSurface :global([class*="_Button--primary_"]:hover) {
+  background: color-mix(in oklch, var(--primary) 90%, var(--foreground));
+}
+
+.editorSurface :global([class*="_Button--secondary_"]) {
+  border-color: var(--border);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.editorSurface :global([class*="_ActionBar_"]) {
+  border-radius: var(--radius-md);
+  background: var(--foreground);
+  box-shadow: var(--shadow-md);
+}
+
+.editorSurface :global([class*="_NavItem--active_"] > [class*="_NavItem-link_"]) {
+  border-color: var(--primary);
+  color: var(--primary);
+}

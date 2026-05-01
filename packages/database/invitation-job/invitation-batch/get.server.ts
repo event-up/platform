@@ -1,6 +1,8 @@
 import { serverDb } from "@workspace/firebase/server";
 import { InvitationJobBatch } from "@workspace/models/db/invitations";
+import type { Timestamp } from "firebase-admin/firestore";
 import { firestorePaths } from "../../paths";
+import { firestoreTimestampsToIsoStrings } from "../../timestamps";
 
 export const getInvitationBatchByIdServer = async (
   organizerId: string,
@@ -19,5 +21,7 @@ export const getInvitationBatchByIdServer = async (
     return null;
   }
 
-  return batchSnap.data() as InvitationJobBatch;
+  return firestoreTimestampsToIsoStrings(
+    batchSnap.data() as InvitationJobBatch<Timestamp>
+  );
 };

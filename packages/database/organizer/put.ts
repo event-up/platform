@@ -3,7 +3,7 @@ import {
   collection,
   doc,
   getDoc,
-  serverTimestamp,
+  Timestamp,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "@workspace/firebase";
@@ -12,6 +12,7 @@ import {
   NotFoundError,
 } from "@workspace/utils/src/errors/database";
 import { ORGANIZER_COLLECTION } from "@workspace/const/database";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 const organizersCollection = collection(db, ORGANIZER_COLLECTION);
 
@@ -26,13 +27,13 @@ export async function updateOrganizer(
     if (!organizerDoc.exists()) {
       throw new NotFoundError("Organizer", userId);
     }
-    const updated: Partial<Organizer> = {
+    const updated: Partial<Organizer<Timestamp | string>> = {
       ...updates,
-      updatedAt: serverTimestamp(),
+      updatedAt: Timestamp.fromDate(new Date()),
     };
     await updateDoc(organizerRef, updated);
 
-    return updated;
+    return firestoreTimestampsToIsoStrings(updated);
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;

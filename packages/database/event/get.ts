@@ -1,4 +1,4 @@
-import { Event } from "@workspace/models/db/event";
+import type { Event } from "@workspace/models/db/event";
 import {
   collection,
   collectionGroup,
@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   query,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { db } from "@workspace/firebase";
@@ -14,6 +15,7 @@ import {
   NotFoundError,
 } from "@workspace/utils/src/errors/database";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getEvent(
   eventId: string,
@@ -31,7 +33,7 @@ export async function getEvent(
       throw new NotFoundError("Event", eventId);
     }
 
-    return eventDoc.data() as Event;
+    return firestoreTimestampsToIsoStrings(eventDoc.data() as Event<Timestamp>);
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;
@@ -50,7 +52,9 @@ export async function getOrganizerEvents(
     );
     const querySnapshot = await getDocs(query);
 
-    return querySnapshot.docs.map((doc) => doc.data() as Event);
+    return querySnapshot.docs.map((doc) =>
+      firestoreTimestampsToIsoStrings(doc.data() as Event<Timestamp>)
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;

@@ -1,5 +1,6 @@
 import {
   EVENT_COLLECTION,
+  EVENT_PAGE_COLLECTION,
   INVITATION_BATCH_COLLECTION,
   INVITATION_JOB_COLLECTION,
   ORGANIZER_COLLECTION,
@@ -15,6 +16,23 @@ export const firestorePaths = {
     [ORGANIZER_COLLECTION, organizerId, EVENT_COLLECTION] as const,
   eventDoc: (organizerId: string, eventId: string) =>
     [ORGANIZER_COLLECTION, organizerId, EVENT_COLLECTION, eventId] as const,
+  eventPagesCollection: (organizerId: string, eventId: string) =>
+    [
+      ORGANIZER_COLLECTION,
+      organizerId,
+      EVENT_COLLECTION,
+      eventId,
+      EVENT_PAGE_COLLECTION,
+    ] as const,
+  eventPageDoc: (organizerId: string, eventId: string, pageId: string) =>
+    [
+      ORGANIZER_COLLECTION,
+      organizerId,
+      EVENT_COLLECTION,
+      eventId,
+      EVENT_PAGE_COLLECTION,
+      pageId,
+    ] as const,
   registrationFormsCollection: (organizerId: string, eventId: string) =>
     [
       ORGANIZER_COLLECTION,
@@ -101,4 +119,3 @@ export const firestorePaths = {
       batchId,
     ] as const,
 };
-

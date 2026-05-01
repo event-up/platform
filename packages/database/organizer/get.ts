@@ -1,8 +1,9 @@
 import { Organizer } from '@workspace/models/db/organizer';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, Timestamp, where } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
 import { ORGANIZER_COLLECTION } from "@workspace/const/database";
+import { firestoreTimestampsToIsoStrings } from '../timestamps';
 
 const organizersCollection = collection(db, ORGANIZER_COLLECTION);
 
@@ -15,7 +16,9 @@ export async function getOrganizer(userId: string): Promise<Organizer> {
             throw new NotFoundError('Organizer', userId);
         }
 
-        return organizerDoc.data() as Organizer;
+        return firestoreTimestampsToIsoStrings(
+            organizerDoc.data() as Organizer<Timestamp>
+        );
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;
@@ -34,7 +37,9 @@ export async function getOrganizerByEmail(email: string): Promise<Organizer | nu
             return null;
         }
 
-        return firstDoc.data() as Organizer;
+        return firestoreTimestampsToIsoStrings(
+            firstDoc.data() as Organizer<Timestamp>
+        );
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;
@@ -42,5 +47,4 @@ export async function getOrganizerByEmail(email: string): Promise<Organizer | nu
         throw DatabaseError.fromFirebaseError(error as any);
     }
 }
-
 

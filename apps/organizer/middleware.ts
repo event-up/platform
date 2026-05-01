@@ -2,13 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const session = request.cookies.get("__session");
-  const isLoginPage = request.nextUrl.pathname.startsWith("/login");
+  const { pathname } = request.nextUrl;
+  const isAuthPage =
+    pathname.startsWith("/login") || pathname.startsWith("/signup");
+  const isPublicFile = /\.[^/]+$/.test(pathname);
 
-  if (!session && !isLoginPage) {
+  if (isPublicFile) {
+    return NextResponse.next();
+  }
+
+  if (!session && !isAuthPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (session && isLoginPage) {
+  if (session && isAuthPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 

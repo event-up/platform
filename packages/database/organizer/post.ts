@@ -1,8 +1,8 @@
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "@workspace/firebase";
 import { Organizer } from "@workspace/models/db/organizer";
-import { serverTimestamp } from "firebase/firestore";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 /**
  * Creates a new organizer document in the Firestore "Organizers" collection
  * @param organizer - The organizer data to save
@@ -14,17 +14,18 @@ export async function createOrganizer(
   try {
     const organizersCollection = collection(db, ...firestorePaths.organizersCollection());
     const organizerDoc = doc(organizersCollection, organizer.userId);
-    const organizerData: Organizer = {
+    const now = Timestamp.fromDate(new Date());
+    const organizerData: Organizer<Timestamp> = {
       userId: organizer.userId,
       email: organizer.email,
       role: organizer.role,
       profileImgUrl: organizer.profileImgUrl,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: now,
+      updatedAt: now,
     };
     await setDoc(organizerDoc, organizerData);
 
-    return organizerData;
+    return firestoreTimestampsToIsoStrings(organizerData);
   } catch (error) {
     console.error("Error creating organizer:", error);
     throw new Error(

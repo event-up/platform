@@ -35,7 +35,6 @@ import { toast } from "sonner";
 import { FormEditor } from "@workspace/surveyjs/lib/editor/components";
 import { EditorState } from "@workspace/surveyjs/lib/models/types";
 import { validateFormForSave } from "@workspace/surveyjs/lib/editor/utils/validation";
-import { uploadImageToFirebaseStorage } from "@workspace/firebase/storage/store";
 
 type RegistrationFormStatus = "active" | "inactive";
 
@@ -154,13 +153,6 @@ const formatSubmittedTime = (value: string | undefined) => {
   if (Number.isNaN(date.getTime())) return "-";
   return date.toLocaleString();
 };
-
-const createSafeStorageFileName = (fileName: string) =>
-  fileName
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9.]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "cover-image";
 
 // ─── Latest responses ─────────────────────────────────────────────────────────
 
@@ -512,17 +504,25 @@ const RegistrationPage = () => {
         throw new Error("You need to be signed in to upload a cover image.");
       }
 
-      const safeFileName = createSafeStorageFileName(file.name);
-      const storagePath = [
-        "Organizers",
-        user.uid,
-        "Events",
-        eventId,
-        "registration-cover",
-        `${crypto.randomUUID()}-${safeFileName}`,
-      ].join("/");
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("context", "registration-cover");
+      formData.append("eventId", eventId);
 
-      return uploadImageToFirebaseStorage(file, storagePath);
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const payload = (await response.json()) as {
+        downloadUrl?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !payload.downloadUrl) {
+        throw new Error(payload.error || "Failed to upload cover image.");
+      }
+
+      return payload.downloadUrl;
     },
     [eventId, user?.uid],
   );

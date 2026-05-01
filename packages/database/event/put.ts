@@ -1,8 +1,12 @@
-import { Event } from '@workspace/models/db/event';
-import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import type { Event } from '@workspace/models/db/event';
+import { collection, doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
 import { firestorePaths } from "../paths";
+import {
+    firestoreTimestampsToIsoStrings,
+    isoStringsToFirestoreTimestamps,
+} from "../timestamps";
 
 export async function updateEvent(
     organizerId: string,
@@ -18,10 +22,13 @@ export async function updateEvent(
             throw new NotFoundError('Event', eventId);
         }
 
-        await updateDoc(eventRef, updates);
+        await updateDoc(
+            eventRef,
+            isoStringsToFirestoreTimestamps(updates, Timestamp.fromDate)
+        );
 
         const updatedDoc = await getDoc(eventRef);
-        return updatedDoc.data() as Event;
+        return firestoreTimestampsToIsoStrings(updatedDoc.data() as Event<Timestamp>);
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;

@@ -3,11 +3,13 @@ import {
 } from "@workspace/const/database";
 import { serverDb as db } from "@workspace/firebase/server";
 import { InvitationJob } from "@workspace/models/db/invitations";
+import type { Timestamp } from "firebase-admin/firestore";
 import {
   ParticipantStatus,
   Registration,
 } from "@workspace/models/db/registration";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getEventRegistrationsByStatus(
   organizerId: string,
@@ -20,7 +22,9 @@ export async function getEventRegistrationsByStatus(
 
   const snapshot = await collectionRef.where("status", "==", status).get();
 
-  return snapshot.docs.map((doc) => doc.data() as Registration);
+  return snapshot.docs.map((doc) =>
+    firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>)
+  );
 }
 
 export async function getInvitationJobByIdServer(
@@ -38,5 +42,7 @@ export async function getInvitationJobByIdServer(
     return null;
   }
 
-  return jobSnapshot.data() as InvitationJob;
+  return firestoreTimestampsToIsoStrings(
+    jobSnapshot.data() as InvitationJob<Timestamp>
+  );
 }

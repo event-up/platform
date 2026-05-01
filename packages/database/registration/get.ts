@@ -14,6 +14,7 @@ import {
   startAfter,
   QueryDocumentSnapshot,
   DocumentData,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "@workspace/firebase";
 import {
@@ -25,6 +26,7 @@ import {
   ORGANIZER_COLLECTION,
   REGISTRATION_COLLECTION,
 } from "@workspace/const/database";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getRegistration(
   organizerId: string,
@@ -47,7 +49,9 @@ export async function getRegistration(
       throw new NotFoundError("Registration", registrationId);
     }
 
-    return registrationDoc.data() as Registration;
+    return firestoreTimestampsToIsoStrings(
+      registrationDoc.data() as Registration<Timestamp>
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;
@@ -112,7 +116,9 @@ export async function getEventRegistrations(
 
     const data = docs
       .slice(0, pageSize)
-      .map((doc) => doc.data() as Registration);
+      .map((doc) =>
+        firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>)
+      );
 
     const lastDoc = hasMore && docs[pageSize - 1] ? docs[pageSize - 1] : null;
 
@@ -147,7 +153,9 @@ export async function getEventRegistrationsByStatus(
       query(collectionRef, where("status", "==", status)),
     );
 
-    return docRef.docs.map((doc) => doc.data() as Registration);
+    return docRef.docs.map((doc) =>
+      firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>)
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;

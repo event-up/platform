@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "../../../../apps/**/*.{ts,tsx}";
+@source "../../../../packages/page-builder/**/*.{ts,tsx}";
 @source "../../../../packages/surveyjs/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 

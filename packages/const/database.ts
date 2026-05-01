@@ -4,3 +4,4 @@ export const REGISTRATION_COLLECTION = "Registrations";
 export const INVITATION_JOB_COLLECTION = "InvitationJobs";
 export const INVITATION_BATCH_COLLECTION = "Batches";
 export const REGISTRATION_FORM_COLLECTION = "RegistrationForms";
+export const EVENT_PAGE_COLLECTION = "EventPages";

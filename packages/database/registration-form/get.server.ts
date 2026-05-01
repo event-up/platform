@@ -1,8 +1,9 @@
 "use server";
 import { serverDb as db } from "@workspace/firebase/server";
 import { RegistrationForm } from "@workspace/models/db/registration-form";
-import { Timestamp } from "firebase-admin/firestore";
+import type { Timestamp } from "firebase-admin/firestore";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getRegistrationFormServer(
   organizerId: string,
@@ -22,12 +23,7 @@ export async function getRegistrationFormServer(
   const docData = doc?.data();
 
   if (docData) {
-    const res = docData as RegistrationForm;
-    return {
-      ...res,
-      createdAt: (res.createdAt as Timestamp).toDate().toString(),
-      updatedAt: (res.updatedAt as Timestamp).toDate().toString(),
-    };
+    return firestoreTimestampsToIsoStrings(docData as RegistrationForm<Timestamp>);
   }
   return null;
 }

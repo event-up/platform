@@ -3,11 +3,13 @@ import {
   ParticipantStatus,
   Registration,
 } from "@workspace/models/db/registration";
+import type { Timestamp } from "firebase-admin/firestore";
 import { serverDb as db } from "@workspace/firebase/server";
 import {
 } from "@workspace/const/database";
 import { REGISTRATION_COLLECTION } from "@workspace/const/database";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getEventRegistrationsByStatus(
   organizerId: string,
@@ -21,7 +23,9 @@ export async function getEventRegistrationsByStatus(
     ? collectionRef.where("status", "==", status)
     : collectionRef;
   const snapshot = await query.get();
-  return snapshot.docs.map((doc) => doc.data() as Registration);
+  return snapshot.docs.map((doc) =>
+    firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>)
+  );
 }
 
 export async function getRegistrationById(registrationId: string) {
@@ -38,6 +42,5 @@ export async function getRegistrationById(registrationId: string) {
   const doc = snapshot.docs[0];
   if (!doc) return null;
 
-  return doc.data() as Registration;
+  return firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>);
 }
-

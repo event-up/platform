@@ -1,5 +1,3 @@
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
-
 export type ParticipantStatus =
   | "registered"
   | "self-cancelled"
@@ -18,8 +16,8 @@ export interface ContactChannelJobResult {
   success: boolean;
 }
 
-export interface CheckInData {
-  timeStamp: Timestamp | string | FieldValue;
+export interface CheckInData<DateTime = string> {
+  timeStamp: DateTime;
   entranceCode: string;
   inputToken: string;
 }
@@ -29,19 +27,19 @@ export interface ContactChannel {
   value: string;
   jobResults: ContactChannelJobResult[];
 }
-export interface BaseRegistration {
+export interface BaseRegistration<DateTime = string> {
   organizerId: string;
   eventId: string;
   registrationId: string;
   // ......
   status: ParticipantStatus;
-  checkInData: CheckInData[];
-  createdAt: string;
-  updatedAt: string;
+  checkInData: CheckInData<DateTime>[];
+  createdAt: DateTime;
+  updatedAt: DateTime;
   contactChannels: ContactChannel[];
   token: string;
 }
-export interface Registration extends BaseRegistration {
+export interface Registration<DateTime = string> extends BaseRegistration<DateTime> {
   registrationData?: {
     [key: string]: any;
   };

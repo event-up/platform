@@ -1,7 +1,8 @@
 import { db } from "@workspace/firebase";
 import { RegistrationForm } from "@workspace/models/db/registration-form";
-import { collection, query, limit, getDocs } from "firebase/firestore";
+import { collection, query, limit, getDocs, Timestamp } from "firebase/firestore";
 import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getRegistrationForm(
   organizerId: string,
@@ -23,8 +24,9 @@ export async function getRegistrationForm(
   const docData = doc?.data();
 
   if (docData) {
-    const res = docData as RegistrationForm;
-    return res;
+    return firestoreTimestampsToIsoStrings(
+      docData as RegistrationForm<Timestamp>
+    );
   }
   return null;
 }

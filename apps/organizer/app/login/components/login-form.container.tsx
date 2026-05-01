@@ -10,28 +10,59 @@ import {
   CardContent,
   CardFooter,
 } from "@workspace/ui/components/card";
+import { Input } from "@workspace/ui/components/input";
+import { Label } from "@workspace/ui/components/label";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signInWithGoogleWithOrganizerProfile } from "@/helper/auth";
+import { type FormEvent, useState } from "react";
+import {
+  signInWithEmailPassword,
+  signInWithGoogle,
+} from "@/lib/auth-service";
 
 export function LoginForm() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [pendingMethod, setPendingMethod] = useState<"email" | "google" | null>(
+    null
+  );
+
+  const isSigningIn = pendingMethod !== null;
+
+  const getErrorMessage = (error: unknown) => {
+    return error instanceof Error ? error.message : "Failed to sign in";
+  };
+
+  const handleEmailSignIn = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      setError(null);
+      setPendingMethod("email");
+      await signInWithEmailPassword({ email, password });
+      router.push("/");
+    } catch (error) {
+      console.error("Email sign in error:", error);
+      setError(getErrorMessage(error));
+    } finally {
+      setPendingMethod(null);
+    }
+  };
 
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
-      setIsSigningIn(true);
-      await signInWithGoogleWithOrganizerProfile();
+      setPendingMethod("google");
+      await signInWithGoogle();
       router.push("/");
-    } catch (err: any) {
-      console.error("Sign in error:", err);
-      setError(err.message || "Failed to sign in with Google");
+    } catch (error) {
+      console.error("Google sign in error:", error);
+      setError(getErrorMessage(error));
     } finally {
-      setIsSigningIn(false);
+      setPendingMethod(null);
     }
   };
 
@@ -40,7 +71,7 @@ export function LoginForm() {
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
         <CardDescription>
-          Sign in with Google to access your organizer dashboard
+          Sign in with email and password or continue with Google.
         </CardDescription>
         <CardAction>
           <Link href="/signup">
@@ -54,8 +85,49 @@ export function LoginForm() {
             {error}
           </div>
         )}
+        <form className="flex flex-col gap-4" onSubmit={handleEmailSignIn}>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="m@example.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              disabled={isSigningIn}
+              required
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              disabled={isSigningIn}
+              required
+              minLength={6}
+            />
+          </div>
+          <Button type="submit" className="w-full" disabled={isSigningIn}>
+            {pendingMethod === "email" ? "Signing in..." : "Sign in"}
+          </Button>
+        </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
+        <div className="relative w-full py-2">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-card px-2 text-muted-foreground">
+              Or continue with
+            </span>
+          </div>
+        </div>
         <Button
           variant="outline"
           className="w-full"
@@ -80,7 +152,7 @@ export function LoginForm() {
               fill="#EA4335"
             />
           </svg>
-          {isSigningIn ? "Signing in..." : "Sign in with Google"}
+          {pendingMethod === "google" ? "Signing in..." : "Sign in with Google"}
         </Button>
       </CardFooter>
     </Card>

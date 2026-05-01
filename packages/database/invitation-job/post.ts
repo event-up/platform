@@ -1,8 +1,12 @@
 import { InvitationJob } from "@workspace/models/db/invitations";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "@workspace/firebase";
 import { DatabaseError } from "@workspace/utils/src/errors/database";
 import { firestorePaths } from "../paths";
+import {
+  firestoreTimestampsToIsoStrings,
+  isoStringsToFirestoreTimestamps,
+} from "../timestamps";
 
 export async function createInvitationJob(
   organizerId: string,
@@ -18,15 +22,16 @@ export async function createInvitationJob(
     );
     const invitationJobRef = doc(invitationJobsCollection);
 
-    const newInvitationJob = {
+    const now = Timestamp.fromDate(new Date());
+    const newInvitationJob: InvitationJob<Timestamp | string> = isoStringsToFirestoreTimestamps<InvitationJob<Timestamp | string>, Timestamp>({
       ...job,
       jobId: invitationJobRef.id,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+      createdAt: now,
+      updatedAt: now,
+    }, Timestamp.fromDate);
 
     await setDoc(invitationJobRef, newInvitationJob);
-    return newInvitationJob;
+    return firestoreTimestampsToIsoStrings(newInvitationJob);
   } catch (error) {
     if (error instanceof Error) {
       throw DatabaseError.fromFirebaseError(error as any);
