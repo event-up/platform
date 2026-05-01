@@ -5,7 +5,7 @@ import {
   query,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
-import { getEventRegistrations } from "@workspace/database/registration/get";
+import { getEventRegistrations } from "@workspace/database/client/registration";
 import { useQuery } from "react-query";
 import { Registration } from "@workspace/models/db/registration";
 

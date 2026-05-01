@@ -16,7 +16,7 @@ import {
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
 import { toast } from "sonner";
-import { createRegistration } from "@workspace/database/registration/post";
+import { createRegistration } from "@workspace/database/client/registration";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { RegistrationContactChannels } from "@workspace/models/db/registration";
@@ -57,6 +57,7 @@ export function ParticipantCreateForm() {
         organizerId: user?.uid || "",
         registrationData: data,
         status: "registered",
+        checkInData: [],
         contactChannels:[
           { type: RegistrationContactChannels.EMAIL, value: data.email , jobResults:[] },
           { type: RegistrationContactChannels.PHONE, value: data.phone, jobResults: [] },

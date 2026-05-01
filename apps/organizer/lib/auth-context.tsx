@@ -3,11 +3,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import {
-  onAuthStateChange,
-  signInWithGoogle as firebaseSignInWithGoogle,
-  signOut as firebaseSignOut,
-} from "@workspace/firebase/auth";
+import { onAuthStateChange } from "@workspace/firebase/auth";
+import { verifySession } from "@/actions/auth-actions";
+import { signOut as organizerSignOut } from "@/lib/auth-service";
 interface AuthContextType {
   user: User;
   loading: boolean;
@@ -41,10 +39,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user, loading, router]);
 
+  useEffect(() => {
+    if (!user) return;
+    verifySession().then(({ valid }) => {
+      if (!valid) organizerSignOut();
+    });
+  }, [user]);
+
   const signOut = async () => {
     try {
       setLoading(true);
-      await firebaseSignOut();
+      await organizerSignOut();
     } catch (error) {
       console.error("Sign out error:", error);
       throw error;

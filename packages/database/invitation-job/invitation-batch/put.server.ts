@@ -1,9 +1,3 @@
-import {
-  ORGANIZER_COLLECTION,
-  EVENT_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-  INVITATION_BATCH_COLLECTION,
-} from "@workspace/const/database";
 import { serverDb as db } from "@workspace/firebase/server";
 import { InvitationJobBatch } from "@workspace/models/db/invitations";
 import {
@@ -11,6 +5,8 @@ import {
   DatabaseErrorCode,
 } from "@workspace/utils/src/errors/database";
 import { firestore } from "firebase-admin";
+import { firestorePaths } from "../../paths";
+import { isoStringsToFirestoreTimestamps } from "../../timestamps";
 
 export async function updateInvitationJobBatchServer(
   organizerId: string,
@@ -19,7 +15,9 @@ export async function updateInvitationJobBatchServer(
   batchId: string,
   updateData: Partial<InvitationJobBatch>
 ) {
-  const batchPath = `${ORGANIZER_COLLECTION}/${organizerId}/${EVENT_COLLECTION}/${eventId}/${INVITATION_JOB_COLLECTION}/${jobId}/${INVITATION_BATCH_COLLECTION}/${batchId}`;
+  const batchPath = firestorePaths
+    .invitationBatchDoc(organizerId, eventId, jobId, batchId)
+    .join("/");
 
   const batchDocRef = db.doc(batchPath);
   const batchDoc = await batchDocRef.get();
@@ -32,7 +30,10 @@ export async function updateInvitationJobBatchServer(
   }
 
   await batchDocRef.update({
-    ...updateData,
+    ...isoStringsToFirestoreTimestamps(
+      updateData,
+      (date) => firestore.Timestamp.fromDate(date),
+    ),
     updatedAt: firestore.FieldValue
       ? firestore.FieldValue.serverTimestamp()
       : null,

@@ -1,12 +1,10 @@
+'use server';
 import { Registration } from "@workspace/models/db/registration";
 import { DatabaseError } from "@workspace/utils/src/errors/database";
 import { serverDb } from "@workspace/firebase/server";
-import {
-  EVENT_COLLECTION,
-  ORGANIZER_COLLECTION,
-  REGISTRATION_COLLECTION,
-} from "@workspace/const/database";
 import { firestore } from "firebase-admin";
+import { generateRegistrationToken } from "@workspace/check-token/lib/tokenize"
+import { firestorePaths } from "../paths";
 
 export async function createRegistrationServer(
   registration: Omit<
@@ -16,36 +14,28 @@ export async function createRegistrationServer(
 ): Promise<Registration> {
   try {
     const registrationsCollection = serverDb
-      .collection(ORGANIZER_COLLECTION)
-      .doc(registration.organizerId)
-      .collection(EVENT_COLLECTION)
-      .doc(registration.eventId)
-      .collection(REGISTRATION_COLLECTION);
+      .collection(
+        firestorePaths
+          .registrationsCollection(registration.organizerId, registration.eventId)
+          .join("/")
+      );
 
     const registrationRef = registrationsCollection.doc();
 
-    const tokenObject = {
-      o: registration.organizerId,
-      e: registration.eventId,
-      r: registrationRef.id,
-    };
-
-    const newRegistration: Registration = {
+    const newRegistration: Registration<FirebaseFirestore.FieldValue | string> = {
       ...registration,
       registrationId: registrationRef.id,
-      token: {
-        verifyToken: JSON.stringify(tokenObject),
-        type: "QR",
-      },
-      createdAt: firestore.FieldValue.serverTimestamp() as any,
-      updatedAt: firestore.FieldValue.serverTimestamp() as any,
+      token: await generateRegistrationToken(registrationRef.id, registration.eventId, registration.organizerId),
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
     };
 
     await registrationRef.set(newRegistration);
 
-    // Return the registration with ISO string timestamps for consistency
     return {
-      ...newRegistration,
+      ...registration,
+      registrationId: registrationRef.id,
+      token: newRegistration.token,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

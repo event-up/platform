@@ -1,4 +1,5 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../index";
 
 /**
  * Uploads a given image file to Firebase Cloud Storage and retrieves its download URL.
@@ -6,9 +7,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
  * @param path The path within the storage bucket where the file should be stored (e.g., 'images/profile_pics/user123.jpg').
  * @returns A Promise that resolves with the download URL of the uploaded image.
  */
-async function uploadImageToFirebaseStorage(
+export async function uploadImageToFirebaseStorage(
   file: Blob | File,
-  path: string
+  path: string,
 ): Promise<string> {
   const storageRef = ref(storage, path);
 

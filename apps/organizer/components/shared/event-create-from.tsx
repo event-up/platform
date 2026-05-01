@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from "@workspace/ui/components/card";
 import { cn } from "@workspace/ui/lib/utils";
-import { createEvent } from "@workspace/database/event/post";
+import { createEvent } from "@workspace/database/client/event";
 import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

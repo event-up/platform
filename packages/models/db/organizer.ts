@@ -1,11 +1,10 @@
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { UserRole } from "./user";
 
-export type Organizer = {
+export type Organizer<DateTime = string> = {
   userId: string;
   email: string;
   role: UserRole;
   profileImgUrl: string;
-  createdAt?: FieldValue | Timestamp;
-  updatedAt?: FieldValue | Timestamp;
+  createdAt?: DateTime;
+  updatedAt?: DateTime;
 };

@@ -4,12 +4,9 @@ import {
   NotFoundError,
 } from "@workspace/utils/src/errors/database";
 import { serverDb } from "@workspace/firebase/server";
-import {
-  EVENT_COLLECTION,
-  ORGANIZER_COLLECTION,
-  REGISTRATION_COLLECTION,
-} from "@workspace/const/database";
 import { firestore } from "firebase-admin";
+import { firestorePaths } from "../paths";
+import { isoStringsToFirestoreTimestamps } from "../timestamps";
 
 export async function updateRegistrationServer(
   organizerId: string,
@@ -19,19 +16,17 @@ export async function updateRegistrationServer(
 ) {
   try {
     const regRef = serverDb
-      .collection(ORGANIZER_COLLECTION)
-      .doc(organizerId)
-      .collection(EVENT_COLLECTION)
-      .doc(eventId)
-      .collection(REGISTRATION_COLLECTION)
-      .doc(registrationId);
+      .doc(firestorePaths.registrationDoc(organizerId, eventId, registrationId).join("/"));
     const regSnap = await regRef.get();
     if (!regSnap.exists) {
       throw new NotFoundError("Registration", registrationId);
     }
 
     const updateData = {
-      ...updates,
+      ...isoStringsToFirestoreTimestamps(
+        updates,
+        (date) => firestore.Timestamp.fromDate(date),
+      ),
       updatedAt: firestore.FieldValue
         ? firestore.FieldValue.serverTimestamp()
         : null,

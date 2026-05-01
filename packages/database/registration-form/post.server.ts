@@ -1,9 +1,4 @@
 "use server";
-import {
-  ORGANIZER_COLLECTION,
-  EVENT_COLLECTION,
-  REGISTRATION_FORM_COLLECTION,
-} from "@workspace/const/database";
 import { serverDb as db } from "@workspace/firebase/server";
 import { RegistrationForm } from "@workspace/models/db/registration-form";
 import {
@@ -11,6 +6,7 @@ import {
   DatabaseErrorCode,
 } from "@workspace/utils/src/errors/database";
 import { firestore } from "firebase-admin";
+import { firestorePaths } from "../paths";
 
 export async function createRegistrationFormServer(
   formData: Omit<
@@ -19,7 +15,9 @@ export async function createRegistrationFormServer(
   >
 ) {
   const registrationFormCol = db.collection(
-    `${ORGANIZER_COLLECTION}/${formData.organizerId}/${EVENT_COLLECTION}/${formData.eventId}/${REGISTRATION_FORM_COLLECTION}`
+    firestorePaths
+      .registrationFormsCollection(formData.organizerId, formData.eventId)
+      .join("/")
   );
 
   const existingForms = await registrationFormCol.limit(1).get();
@@ -33,7 +31,7 @@ export async function createRegistrationFormServer(
 
   const registrationFormDocRef = registrationFormCol.doc();
 
-  const registrationForm: RegistrationForm = {
+  const registrationForm: RegistrationForm<FirebaseFirestore.FieldValue> = {
     ...formData,
     registrationFormId: registrationFormDocRef.id,
     createdAt: firestore.FieldValue.serverTimestamp(),

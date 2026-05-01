@@ -16,32 +16,39 @@ export interface ContactChannelJobResult {
   success: boolean;
 }
 
+export interface CheckInData<DateTime = string> {
+  timeStamp: DateTime;
+  entranceCode: string;
+  inputToken: string;
+}
+
 export interface ContactChannel {
   type: RegistrationContactChannels;
   value: string;
   jobResults: ContactChannelJobResult[];
 }
-export interface BaseRegistration {
+export interface BaseRegistration<DateTime = string> {
   organizerId: string;
   eventId: string;
   registrationId: string;
   // ......
   status: ParticipantStatus;
-  createdAt: string;
-  updatedAt: string;
+  checkInData: CheckInData<DateTime>[];
+  createdAt: DateTime;
+  updatedAt: DateTime;
   contactChannels: ContactChannel[];
-  token: RegistrationToken;
+  token: string;
 }
-export interface Registration extends BaseRegistration {
+export interface Registration<DateTime = string> extends BaseRegistration<DateTime> {
   registrationData?: {
     [key: string]: any;
   };
 }
 
-export interface RegistrationToken {
-  verifyToken: string;
-  type: "QR" | "PIN";
-}
+// export interface RegistrationToken {
+//   verifyToken: string;
+//   type: "QR" | "PIN";
+// }
 
 // export interface QRRegistrationToken extends RegistrationToken {
 //   qrText: string;

@@ -1,16 +1,24 @@
 import { Registration } from '@workspace/models/db/registration';
-import { collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
-
-const COLLECTION_NAME = 'registrations';
-const registrationsCollection = collection(db, COLLECTION_NAME);
+import { firestorePaths } from "../paths";
+import {
+    firestoreTimestampsToIsoStrings,
+    isoStringsToFirestoreTimestamps,
+} from "../timestamps";
 
 export async function updateRegistration(
+    organizerId: string,
+    eventId: string,
     registrationId: string,
     updates: Partial<Omit<Registration, 'id' | 'createdAt'>>
 ): Promise<Registration> {
     try {
+        const registrationsCollection = collection(
+          db,
+          ...firestorePaths.registrationsCollection(organizerId, eventId)
+        );
         const registrationRef = doc(registrationsCollection, registrationId);
         const registrationDoc = await getDoc(registrationRef);
 
@@ -19,14 +27,16 @@ export async function updateRegistration(
         }
 
         const updateData = {
-            ...updates,
-            updatedAt: new Date()
+            ...isoStringsToFirestoreTimestamps(updates, Timestamp.fromDate),
+            updatedAt: Timestamp.fromDate(new Date())
         };
 
         await updateDoc(registrationRef, updateData);
 
         const updatedDoc = await getDoc(registrationRef);
-        return updatedDoc.data() as Registration;
+        return firestoreTimestampsToIsoStrings(
+            updatedDoc.data() as Registration<Timestamp>
+        );
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;

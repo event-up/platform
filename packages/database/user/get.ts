@@ -1,7 +1,8 @@
 import { User, UserRole } from '@workspace/models/db/user';
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, Timestamp, where } from 'firebase/firestore';
 import { db } from '@workspace/firebase';
 import { DatabaseError, NotFoundError } from '@workspace/utils/src/errors/database';
+import { firestoreTimestampsToIsoStrings } from '../timestamps';
 
 const COLLECTION_NAME = 'users';
 const usersCollection = collection(db, COLLECTION_NAME);
@@ -15,7 +16,7 @@ export async function getUser(userId: string): Promise<User> {
             throw new NotFoundError('User', userId);
         }
 
-        return userDoc.data() as User;
+        return firestoreTimestampsToIsoStrings(userDoc.data() as User<Timestamp>);
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;
@@ -29,7 +30,9 @@ export async function getUsersByRole(role: UserRole): Promise<User[]> {
         const q = query(usersCollection, where('role', '==', role));
         const querySnapshot = await getDocs(q);
 
-        return querySnapshot.docs.map(doc => doc.data() as User);
+        return querySnapshot.docs.map(doc =>
+            firestoreTimestampsToIsoStrings(doc.data() as User<Timestamp>)
+        );
     } catch (error) {
         if (error instanceof DatabaseError) {
             throw error;

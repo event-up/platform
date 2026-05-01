@@ -1,4 +1,4 @@
-import { getRegistrationForm } from "@workspace/database/registration-form/get";
+import { getRegistrationForm } from "@workspace/database/client/registration-form";
 import { useQuery } from "react-query";
 
 export const useRegistrationFormQuery = (

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "@workspace/ui/globals.css";
+import "@puckeditor/core/puck.css";
 import { Toaster } from "sonner";
 
 const fontSans = Geist({

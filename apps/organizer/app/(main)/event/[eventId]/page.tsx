@@ -77,15 +77,11 @@ export default function EventPage() {
           <CardTitle className="text-3xl">{event.name}</CardTitle>
           <CardDescription className="text-base mt-2">
             {moment(
-              typeof event.date === "string"
-                ? new Date(event.date)
-                : event.date.toDate()
+              new Date(event.date)
             ).format("dddd, MMMM D, YYYY")}{" "}
             at{" "}
             {moment(
-              typeof event.date === "string"
-                ? new Date(event.date)
-                : event.date.toDate()
+              new Date(event.date)
             ).format("h:mm A")}
           </CardDescription>
         </CardHeader>

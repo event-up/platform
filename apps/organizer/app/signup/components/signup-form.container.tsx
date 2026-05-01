@@ -1,9 +1,63 @@
+"use client";
+
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { type FormEvent, useState } from "react";
+import {
+  registerWithEmailPassword,
+  signInWithGoogle,
+} from "@/lib/auth-service";
 
 export function SignUpForm() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [pendingMethod, setPendingMethod] = useState<
+    "email" | "google" | null
+  >(null);
+
+  const isSubmitting = pendingMethod !== null;
+
+  const getErrorMessage = (error: unknown) => {
+    return error instanceof Error ? error.message : "Failed to create account";
+  };
+
+  const handleEmailRegistration = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    try {
+      setError(null);
+      setPendingMethod("email");
+      await registerWithEmailPassword({ email, password });
+      router.push("/");
+    } catch (error) {
+      console.error("Email registration error:", error);
+      setError(getErrorMessage(error));
+    } finally {
+      setPendingMethod(null);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setError(null);
+      setPendingMethod("google");
+      await signInWithGoogle();
+      router.push("/");
+    } catch (error) {
+      console.error("Google sign in error:", error);
+      setError(getErrorMessage(error));
+    } finally {
+      setPendingMethod(null);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="flex flex-col gap-3">
@@ -11,44 +65,69 @@ export function SignUpForm() {
           Sign Up to Elevate your events
         </h1>
         <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">
-          Join EventUp and gain access to tools designed to make every event a memorable success. Get started in seconds.
+          Join EventUp and gain access to tools designed to make every event a
+          memorable success. Get started in seconds.
         </p>
         <div className="mt-4 rounded-xl bg-primary/5 p-4 border border-primary/10">
           <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong className="font-semibold text-foreground">A quick heads-up:</strong> We're actively building a fully self-service platform for organizers. Currently, we specialize in managed QR invitations and provide a dedicated scanner app for seamless on-site attendance tracking. We handle the complex parts so you can focus on the experience.
+            <strong className="font-semibold text-foreground">
+              A quick heads-up:
+            </strong>{" "}
+            We're actively building a fully self-service platform for
+            organizers. Currently, we specialize in managed QR invitations and
+            provide a dedicated scanner app for seamless on-site attendance
+            tracking. We handle the complex parts so you can focus on the
+            experience.
           </p>
         </div>
       </div>
 
-      <form className="flex flex-col gap-5">
-        <div className="grid gap-2">
-          <Label htmlFor="name">Full Name</Label>
-          <Input id="name" type="text" placeholder="John Doe" required className="h-11" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="company">Company Name <span className="text-muted-foreground font-normal">(Optional)</span></Label>
-          <Input id="company" type="text" placeholder="EventUp Inc." className="h-11" />
-        </div>
+      <form className="flex flex-col gap-5" onSubmit={handleEmailRegistration}>
+        {error && (
+          <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+            {error}
+          </div>
+        )}
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
+            autoComplete="email"
             placeholder="m@example.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            disabled={isSubmitting}
             required
             className="h-11"
           />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" required className="h-11" />
+          <Input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            disabled={isSubmitting}
+            required
+            minLength={6}
+            className="h-11"
+          />
         </div>
-        
+
         <div className="mt-2 flex flex-col gap-4">
-          <Button type="submit" className="w-full text-base font-medium h-11">
-            Create Account
+          <Button
+            type="submit"
+            className="w-full text-base font-medium h-11"
+            disabled={isSubmitting}
+          >
+            {pendingMethod === "email"
+              ? "Creating account..."
+              : "Create Account"}
           </Button>
-          
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
@@ -59,8 +138,14 @@ export function SignUpForm() {
               </span>
             </div>
           </div>
-          
-          <Button variant="outline" type="button" className="w-full bg-transparent h-11 hover:bg-muted/50 transition-colors">
+
+          <Button
+            variant="outline"
+            type="button"
+            className="w-full bg-transparent h-11 hover:bg-muted/50 transition-colors"
+            onClick={handleGoogleSignIn}
+            disabled={isSubmitting}
+          >
             <svg viewBox="0 0 24 24" className="mr-2 h-5 w-5">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -79,14 +164,17 @@ export function SignUpForm() {
                 fill="#EA4335"
               />
             </svg>
-            Google
+            {pendingMethod === "google" ? "Signing in..." : "Google"}
           </Button>
         </div>
       </form>
-      
+
       <p className="text-center text-sm text-muted-foreground mt-4">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-primary hover:underline underline-offset-4">
+        <Link
+          href="/login"
+          className="font-semibold text-primary hover:underline underline-offset-4"
+        >
           Log in
         </Link>
       </p>

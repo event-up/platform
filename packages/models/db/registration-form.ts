@@ -1,4 +1,3 @@
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { FormField } from "../dynamic-form";
 
 export enum RegistrationFormAuth {
@@ -8,7 +7,7 @@ export enum RegistrationFormAuth {
   SSO = "SSO",
 }
 
-export interface RegistrationForm {
+export interface RegistrationForm<DateTime = string> {
   registrationFormId: string;
   organizerId: string;
   eventId: string;
@@ -17,8 +16,13 @@ export interface RegistrationForm {
     title: string;
     description: string;
     fields: FormField[];
+    registrationBranding?: {
+      coverImageUrl?: string;
+      organizerName?: string;
+      organizerLogoUrl?: string;
+    };
   };
   authentication: RegistrationFormAuth[];
-  createdAt: FieldValue | Timestamp | string;
-  updatedAt: FieldValue | Timestamp | string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }

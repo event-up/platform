@@ -1,31 +1,30 @@
 import {
-  EVENT_COLLECTION,
-  INVITATION_JOB_COLLECTION,
-  ORGANIZER_COLLECTION,
   REGISTRATION_COLLECTION,
 } from "@workspace/const/database";
 import { serverDb as db } from "@workspace/firebase/server";
 import { InvitationJob } from "@workspace/models/db/invitations";
+import type { Timestamp } from "firebase-admin/firestore";
 import {
   ParticipantStatus,
   Registration,
 } from "@workspace/models/db/registration";
+import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getEventRegistrationsByStatus(
   organizerId: string,
   eventId: string,
   status: ParticipantStatus
 ) {
-  const collectionRef = db
-    .collection(ORGANIZER_COLLECTION)
-    .doc(organizerId)
-    .collection(EVENT_COLLECTION)
-    .doc(eventId)
-    .collection(REGISTRATION_COLLECTION);
+  const collectionRef = db.collection(
+    firestorePaths.registrationsCollection(organizerId, eventId).join("/")
+  );
 
   const snapshot = await collectionRef.where("status", "==", status).get();
 
-  return snapshot.docs.map((doc) => doc.data() as Registration);
+  return snapshot.docs.map((doc) =>
+    firestoreTimestampsToIsoStrings(doc.data() as Registration<Timestamp>)
+  );
 }
 
 export async function getInvitationJobByIdServer(
@@ -33,13 +32,9 @@ export async function getInvitationJobByIdServer(
   eventId: string,
   jobId: string
 ): Promise<InvitationJob | null> {
-  const jobDocRef = db
-    .collection(ORGANIZER_COLLECTION)
-    .doc(organizerId)
-    .collection(EVENT_COLLECTION)
-    .doc(eventId)
-    .collection(INVITATION_JOB_COLLECTION)
-    .doc(jobId);
+  const jobDocRef = db.doc(
+    firestorePaths.invitationJobDoc(organizerId, eventId, jobId).join("/")
+  );
 
   const jobSnapshot = await jobDocRef.get();
 
@@ -47,5 +42,7 @@ export async function getInvitationJobByIdServer(
     return null;
   }
 
-  return jobSnapshot.data() as InvitationJob;
+  return firestoreTimestampsToIsoStrings(
+    jobSnapshot.data() as InvitationJob<Timestamp>
+  );
 }

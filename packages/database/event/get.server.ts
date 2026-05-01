@@ -1,7 +1,10 @@
 "use server";
 import { serverDb } from "@workspace/firebase/server";
 import { EVENT_COLLECTION } from "@workspace/const/database";
-import type { Event } from "@workspace/models/db/Event";
+import type { Event } from "@workspace/models/db/event";
+import { firestorePaths } from "../paths";
+import type { Timestamp } from "firebase-admin/firestore";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 /**
  * Get an event by its domain name
@@ -26,11 +29,19 @@ export const getEventByDomainNameServer = async (
     return null;
   }
 
-  const data = doc.data() as Event;
-  console.log({ data });
+  return firestoreTimestampsToIsoStrings(doc.data() as Event<Timestamp>);
+};
 
-  return {
-    ...data,
-    date: "edwde",
-  } as Event;
+export const getEventByIdServer = async (
+  organizerId: string,
+  eventId: string,
+): Promise<Event | null> => {
+  const snapshot = await serverDb
+    .doc(firestorePaths.eventDoc(organizerId, eventId).join("/"))
+    .get();
+
+  if (!snapshot.exists) {
+    return null;
+  }
+  return firestoreTimestampsToIsoStrings(snapshot.data() as Event<Timestamp>);
 };

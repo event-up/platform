@@ -22,7 +22,6 @@ import { Ban, CheckCircle, UserCheck, UserX } from "lucide-react";
 interface ParticipantDrawerProps {
   participant: Registration | null;
   formFields: FormField[];
-  organizerId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -40,7 +39,6 @@ const statusConfig: Record<
 export function ParticipantDrawer({
   participant,
   formFields,
-  organizerId,
   open,
   onOpenChange,
 }: ParticipantDrawerProps) {
@@ -55,7 +53,6 @@ export function ParticipantDrawer({
   const handleBlockToggle = () => {
     const newStatus: ParticipantStatus = isBlocked ? "registered" : "blocked";
     updateStatusMutation.mutate({
-      organizerId,
       eventId: participant.eventId,
       registrationId: participant.registrationId,
       status: newStatus,
@@ -64,7 +61,6 @@ export function ParticipantDrawer({
 
   const handleCheckIn = () => {
     updateStatusMutation.mutate({
-      organizerId,
       eventId: participant.eventId,
       registrationId: participant.registrationId,
       status: "checked-in",

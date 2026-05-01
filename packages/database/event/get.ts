@@ -1,4 +1,4 @@
-import { Event } from "@workspace/models/db/event";
+import type { Event } from "@workspace/models/db/event";
 import {
   collection,
   collectionGroup,
@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   query,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { db } from "@workspace/firebase";
@@ -13,10 +14,8 @@ import {
   DatabaseError,
   NotFoundError,
 } from "@workspace/utils/src/errors/database";
-import {
-  EVENT_COLLECTION,
-  ORGANIZER_COLLECTION,
-} from "@workspace/const/database";
+import { firestorePaths } from "../paths";
+import { firestoreTimestampsToIsoStrings } from "../timestamps";
 
 export async function getEvent(
   eventId: string,
@@ -25,9 +24,7 @@ export async function getEvent(
   try {
     const eventsCollection = collection(
       db,
-      ORGANIZER_COLLECTION,
-      organizerId,
-      EVENT_COLLECTION
+      ...firestorePaths.eventsCollection(organizerId)
     ); // Placeholder for organizer ID
     const eventDocRef = doc(eventsCollection, eventId);
     const eventDoc = await getDoc(eventDocRef);
@@ -36,7 +33,7 @@ export async function getEvent(
       throw new NotFoundError("Event", eventId);
     }
 
-    return eventDoc.data() as Event;
+    return firestoreTimestampsToIsoStrings(eventDoc.data() as Event<Timestamp>);
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;
@@ -51,13 +48,13 @@ export async function getOrganizerEvents(
   try {
     const query = collection(
       db,
-      ORGANIZER_COLLECTION,
-      organizerId,
-      EVENT_COLLECTION
+      ...firestorePaths.eventsCollection(organizerId)
     );
     const querySnapshot = await getDocs(query);
 
-    return querySnapshot.docs.map((doc) => doc.data() as Event);
+    return querySnapshot.docs.map((doc) =>
+      firestoreTimestampsToIsoStrings(doc.data() as Event<Timestamp>)
+    );
   } catch (error) {
     if (error instanceof DatabaseError) {
       throw error;

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getEvent, getOrganizerEvents } from "@workspace/database/event/get";
+import { getEvent, getOrganizerEvents } from "@workspace/database/client/event";
 import type { Event } from "@workspace/models/db/event";
 
 export const useEventQuery = (

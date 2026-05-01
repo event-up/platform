@@ -14,6 +14,8 @@
   "dependencies": {
     "@workspace/firebase": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "@workspace/models": "workspace:*",
+    "@workspace/database": "workspace:*",
     "firebase": "^12.4.0",
     "lucide-react": "^0.475.0",
     "next": "15.5.9",

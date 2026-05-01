@@ -20,6 +20,7 @@ const SEGMENT_LABELS: Record<string, string> = {
   checkers: "Checkers & Entrances",
   participants: "Participants",
   invitations: "Invitations",
+  "page-builder": "Event Page",
   registration: "Registration",
 };
 

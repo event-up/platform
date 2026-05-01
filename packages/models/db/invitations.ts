@@ -1,19 +1,21 @@
 import { Registration } from "./registration";
-import { Timestamp, FieldValue } from "firebase-admin/firestore";
 type JobStatusType = "created" | "processing" | "completed" | "failed";
 
-export interface InvitationJob {
+export interface InvitationJob<DateTime = string> {
+  jobId: string;
   eventId: string;
   jobName: string;
   status: JobStatusType;
   completedCount: number;
-  completedAt: Timestamp | FieldValue | null;
+  completedAt: DateTime | null;
   failedCount: number;
   recipientsReference: string;
   notifyChannel: NotifyChannel | SMSNotifyChannel;
+  createdAt: DateTime;
+  updatedAt: DateTime;
 }
 
-interface NotifyChannel {
+export interface NotifyChannel {
   channelType: "SMS" | "EMAIL";
   messageTemplate: string;
 }
@@ -21,12 +23,13 @@ export interface SMSNotifyChannel extends NotifyChannel {
   smsMaskId: string;
 }
 
-export type InvitationJobBatch = {
+export type InvitationJobBatch<DateTime = string> = {
   batchId: string;
-  recipients: Registration[];
+  recipients: Registration<DateTime>[];
   status: JobStatusType;
-  completedAt: Timestamp | FieldValue | null;
+  completedAt: DateTime | null;
   successCount: number;
-  createdAt: Timestamp | FieldValue | null;
+  createdAt: DateTime | null;
+  updatedAt: DateTime;
   message: string | null;
 };

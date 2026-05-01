@@ -27,12 +27,23 @@ export class SurveyConverter {
         element.description = field.description;
       }
 
+      if (field.options?.length) {
+        element.options = field.options;
+      }
+
       return element;
     });
 
     return {
       title: state.surveyTitle,
       description: state.surveyDescription,
+      metadata: {
+        registrationBranding: {
+          coverImageUrl: state.coverImageUrl,
+          organizerName: state.organizerName,
+          organizerLogoUrl: state.organizerLogoUrl,
+        },
+      },
       pages: [
         {
           name: "page1",
@@ -56,6 +67,7 @@ export class SurveyConverter {
   static fromSurveyJSON(json: any): Partial<EditorState> {
     const firstPage = json.pages?.[0];
     const elements = firstPage?.elements || [];
+    const registrationBranding = json.metadata?.registrationBranding || {};
 
     const fields: FormField[] = elements.map((element: any, index: number) => ({
       id: element.id || `field_${Date.now()}_${index}`,
@@ -64,12 +76,16 @@ export class SurveyConverter {
       required: element.isRequired || false,
       placeholder: element.placeholder,
       description: element.description,
+      options: element.options,
     }));
 
     return {
       fields,
       surveyTitle: json.title || "Untitled Form",
       surveyDescription: json.description || "",
+      coverImageUrl: registrationBranding.coverImageUrl || "",
+      organizerName: registrationBranding.organizerName || "EventUp",
+      organizerLogoUrl: registrationBranding.organizerLogoUrl || "",
       selectedFieldId: null,
     };
   }

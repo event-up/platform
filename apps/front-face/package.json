@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.18",
+    "@workspace/database": "workspace:*",
+    "@workspace/models": "workspace:*",
+    "@workspace/page-builder": "workspace:*",
     "@workspace/surveyjs": "workspace:*",
     "@workspace/ui": "workspace:*",
     "lucide-react": "^0.475.0",

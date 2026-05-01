@@ -1,8 +1,6 @@
-import { Timestamp } from "firebase-admin/firestore";
-
-export type Event = {
+export type Event<DateTime = string> = {
   name: string;
-  date: string | Timestamp;
+  date: DateTime;
   location: string;
   description: string;
   eventId: string;

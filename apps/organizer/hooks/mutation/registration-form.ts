@@ -1,12 +1,18 @@
 import { useMutation } from "react-query";
-import { createRegistrationFormServer } from "@workspace/database/registration-form/post.server";
-import { updateRegistrationForm } from "@workspace/database/registration-form/put";
-import { RegistrationForm } from "@workspace/models/db/registration-form";
+import {
+  createRegistrationFormAction,
+  updateRegistrationFormAction,
+} from "@/actions/registration-form-actions";
 import { toast } from "sonner";
 
 export const useCreateRegistrationFormMutation = () => {
   const mutation = useMutation({
-    mutationFn: createRegistrationFormServer,
+    mutationFn: async (input: any) => {
+      const result = await createRegistrationFormAction(input);
+      if (result?.serverError) throw new Error(result.serverError);
+      if (result?.validationErrors) throw new Error("Invalid input provided");
+      return result?.data;
+    },
     onSuccess: (data) => {
       toast.success("Registration Form Created", {
         description: "Your registration form has been saved successfully.",
@@ -25,7 +31,12 @@ export const useCreateRegistrationFormMutation = () => {
 
 export const useUpdateRegistrationFormMutation = () => {
   const mutation = useMutation({
-    mutationFn: updateRegistrationForm,
+    mutationFn: async (input: any) => {
+      const result = await updateRegistrationFormAction(input);
+      if (result?.serverError) throw new Error(result.serverError);
+      if (result?.validationErrors) throw new Error("Invalid input provided");
+      return result?.data;
+    },
     onSuccess: (data) => {
       toast.success("Registration Form Updated", {
         description: "Your registration form has been updated successfully.",

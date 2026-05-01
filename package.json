@@ -6,12 +6,14 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check:architecture": "./scripts/check-architecture-guardrails.sh"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "prettier": "^3.6.2",
+    "tailwindcss": "^4.2.4",
     "turbo": "^2.5.5",
     "typescript": "5.7.3"
   },

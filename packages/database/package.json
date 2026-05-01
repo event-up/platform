@@ -2,6 +2,21 @@
   "name": "@workspace/database",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "exports": {
+    "./client/event": "./client/event.ts",
+    "./client/organizer": "./client/organizer.ts",
+    "./client/registration": "./client/registration.ts",
+    "./client/registration-form": "./client/registration-form.ts",
+    "./client/invitation-job": "./client/invitation-job.ts",
+    "./server/event": "./server/event.ts",
+    "./server/event-page": "./server/event-page.ts",
+    "./server/registration": "./server/registration.ts",
+    "./server/registration-form": "./server/registration-form.ts",
+    "./server/invitation-job": "./server/invitation-job.ts",
+    "./server/invitation-batch": "./server/invitation-batch.ts",
+    "./paths": "./paths.ts"
+  },
   "scripts": {
     "dev": "echo 'Add dev script here'",
     "build": "echo 'Add build script here'",
